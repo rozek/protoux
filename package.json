@@ -1,0 +1,45 @@
+{
+  "name": "protoux",
+  "version": "0.0.1",
+  "description": "runtime for a self-made private prototyping system",
+  "type": "module",
+  "source": "src/protoux.ts",
+  "exports": {
+    "types": "./dist/protoux.d.ts",
+    "require": "./dist/protoux.cjs",
+    "default": "./dist/protoux.modern.js"
+  },
+  "main": "./dist/protoux.cjs",
+  "module": "./dist/protoux.esm.js",
+  "svelte": "./dist/protoux.esm.js",
+  "umd:main": "./dist/protoux.umd.js",
+  "types": "./dist/protoux.d.ts",
+  "scripts": {
+    "build": "rimraf dist && microbundle --globals JIL=javascript-interface-library && rm -r dist/src",
+    "agadoo": "agadoo",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rozek/protoux.git"
+  },
+  "keywords": [
+    "javascript",
+    "typescript"
+  ],
+  "author": "Andreas Rozek <a.rozek@gmx.de> (https://www.rozek.de/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rozek/protoux/issues"
+  },
+  "homepage": "https://github.com/rozek/protoux#readme",
+  "devDependencies": {
+    "agadoo": "^2.0.0",
+    "htm": "^3.1.1",
+    "hyperactiv": "github:rozek/hyperactiv",
+    "javascript-interface-library": "^1.0.5",
+    "microbundle": "^0.15.1",
+    "preact": "^10.19.3",
+    "rimraf": "^3.0.2"
+  }
+}
