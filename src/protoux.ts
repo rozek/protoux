@@ -162,7 +162,13 @@
   /**** ImageFolder - where to find image files ****/
 
     public get ImageFolder ():string          { return this._ImageFolder }
-    public set ImageFolder (newFolder:string) { this._ImageFolder = newFolder }
+    public set ImageFolder (newFolder:string) {
+      newFolder = newFolder.trim()
+      if ((newFolder !== '') && ! newFolder.endsWith('/')) {
+        newFolder += '/'
+      }
+      this._ImageFolder = newFolder
+    }
 
   /**** Style - represents the CSS stylesheet of a given ProtoUX project ****/
 
@@ -176,8 +182,7 @@
       const StyleId = this._IdPrefix + '-Style'
 
       let ImageFolder = this._ImageFolder
-      if (ImageFolder.trim() !== '') {
-        if (! ImageFolder.endsWith('/')) { ImageFolder += '/' }
+      if (ImageFolder !== '') {
         newStyle = newStyle.replace(/url\("\/images\//g,'url("'+ImageFolder)
       }
 
@@ -394,6 +399,16 @@
       return Widget
     }
 
+  /**** WidgetInContainer ****/
+
+    public WidgetInContainer (WidgetName:string, Container:Indexable):Indexable|undefined {
+      let WidgetList = Container.WidgetList || []
+      for (let i = 0, l = WidgetList.length; i < l; i++) {
+        if (WidgetList[i].Name === WidgetName) { return WidgetList[i] }
+      }
+      return undefined
+    }
+
   /**** configure (w/o rerendering) ****/
 
     public configure (PropSet:Indexable):void {
@@ -422,6 +437,14 @@
             this.updateWidget(Widget, { [Property]:Value.Updater() })
           }))
         } else {
+          if (ValueIsPlainObject(Value) && (Widget.WidgetList != null)) {
+            const innerWidget = this.WidgetInContainer(Property,Widget)
+            if (innerWidget != null) {
+              this.configureWidget(innerWidget,Value)
+              continue
+            }
+          }
+
           Widget[Property] = Value
         }
       }
@@ -513,9 +536,9 @@
         display:block; position:absolute;
         left:0px; top:0px; right:0px; bottom:0px;
       ">
-        <${PUX_ScreenView} Screen=${openScreenList[0]}/>
+        <${PUX_ScreenView} ProtoUX=${ProtoUX} Screen=${openScreenList[0]}/>
         ${openScreenList.slice(1).map(
-          (Overlay:Indexable) => html`<${PUX_OverlayView} Overlay=${Overlay}/>`
+          (Overlay:Indexable) => html`<${PUX_OverlayView} ProtoUX=${ProtoUX} Overlay=${Overlay}/>`
         )}
       </div>`
     }
@@ -536,7 +559,7 @@
         width:${Width}px; height:${Height}px; ${Style || ''}
       ">
         ${WidgetList.map(
-          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget}/>`
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
         )}
       </div>`
     }
@@ -557,7 +580,7 @@
         width:${Width}px; height:${Height}px; ${Style || ''}
       ">
         ${WidgetList.map(
-          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget}/>`
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
         )}
       </div>`
     }
@@ -578,19 +601,27 @@
       const Widget = PropSet.Widget
       Widget.View = this
 
+      if ((PropSet.hidden == true) || (Widget.hidden == true)) {
+        return ''
+      }
+
       const WidgetView = ProtoUX.WidgetViewForType(Widget.Type)
       if (WidgetView == null) {
         const {
-          Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+          Id, Type,Classes,Style, x,y, Width,Height, Value, hidden,View,
+          WidgetList, ...otherProps
         } = Widget
 
         return html`<div class="PUX Widget ${Classes}" id=${Id} style="
           left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
         " ...${otherProps}>
           ${Value || ''}
+          ${(WidgetList || []).map(
+            (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+          )}
         </div>`
       } else {
-        return html`<${WidgetView} Widget=${Widget}/>`
+        return html`<${WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
       }
     }
   }
@@ -1174,36 +1205,27 @@
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
-        Id, Type,Classes, x,y, Width,Height, Value, View, ...otherProps
+      let {
+        Id, Type,Classes,Style, x,y, Width,Height, Value,Color, View, ...otherProps
       } = Widget
 
+      let PUX = PropSet.ProtoUX, ImageFolder = PUX.ImageFolder
+      if ((Value != null) && (Value.trim() !== '')) {
+        Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
+      }
+
       return html`<div class="PUX Icon Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px
-      "/>
-        <div/>
-      </>`
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+      "><div style="
+        display:block; position:absolute;
+        left:0px; top:0px; width:100%; height:100%;
+        -webkit-mask-image:${Value};         mask-image:${Value};
+        -webkit-mask-size:contain;           mask-size:contain;
+        -webkit-mask-position:center center; mask-position:center center;
+        background-color:${Color || 'black'};
+      "/></>`
     }
   }
   ProtoUX.registerWidgetView('Icon',PUX_Icon)
 
 
-
-/*
-        return html`
-          <style>
-            :host {
-              display:inline-block; position:relative;
-              width:24px; height:24px;
-              font-size:0px; line-height:0px;
-            }
-            div {
-              display:block; position:absolute;
-              left:0px; top:0px; width:100%; height:100%;
-              -webkit-mask-image:url(${Value});    mask-image:url(${Value});
-              -webkit-mask-size:contain;           mask-size:contain;
-              -webkit-mask-position:center center; mask-position:center center;
-              background-color:${Color};
-            }
-          </style>
-*/
