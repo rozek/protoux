@@ -85,6 +85,9 @@
 
   .PUX.TextInput.no-resize > textarea { resize:none }
 
+  .PUX.Tab        { border:none; border-width:0px 0px 4px 0px }
+  .PUX.Tab.active { border-style:solid; border-color:black }
+
   .PUX.horizontalSeparator {
     height:1px; margin:0px; margin-top:7px;
     border:none; border-top:solid 1px black
@@ -512,6 +515,23 @@
 
     public static WidgetViewForType (Name:string):Function|undefined {
       return ProtoUX._WidgetViewRegistry[Name]
+    }
+
+  /**** reactiveTab ****/
+
+    public reactiveTab (ObservableName:string, TabName:string):Indexable {
+      return {
+        active:this.updatedFrom(() => this.observed[ObservableName] === TabName),
+        onClick: () => this.observed[ObservableName] = TabName
+      }
+    }
+
+  /**** reactiveTabPane ****/
+
+    public reactiveTabPane (ObservableName:string, TabName:string):Indexable {
+      return {
+        hidden:this.updatedFrom(() => this.observed[ObservableName] !== TabName)
+      }
     }
   }
 
@@ -1227,5 +1247,30 @@
     }
   }
   ProtoUX.registerWidgetView('Icon',PUX_Icon)
+
+//------------------------------------------------------------------------------
+//--                                 PUX_Tab                                  --
+//------------------------------------------------------------------------------
+
+  class PUX_Tab extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, active,Value, View,
+        WidgetList, ...otherProps
+      } = Widget
+
+      return html`<div class="PUX ${active ? 'active' : ''} Tab Widget ${Classes}" id=${Id} style="
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+      " ...${otherProps}>
+        ${(WidgetList || []).map(
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+        )}
+      </div>`
+    }
+  }
+  ProtoUX.registerWidgetView('Tab',PUX_Tab)
 
 
