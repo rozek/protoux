@@ -625,23 +625,44 @@
         return ''
       }
 
-      const WidgetView = ProtoUX.WidgetViewForType(Widget.Type)
-      if (WidgetView == null) {
-        const {
-          Id, Type,Classes,Style, x,y, Width,Height, Value, hidden,View,
-          WidgetList, ...otherProps
-        } = Widget
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Value, hidden,View,
+        WidgetList, ...otherProps
+      } = Widget
 
-        return html`<div class="PUX Widget ${Classes}" id=${Id} style="
-          left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-        " ...${otherProps}>
-          ${Value || ''}
-          ${(WidgetList || []).map(
-            (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
-          )}
-        </div>`
-      } else {
-        return html`<${WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+      switch (Widget.Type) {
+        case 'Group':                                  // an invisible container
+          return html`<div class="PUX Widget ${Classes}" id=${Id} style="
+            left:${x}px; top:${y}px; width:${Width}px; height:${Height}px
+          " ...${otherProps}>
+            ${(WidgetList || []).map(
+              (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+            )}
+          </div>`
+//      case 'Container':                            // a box with inner widgets
+        case 'Box':                                 // without any inner widgets
+          return html`<div class="PUX Widget ${Classes}" id=${Id} style="
+            left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+          " ...${otherProps}/>`
+        default:                         // default rendering like a "container"
+          const WidgetView = ProtoUX.WidgetViewForType(Widget.Type)
+          if (WidgetView == null) {
+            const {
+              Id, Type,Classes,Style, x,y, Width,Height, Value, hidden,View,
+              WidgetList, ...otherProps
+            } = Widget
+
+            return html`<div class="PUX Widget ${Classes}" id=${Id} style="
+              left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+            " ...${otherProps}>
+              ${Value || ''}
+              ${(WidgetList || []).map(
+                (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+              )}
+            </div>`
+          } else {
+            return html`<${WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+          }
       }
     }
   }
