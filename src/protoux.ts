@@ -79,6 +79,13 @@
 
   .PUX.Icon { width:24px; height:24px }
 
+  .PUX.PseudoDropDown { width:24px; height:24px }
+  .PUX.PseudoDropDown > select {
+    display:block; position:absolute;
+    left:0px; top:0px; right:0px; bottom:0px;
+    opacity:0.01;
+  }
+
   .PUX.Button > button, .PUX.Checkbox > input, .PUX.Radiobutton > input,
   .PUX.Gauge > meter, .PUX.Progressbar > progress, .PUX.Slider > input,
   .PUX.TextlineInput > input, .PUX.PasswordInput > input,
@@ -777,7 +784,7 @@
       } = Widget
 
       return html`<img class="PUX ImageView Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''};
         object-fit:${ImageScaling === 'stretch' ? 'fill ' : ImageScaling};
         object-position:${ImageAlignment};
       " ...${otherProps} src=${Value}/>`
@@ -848,6 +855,46 @@
     }
   }
   ProtoUX.registerWidgetView('Icon',PUX_Icon)
+
+//------------------------------------------------------------------------------
+//--                            PUX_PseudoDropDown                            --
+//------------------------------------------------------------------------------
+
+  class PUX_PseudoDropDown extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      let {
+        Id, Type,Classes,Style, x,y, Width,Height, Value,Color,Options,
+        View, onInput, ...otherProps
+      } = Widget
+
+      let PUX = PropSet.ProtoUX, ImageFolder = PUX.ImageFolder
+      if ((Value != null) && (Value.trim() !== '')) {
+        Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
+      }
+
+      return html`<div class="PUX PseudoDropDown Widget ${Classes}" id=${Id} style="
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+      "><div style="
+        display:block; position:absolute;
+        left:0px; top:0px; width:100%; height:100%;
+        -webkit-mask-image:${Value};         mask-image:${Value};
+        -webkit-mask-size:contain;           mask-size:contain;
+        -webkit-mask-position:center center; mask-position:center center;
+        background-color:${Color || 'black'};
+      " ...${otherProps}/>
+        <select onInput=${onInput}>
+          <option value="" disabled selected>please select</option>
+          ${(Options || []).map(
+            (Option:string) => html`<option>${Option}</>`
+          )}
+        </select>
+      </div>`
+    }
+  }
+  ProtoUX.registerWidgetView('PseudoDropDown',PUX_PseudoDropDown)
 
 //------------------------------------------------------------------------------
 //--                              PUX_Button                               --
