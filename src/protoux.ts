@@ -47,13 +47,37 @@
     text-align:left; text-shadow:none;
   }
 
-  .PUX.Box { background-color:white }
+  .textured { background-image:repeat }
 
-  .PUX.Title    { font-size:20px; font-weight:normal; padding:0px 0px 0px 0px }
-  .PUX.Label    { font-size:14px; font-weight:bold;   padding:4px 0px 0px 0px }
-  .PUX.Textline { font-size:14px; font-weight:normal; padding:4px 0px 0px 0px }
-  .PUX.Text     { font-size:14px; font-weight:normal; padding:2px 0px 0px 0px }
-  .PUX.Hint     { font-size:12px; font-weight:normal; padding:4px 0px 0px 0px }
+  .vertically-centered {
+    display:flex; align-items:center;
+  }
+
+  .disabled            { opacity:0.3 }
+  .readonly            { background:none }
+  .no-pointer-events   { pointer-events:none }
+
+  .scrollable   { overflow:scroll }
+  .scrollable-x { overflow-x:scroll; overflow-y:hidden }
+  .scrollable-y { overflow-x:hidden; overflow-y:scroll }
+
+  .PUX.Box       { background-color:white }
+  .PUX.Container {}
+  .PUX.Group     {}
+
+  .PUX.Title    { font-size:20px; font-weight:normal; padding:0px 0px 0px 0px; text-align:left }
+  .PUX.Subtitle { font-size:16px; font-weight:normal; padding:0px 0px 0px 0px; text-align:left }
+  .PUX.Label    { font-size:14px; font-weight:bold;   padding:4px 0px 0px 0px; text-align:left }
+  .PUX.Textline { font-size:14px; font-weight:normal; padding:4px 0px 0px 0px; text-align:left }
+  .PUX.Hint     { font-size:12px; font-weight:normal; padding:4px 0px 0px 0px; text-align:left }
+  .PUX.Text     { font-size:14px; font-weight:normal; padding:2px 0px 0px 0px; text-aline:justify }
+
+  .PUX.HTMLView  {}
+  .PUX.TextView  {}
+  .PUX.ImageView { object-fit:contain; object-position:center center }
+  .PUX.WebView   {}
+
+  .PUX.Icon { width:24px; height:24px }
 
   .PUX.Button > button, .PUX.Checkbox > input, .PUX.Radiobutton > input,
   .PUX.Gauge > meter, .PUX.Progressbar > progress, .PUX.Slider > input,
@@ -85,9 +109,6 @@
 
   .PUX.TextInput.no-resize > textarea { resize:none }
 
-  .PUX.Tab        { border:none; border-width:0px 0px 4px 0px }
-  .PUX.Tab.active { border-style:solid; border-color:black }
-
   .PUX.horizontalSeparator {
     height:1px; margin:0px; margin-top:7px;
     border:none; border-top:solid 1px black
@@ -97,19 +118,9 @@
     border:none; border-left:solid 1px black
   }
 
-  .disabled            { opacity:0.3 }
-  .readonly            { background:none }
-  .no-pointer-events   { pointer-events:none }
+  .PUX.Tab        { border:none; border-width:0px 0px 4px 0px }
+  .PUX.Tab.active { border-style:solid; border-color:black }
 
-  .vertically-centered {
-    display:flex; align-items:center;
-  }
-
-  .textured { background-image:repeat }
-
-  .scrollable   { overflow:scroll }
-  .scrollable-x { overflow-x:scroll; overflow-y:hidden }
-  .scrollable-y { overflow-x:hidden; overflow-y:scroll }
 
 `
   document.head.appendChild(Stylesheet)
@@ -668,28 +679,6 @@
   }
 
 //------------------------------------------------------------------------------
-//--                               PUX_HTMLView                               --
-//------------------------------------------------------------------------------
-
-  class PUX_HTMLView extends PUX_WidgetView {
-    public render (PropSet:Indexable):any {
-      const Widget = PropSet.Widget
-      Widget.View = this
-
-      const {
-        Id, Type,Classes, x,y, Width,Height, Value, View, ...otherProps
-      } = Widget
-
-      return html`<div class="PUX HTMLView Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px
-      "
-        dangerouslySetInnerHTML=${{__html:Value}}
-      />`
-    }
-  }
-  ProtoUX.registerWidgetView('HTMLView',PUX_HTMLView)
-
-//------------------------------------------------------------------------------
 //--                         PUX_horizontalSeparator                          --
 //------------------------------------------------------------------------------
 
@@ -730,6 +719,137 @@
   ProtoUX.registerWidgetView('verticalSeparator',PUX_verticalSeparator)
 
 //------------------------------------------------------------------------------
+//--                               PUX_HTMLView                               --
+//------------------------------------------------------------------------------
+
+  class PUX_HTMLView extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        WidgetList, ...otherProps
+      } = Widget
+
+      return html`<div class="PUX HTMLView Widget ${Classes}" id=${Id} style="
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+      " ...${otherProps}
+        dangerouslySetInnerHTML=${{__html:Value}}
+      />`
+    }
+  }
+  ProtoUX.registerWidgetView('HTMLView',PUX_HTMLView)
+
+//------------------------------------------------------------------------------
+//--                               PUX_TextView                               --
+//------------------------------------------------------------------------------
+
+  class PUX_TextView extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        WidgetList, ...otherProps
+      } = Widget
+
+      return html`<div class="PUX TextView Widget ${Classes}" id=${Id} style="
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+      " ...${otherProps}>${Value}</>`
+    }
+  }
+  ProtoUX.registerWidgetView('TextView',PUX_TextView)
+
+//------------------------------------------------------------------------------
+//--                              PUX_ImageView                               --
+//------------------------------------------------------------------------------
+
+  class PUX_ImageView extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        ImageScaling, ImageAlignment, WidgetList, ...otherProps
+      } = Widget
+
+      return html`<img class="PUX ImageView Widget ${Classes}" id=${Id} style="
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        object-fit:${ImageScaling === 'stretch' ? 'fill ' : ImageScaling};
+        object-position:${ImageAlignment};
+      " ...${otherProps} src=${Value}/>`
+    }
+  }
+  ProtoUX.registerWidgetView('ImageView',PUX_ImageView)
+
+//------------------------------------------------------------------------------
+//--                               PUX_WebView                                --
+//------------------------------------------------------------------------------
+
+  class PUX_WebView extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        PermissionsPolicy, allowsFullscreen, SandboxPermissions,
+        ReferrerPolicy, WidgetList, ...otherProps
+      } = Widget
+
+      const DefaultSandboxPermissions = (
+        'allow-downloads allow-forms allow-modals allow-orientation-lock ' +
+        'allow-pointer-lock allow-popups allow-same-origin allow-scripts'
+      )
+
+      return html`<iframe class="PUX WebView Widget ${Classes}" id=${Id} style="
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+      " ...${otherProps} src=${Value}
+        allow=${PermissionsPolicy} allowfullscreen=${allowsFullscreen}
+        sandbox=${SandboxPermissions || DefaultSandboxPermissions}
+        referrerpolicy=${ReferrerPolicy}
+      />`
+    }
+  }
+  ProtoUX.registerWidgetView('WebView',PUX_WebView)
+
+//------------------------------------------------------------------------------
+//--                                 PUX_Icon                                 --
+//------------------------------------------------------------------------------
+
+  class PUX_Icon extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      let {
+        Id, Type,Classes,Style, x,y, Width,Height, Value,Color,
+        View, ...otherProps
+      } = Widget
+
+      let PUX = PropSet.ProtoUX, ImageFolder = PUX.ImageFolder
+      if ((Value != null) && (Value.trim() !== '')) {
+        Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
+      }
+
+      return html`<div class="PUX Icon Widget ${Classes}" id=${Id} style="
+        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+      "><div style="
+        display:block; position:absolute;
+        left:0px; top:0px; width:100%; height:100%;
+        -webkit-mask-image:${Value};         mask-image:${Value};
+        -webkit-mask-size:contain;           mask-size:contain;
+        -webkit-mask-position:center center; mask-position:center center;
+        background-color:${Color || 'black'};
+      " ...${otherProps}/></>`
+    }
+  }
+  ProtoUX.registerWidgetView('Icon',PUX_Icon)
+
+//------------------------------------------------------------------------------
 //--                              PUX_Button                               --
 //------------------------------------------------------------------------------
 
@@ -764,10 +884,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      let { checked,indeterminate } = PropSet
+      if (checked       == null) { checked       = (Value == true)}
+      if (indeterminate == null) { indeterminate = (Value == null) }
+
       return html`<div class="PUX Checkbox Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
       ">
-        <input type="checkbox" value=${Value || ''} ...${otherProps}/>
+        <input type="checkbox" checked=${checked} indeterminate=${indeterminate} ...${otherProps}/>
       </div>`
     }
   }
@@ -786,10 +910,13 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      let { checked } = PropSet
+      if (checked == null) { checked = (Value == true)}
+
       return html`<div class="PUX Radiobutton Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
       ">
-        <input type="radio" value=${Value || ''} ...${otherProps}/>
+        <input type="radio" checked=${checked} ...${otherProps}/>
       </div>`
     }
   }
@@ -843,20 +970,37 @@
 //--                                PUX_Slider                                --
 //------------------------------------------------------------------------------
 
+  const HashmarkPattern = /^\s*(\d+(?:[.]\d+)?|\d*[.](?:\d*))(?:\s*:\s*([^\x00-\x1F\x7F-\x9F\u2028\u2029\uFFF9-\uFFFB]+))?$/
+
   class PUX_Slider extends PUX_WidgetView {
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Hashmarks,
+        View, ...otherProps
       } = Widget
+
+      let HashmarkList:any = '', HashmarkId
+      if (Array.isArray(Hashmarks) && (Hashmarks.length > 0)) {
+        HashmarkId = Id + '-Hashmarks'
+
+        HashmarkList = html`\n<datalist id=${HashmarkId}>
+          ${Hashmarks.map((Item:string) => {
+            const Label = Item.replace(/:.*$/,'').trim()
+            const Value = Item.replace(/^[^:]+:/,'').trim()
+
+            return html`<option label=${Label} value=${Value}></option>`
+          })}
+        </datalist>`
+      }
 
       return html`<div class="PUX Slider Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${HashmarkId}>
         <input type="range" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${HashmarkList}`
     }
   }
   ProtoUX.registerWidgetView('Slider',PUX_Slider)
@@ -871,14 +1015,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX TextlineInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="text" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('TextlineInput',PUX_TextlineInput)
@@ -915,14 +1069,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX NumberInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="number" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('NumberInput',PUX_NumberInput)
@@ -937,14 +1101,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX PhoneNumberInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="tel" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('PhoneNumberInput',PUX_PhoneNumberInput)
@@ -959,14 +1133,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX EMailAddressInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="email" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('EMailAddressInput',PUX_EMailAddressInput)
@@ -981,14 +1165,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX URLInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="url" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('URLInput',PUX_URLInput)
@@ -1003,14 +1197,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX TimeInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="time" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('TimeInput',PUX_TimeInput)
@@ -1025,14 +1229,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX DateTimeInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="datetime-local" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('DateTimeInput',PUX_DateTimeInput)
@@ -1047,14 +1261,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX DateInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="date" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('DateInput',PUX_DateInput)
@@ -1069,14 +1293,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX WeekInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="week" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('WeekInput',PUX_WeekInput)
@@ -1091,14 +1325,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX MonthInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="month" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('MonthInput',PUX_MonthInput)
@@ -1113,14 +1357,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX SearchInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
+      " list=${SuggestionId}>
         <input type="search" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('SearchInput',PUX_SearchInput)
@@ -1177,14 +1431,24 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        View, ...otherProps
       } = Widget
+
+      let SuggestionList:any = '', SuggestionId
+      if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
+        SuggestionId = Id + '-Suggestions'
+
+        SuggestionList = html`<datalist id=${SuggestionId}>
+          ${Suggestions.map((Value:string) => html`<option value=${Value}></option>`)}
+        </datalist>`
+      }
 
       return html`<div class="PUX ColorInput Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
-        <input type="color" value=${Value || ''} ...${otherProps}/>
-      </div>`
+      " list=${SuggestionId}>
+        <input type="color" value=${Value || ''} ...${otherProps} />
+      </div>${SuggestionList}`
     }
   }
   ProtoUX.registerWidgetView('ColorInput',PUX_ColorInput)
@@ -1199,13 +1463,18 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value,Options, View, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value,Options, Placeholder,
+        View, ...otherProps
       } = Widget
 
       return html`<div class="PUX DropDown Widget ${Classes}" id=${Id} style="
         left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
       ">
         <select ...${otherProps}>
+          ${Placeholder == null
+            ? ''
+            : html`<option value="" disabled>${Placeholder}</option>`
+          }
           ${(Options || []).map(
             (Option:string) => html`<option selected=${Option === Value}>${Option}</>`
           )}
@@ -1236,38 +1505,6 @@
     }
   }
   ProtoUX.registerWidgetView('TextInput',PUX_TextInput)
-
-//------------------------------------------------------------------------------
-//--                                 PUX_Icon                                 --
-//------------------------------------------------------------------------------
-
-  class PUX_Icon extends PUX_WidgetView {
-    public render (PropSet:Indexable):any {
-      const Widget = PropSet.Widget
-      Widget.View = this
-
-      let {
-        Id, Type,Classes,Style, x,y, Width,Height, Value,Color, View, ...otherProps
-      } = Widget
-
-      let PUX = PropSet.ProtoUX, ImageFolder = PUX.ImageFolder
-      if ((Value != null) && (Value.trim() !== '')) {
-        Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
-      }
-
-      return html`<div class="PUX Icon Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
-      "><div style="
-        display:block; position:absolute;
-        left:0px; top:0px; width:100%; height:100%;
-        -webkit-mask-image:${Value};         mask-image:${Value};
-        -webkit-mask-size:contain;           mask-size:contain;
-        -webkit-mask-position:center center; mask-position:center center;
-        background-color:${Color || 'black'};
-      "/></>`
-    }
-  }
-  ProtoUX.registerWidgetView('Icon',PUX_Icon)
 
 //------------------------------------------------------------------------------
 //--                                 PUX_Tab                                  --
