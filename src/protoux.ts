@@ -262,28 +262,19 @@
       if (padY == null) { padY = padX }
 
       const Screen = this.existingScreenNamed(ScreenName)
+      if (Screen.packedGeometry == null) { return }
 
-      const WidgetList = Screen.WidgetList
-      if (WidgetList.length === 0) { return }
+      let { x,y, Width,Height } = Screen.packedGeometry
+        x -= padX; Width  += 2*padX
+        y -= padY; Height += 2*padY
+      Screen.Width  = Width
+      Screen.Height = Height
 
-      let minX:number = Infinity, maxX:number = 0
-      let minY:number = Infinity, maxY:number = 0
-      WidgetList.forEach((Widget:Indexable) => {
-        let { x,y, Width,Height } = Widget
+      Screen.WidgetList.forEach((Widget:Indexable) => {
+        if (Widget.hidden) { return }
 
-        minX = Math.min(minX,x); maxX = Math.max(maxX,x+Width-1)
-        minY = Math.min(minY,y); maxY = Math.max(maxY,y+Height-1)
-      })
-
-      minX -= padX; maxX += padX
-      minY -= padY; maxY += padY
-
-      Screen.Width  = maxX-minX
-      Screen.Height = maxY-minY
-
-      WidgetList.forEach((Widget:Indexable) => {
-        Widget.x -= minX
-        Widget.y -= minY
+        Widget.x -= x
+        Widget.y -= y
       })
     }
 
@@ -648,11 +639,15 @@
         WidgetList, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       switch (Widget.Type) {
         case 'Group':                                  // an invisible container
-          return html`<div class="PUX Widget ${Classes}" id=${Id} style="
-            left:${x}px; top:${y}px; width:${Width}px; height:${Height}px
-          " ...${otherProps}>
+          return html`<div class="PUX Widget ${Classes}" id=${Id} style="${CSSGeometry}" ...${otherProps}>
             ${(WidgetList || []).map(
               (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
             )}
@@ -660,7 +655,7 @@
 //      case 'Container':                            // a box with inner widgets
         case 'Box':                                 // without any inner widgets
           return html`<div class="PUX Widget ${Classes}" id=${Id} style="
-            left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+            ${Style || ''}; ${CSSGeometry}
           " ...${otherProps}/>`
         default:                         // default rendering like a "container"
           const WidgetView = ProtoUX.WidgetViewForType(Widget.Type)
@@ -671,7 +666,7 @@
             } = Widget
 
             return html`<div class="PUX Widget ${Classes}" id=${Id} style="
-              left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+              ${Style || ''}; ${CSSGeometry}
             " ...${otherProps}>
               ${Value || ''}
               ${(WidgetList || []).map(
@@ -698,8 +693,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX horizontalSeparator Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}/>`
     }
   }
@@ -718,8 +719,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX verticalSeparator Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}/>`
     }
   }
@@ -739,8 +746,14 @@
         WidgetList, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX HTMLView Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}
         dangerouslySetInnerHTML=${{__html:Value}}
       />`
@@ -762,8 +775,14 @@
         WidgetList, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX TextView Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}>${Value}</>`
     }
   }
@@ -783,8 +802,14 @@
         ImageScaling, ImageAlignment, WidgetList, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<img class="PUX ImageView Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''};
+        ${Style || ''}; ${CSSGeometry}
         object-fit:${ImageScaling === 'stretch' ? 'fill ' : ImageScaling};
         object-position:${ImageAlignment};
       " ...${otherProps} src=${Value}/>`
@@ -807,13 +832,19 @@
         ReferrerPolicy, WidgetList, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       const DefaultSandboxPermissions = (
         'allow-downloads allow-forms allow-modals allow-orientation-lock ' +
         'allow-pointer-lock allow-popups allow-same-origin allow-scripts'
       )
 
       return html`<iframe class="PUX WebView Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " ...${otherProps} src=${Value}
         allow=${PermissionsPolicy} allowfullscreen=${allowsFullscreen}
         sandbox=${SandboxPermissions || DefaultSandboxPermissions}
@@ -837,13 +868,19 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let PUX = PropSet.ProtoUX, ImageFolder = PUX.ImageFolder
       if ((Value != null) && (Value.trim() !== '')) {
         Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
       }
 
       return html`<div class="PUX Icon Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       "><div style="
         display:block; position:absolute;
         left:0px; top:0px; width:100%; height:100%;
@@ -870,13 +907,19 @@
         View, onInput, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let PUX = PropSet.ProtoUX, ImageFolder = PUX.ImageFolder
       if ((Value != null) && (Value.trim() !== '')) {
         Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
       }
 
       return html`<div class="PUX PseudoDropDown Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       "><div style="
         display:block; position:absolute;
         left:0px; top:0px; width:100%; height:100%;
@@ -909,8 +952,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX Button Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <button ...${otherProps}>${Value || ''}</button>
       </div>`
@@ -931,12 +980,18 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let { checked,indeterminate } = PropSet
       if (checked       == null) { checked       = (Value == true)}
       if (indeterminate == null) { indeterminate = (Value == null) }
 
       return html`<div class="PUX Checkbox Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <input type="checkbox" checked=${checked} indeterminate=${indeterminate} ...${otherProps}/>
       </div>`
@@ -957,11 +1012,17 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let { checked } = PropSet
       if (checked == null) { checked = (Value == true)}
 
       return html`<div class="PUX Radiobutton Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <input type="radio" checked=${checked} ...${otherProps}/>
       </div>`
@@ -982,8 +1043,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX Gauge Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <meter value=${Value || ''} ...${otherProps}/>
       </div>`
@@ -1004,8 +1071,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX Progressbar Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <progress value=${Value || ''} ...${otherProps}/>
       </div>`
@@ -1029,6 +1102,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let HashmarkList:any = '', HashmarkId
       if (Array.isArray(Hashmarks) && (Hashmarks.length > 0)) {
         HashmarkId = Id + '-Hashmarks'
@@ -1044,7 +1123,7 @@
       }
 
       return html`<div class="PUX Slider Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${HashmarkId}>
         <input type="range" value=${Value || ''} ...${otherProps}/>
       </div>${HashmarkList}`
@@ -1066,6 +1145,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1076,7 +1161,7 @@
       }
 
       return html`<div class="PUX TextlineInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="text" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1097,8 +1182,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX PasswordInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <input type="password" value=${Value || ''} ...${otherProps}/>
       </div>`
@@ -1120,6 +1211,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1130,7 +1227,7 @@
       }
 
       return html`<div class="PUX NumberInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="number" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1152,6 +1249,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1162,7 +1265,7 @@
       }
 
       return html`<div class="PUX PhoneNumberInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="tel" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1184,6 +1287,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1194,7 +1303,7 @@
       }
 
       return html`<div class="PUX EMailAddressInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="email" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1216,6 +1325,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1226,7 +1341,7 @@
       }
 
       return html`<div class="PUX URLInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="url" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1248,6 +1363,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1258,7 +1379,7 @@
       }
 
       return html`<div class="PUX TimeInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="time" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1280,6 +1401,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1290,7 +1417,7 @@
       }
 
       return html`<div class="PUX DateTimeInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="datetime-local" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1312,6 +1439,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1322,7 +1455,7 @@
       }
 
       return html`<div class="PUX DateInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="date" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1344,6 +1477,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1354,7 +1493,7 @@
       }
 
       return html`<div class="PUX WeekInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="week" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1376,6 +1515,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1386,7 +1531,7 @@
       }
 
       return html`<div class="PUX MonthInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="month" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1408,6 +1553,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1418,7 +1569,7 @@
       }
 
       return html`<div class="PUX SearchInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="search" value=${Value || ''} ...${otherProps}/>
       </div>${SuggestionList}`
@@ -1440,6 +1591,12 @@
         Placeholder, onDrop, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       function onDragEnter (Event:Event):void {
         Event.stopPropagation()
         Event.preventDefault()
@@ -1458,7 +1615,7 @@
       }               // nota bene: "files" is now in "Event.dataTransfer.files"
 
       return html`<label class="PUX FileInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " onDragEnter=${onDragEnter} onDragOver=${onDragOver} onDrop=${onFileDrop}>
         <input type="file" style="display:none" ...${otherProps}/>
         ${(Value || '') === '' ? '' : html`<span>${Value}</span>`}
@@ -1482,6 +1639,12 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       let SuggestionList:any = '', SuggestionId
       if (Array.isArray(Suggestions) && (Suggestions.length > 0)) {
         SuggestionId = Id + '-Suggestions'
@@ -1492,7 +1655,7 @@
       }
 
       return html`<div class="PUX ColorInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " list=${SuggestionId}>
         <input type="color" value=${Value || ''} ...${otherProps} />
       </div>${SuggestionList}`
@@ -1514,8 +1677,14 @@
         View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX DropDown Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <select ...${otherProps}>
           ${Placeholder == null
@@ -1544,8 +1713,14 @@
         Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX TextInput Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       ">
         <textarea ...${otherProps}>${Value || ''}</textarea>
       </div>`
@@ -1567,8 +1742,14 @@
         WidgetList, ...otherProps
       } = Widget
 
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
       return html`<div class="PUX ${active ? 'active' : ''} Tab Widget ${Classes}" id=${Id} style="
-        left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; ${Style || ''}
+        ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}>
         ${(WidgetList || []).map(
           (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
