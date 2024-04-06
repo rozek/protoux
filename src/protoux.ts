@@ -726,7 +726,7 @@
       }
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, hidden,View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, hidden,View,
         WidgetList, ...otherProps
       } = Widget
 
@@ -752,7 +752,7 @@
           const WidgetView = ProtoUX.WidgetViewForType(Widget.Type)
           if (WidgetView == null) {
             const {
-              Id, Type,Classes,Style, x,y, Width,Height, Value, hidden,View,
+              Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, hidden,View,
               WidgetList, ...otherProps
             } = Widget
 
@@ -781,7 +781,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -807,7 +807,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -889,7 +889,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
         ImageScaling, ImageAlignment, WidgetList, ...otherProps
       } = Widget
 
@@ -918,7 +918,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
         PermissionsPolicy, allowsFullscreen, SandboxPermissions,
         ReferrerPolicy, WidgetList, ...otherProps
       } = Widget
@@ -955,7 +955,7 @@
       Widget.View = this
 
       let {
-        Id, Type,Classes,Style, x,y, Width,Height, Value,Color,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Color,
         View, ...otherProps
       } = Widget
 
@@ -994,7 +994,7 @@
       Widget.View = this
 
       let {
-        Id, Type,Classes,Style, x,y, Width,Height, Value,Color,Options,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Color,Options,
         View, onInput, ...otherProps
       } = Widget
 
@@ -1040,7 +1040,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1068,7 +1068,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1100,7 +1100,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1131,7 +1131,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1159,7 +1159,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1189,7 +1189,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Hashmarks,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Hashmarks,
         View, ...otherProps
       } = Widget
 
@@ -1232,7 +1232,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1270,7 +1270,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1298,7 +1298,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1336,7 +1336,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1374,7 +1374,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1412,7 +1412,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1450,7 +1450,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1488,7 +1488,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1526,7 +1526,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1564,7 +1564,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1602,7 +1602,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1640,7 +1640,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1678,7 +1678,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
         Placeholder, onDrop, ...otherProps
       } = Widget
 
@@ -1726,7 +1726,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, Suggestions,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
 
@@ -1764,7 +1764,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value,Options, Placeholder,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Options, Placeholder,
         View, ...otherProps
       } = Widget
 
@@ -1801,7 +1801,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1829,7 +1829,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, View,
         WidgetList, ...otherProps
       } = Widget
 
@@ -1866,7 +1866,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value,Expansion, View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Expansion, View,
         WidgetList, ...otherProps
       } = Widget
 
@@ -1911,7 +1911,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
         WidgetList, ...otherProps
       } = Widget
 
@@ -1942,7 +1942,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Value, View, WidgetList, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, WidgetList, ...otherProps
       } = Widget
 
       return html`<div class="PUX Card Widget ${Classes}" id=${Id} style="
@@ -1966,8 +1967,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, active,Value, View,
-        WidgetList, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, active,Value,
+        View, WidgetList, ...otherProps
       } = Widget
 
       const CSSGeometry = (
