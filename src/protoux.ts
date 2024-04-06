@@ -7,7 +7,7 @@
   import {
 //  throwError,
     quoted,
-    ValueIsPlainObject, ValueIsFunction,
+    ValueIsString, ValueIsPlainObject, ValueIsListSatisfying, ValueIsFunction,
     ValidatorForClassifier, acceptNil, rejectNil,
     allowURL,
   } from 'javascript-interface-library'
@@ -125,6 +125,42 @@
     border:none; border-left:solid 1px black
   }
 
+  .PUX.Accordion {
+    display:flex; flex-flow:column nowrap; align-items:stretch;
+    overflow:auto;
+  }
+
+  .PUX.Fold {
+    display:block; position:relative;
+    left:0px; top:0px; width:100%; bottom:auto;
+  }
+
+  .PUX.Fold-Header {
+    display:block; position:relative;
+    width:100%; height:30px; background:#EEEEEE; border:none;
+    border-top:   solid 1px #FFFFFF;
+    border-bottom:solid 1px #AAAAAA;
+  }
+
+  .PUX.Fold-Expander {
+    left:2px; top:2px; width:24px; height:24px;
+  }
+
+  .PUX.Fold-Title {
+    left:30px; top:0px; bottom:0px; right:0px;
+    font-size:14px; font-weight:bold; color:black; line-height:30px;
+  }
+
+  .PUX.Fold-Content {
+    display:block; position:relative;
+    left:0px; top:0px; width:100%; height:auto;
+  }
+  .PUX.Deck {}
+
+  .PUX.Card {
+    left:0px; top:0px; right:0px; bottom:0px; width:auto; height:auto;
+    border:none;
+  }
   .PUX.Tab        { border:none; border-width:0px 0px 4px 0px }
   .PUX.Tab.active { border-style:solid; border-color:black }
 
@@ -419,6 +455,61 @@
         if (WidgetList[i].Name === WidgetName) { return WidgetList[i] }
       }
       return undefined
+    }
+
+  /**** existingWidgetInContainer ****/
+
+    public existingWidgetInContainer (WidgetName:string, Container:Indexable):Indexable {
+      let Widget = this.WidgetInContainer(WidgetName,Container)
+      if (Widget == null) throwError(
+        'NoSuchWidget: could not find widget named ' + quoted(WidgetName)
+      )
+
+      return Widget
+    }
+
+  /**** stuffing ****/
+
+    public stuff (PropSet:Indexable):void {
+      for (let ScreenName in PropSet) {
+        let Screen = this.existingScreenNamed(ScreenName)
+        this.stuffScreen(Screen,PropSet[ScreenName])
+      }
+    }
+
+  /**** stuffScreen  ****/
+
+    public stuffScreen (Screen:Indexable, PropSet:Indexable):void {
+      for (let WidgetName in PropSet) {
+        let Widget = this.existingWidgetOnScreen(WidgetName,Screen)
+        this.stuffWidget(Widget,PropSet[WidgetName])
+      }
+    }
+
+  /**** stuffWidget  ****/
+
+    public stuffWidget (Widget:Indexable, PropSet:Indexable):void {
+      if (this.ValueIsStuff(PropSet)) {
+        const fromScreen = this.existingScreenNamed(PropSet.from)
+        Widget.WidgetList = PropSet.with.map(
+          (WidgetName:string) => this.existingWidgetOnScreen(WidgetName,fromScreen)
+        )
+      } else {
+        for (let Property in PropSet) {
+          const innerWidget = this.existingWidgetInContainer(Property,Widget)
+          this.stuffWidget(innerWidget,PropSet[Property])
+        }
+      }
+    }
+
+  /**** ValueIsStuff  ****/
+
+    public ValueIsStuff (Candidate:any):boolean {
+      return (
+        ValueIsPlainObject(Candidate) &&
+        ValueIsString(Candidate.from) &&
+        ValueIsListSatisfying(Candidate.with,ValueIsString)
+      )
     }
 
   /**** configure (w/o rerendering) ****/
@@ -1727,6 +1818,143 @@
     }
   }
   ProtoUX.registerWidgetView('TextInput',PUX_TextInput)
+
+//------------------------------------------------------------------------------
+//--                              PUX_Accordion                               --
+//------------------------------------------------------------------------------
+
+  class PUX_Accordion extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, View,
+        WidgetList, ...otherProps
+      } = Widget
+
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
+      return html`<div class="PUX Accordion Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}
+      " ...${otherProps}>
+        ${(WidgetList || []).map(
+          (Widget:Indexable) => html`<${PUX_Fold} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+        )}
+      </>`
+    }
+  }
+  ProtoUX.registerWidgetView('Accordion',PUX_Accordion)
+
+//------------------------------------------------------------------------------
+//--                                 PUX_Fold                                 --
+//------------------------------------------------------------------------------
+
+  class PUX_Fold extends PUX_WidgetView {
+    public state:number = 0
+
+    public rerender () {
+      (this as Component).setState(this.state + 1)
+    }
+
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Value,Expansion, View,
+        WidgetList, ...otherProps
+      } = Widget
+
+      const self = this
+      function onClick () {
+        Widget.Expansion = ! Widget.Expansion
+        self.rerender()
+      }
+
+      return html`<div class="PUX Fold Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; left:0px; top:0px; width:100%; height:auto;
+      " ...${otherProps}>
+        <div class="PUX Fold-Header">
+          <img class="PUX Fold-Expander" src=${Expansion
+            ? `${PropSet.ProtoUX._ImageFolder}caret-down.png`
+            : `${PropSet.ProtoUX._ImageFolder}caret-right.png`
+          } onClick=${onClick}
+          />
+          <div class="PUX Fold-Title">${Value}</>
+        </div>
+
+        ${Expansion
+          ? html`<div class="PUX Fold-Content" style="height:${Height}px">
+              ${(WidgetList || []).map(
+                (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+              )}
+            </>`
+          : ''
+        }
+      </>`
+    }
+  }
+  ProtoUX.registerWidgetView('Fold',PUX_Fold)
+
+//------------------------------------------------------------------------------
+//--                                 PUX_Deck                                 --
+//------------------------------------------------------------------------------
+
+  class PUX_Deck extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
+        WidgetList, ...otherProps
+      } = Widget
+
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
+      return html`<div class="PUX Deck Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}
+      " ...${otherProps}>
+        ${(WidgetList || []).map(
+          (Widget:Indexable) => html`<${PUX_Card} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+        )}
+      </>`
+    }
+  }
+  ProtoUX.registerWidgetView('Deck',PUX_Deck)
+
+//------------------------------------------------------------------------------
+//--                                 PUX_Card                                 --
+//------------------------------------------------------------------------------
+
+  class PUX_Card extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, Value, View, WidgetList, ...otherProps
+      } = Widget
+
+      return html`<div class="PUX Card Widget ${Classes}" id=${Id} style="
+        ${Style || ''}
+      " ...${otherProps}>
+        ${(WidgetList || []).map(
+          (Widget:Indexable) => html`<${PUX_Card} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+        )}
+      </>`
+    }
+  }
+  ProtoUX.registerWidgetView('Card',PUX_Card)
 
 //------------------------------------------------------------------------------
 //--                                 PUX_Tab                                  --
