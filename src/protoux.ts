@@ -165,6 +165,21 @@
   .PUX.Tab.active { border-style:solid; border-color:black }
 
 
+
+/**** centered ****/
+
+  .centered {
+    display:block; position:relative;
+    width:100%; height:100%; max-height:240px;
+  }
+
+  .centered > * {
+    display:block; position:absolute;
+    left:50%; top:50%;
+    transform:translate(-55%,-50%);
+    white-space:nowrap;
+  }
+
 `
   document.head.appendChild(Stylesheet)
 
@@ -203,8 +218,8 @@
     private _observed:Indexable     = observe({})
     private _UpdaterList:Function[] = []
 
-    private _StartScreen:Indexable      = {}     // just to satisfy the compiler
-    private _openScreenList:Indexable[] = []
+    private _StartScreen:Indexable = {}          // just to satisfy the compiler
+    private _openScreen:Indexable  = {}                                  // dto.
 
     private _View:PUX_View|undefined
 
@@ -314,49 +329,13 @@
       })
     }
 
-  /**** ScreenIsOverlay ****/
-
-    public ScreenIsOverlay (ScreenName:string):boolean {
-      let Screen = this.existingScreenNamed(ScreenName)
-      return Screen.isOverlay
-    }
-
-  /**** openScreenList ****/
-
-    public get openScreenList ():Indexable[]  { return this._openScreenList.slice() }
-    public set openScreenList (_:Indexable[]) { throwReadOnlyError('openScreenList') }
-
-  /**** ScreenIsOpen ****/
-
-    public ScreenIsOpen (ScreenName:string):boolean {
-      let Screen = this.existingScreenNamed(ScreenName)
-      return (this._openScreenList.indexOf(Screen) >= 0)
-    }
-
   /**** openScreen ****/
 
     public openScreen (ScreenName:string):void {
       let Screen = this.existingScreenNamed(ScreenName)
+      if (this._openScreen === Screen) { return }
 
-      const openScreenList = this._openScreenList
-
-      let ScreenIndex = openScreenList.indexOf(Screen)
-      switch (true) {
-        case (ScreenIndex === 0):
-          return
-        case (ScreenIndex > 0):
-          if (ScreenIndex < openScreenList.length-1) {
-            openScreenList.splice(ScreenIndex,1)
-            openScreenList.push(Screen)
-          } else { return }
-          break
-        default:
-          if (Screen.isOverlay) {
-            openScreenList.push(Screen)
-          } else {
-            this._openScreenList = [Screen]
-          }
-      }
+      this._openScreen = Screen
       this.rerender()
     }
 
@@ -366,27 +345,17 @@
       let Screen = this.ScreenNamed(ScreenName)
       if (Screen == null) { return }
 
-      const openScreenList = this._openScreenList
+      if (this._openScreen !== Screen) { return }
 
-      let ScreenIndex = openScreenList.indexOf(Screen)
-      if (ScreenIndex < 0) { return }
-
-      if (ScreenIndex === 0) {
-        this._openScreenList = [this._StartScreen]
-      } else {
-        openScreenList.splice(ScreenIndex,1)
-      }
+      this._openScreen = this._StartScreen
       this.rerender()
     }
 
-  /**** closeAllOverlays ****/
+  /**** ScreenIsOpen ****/
 
-    public closeAllOverlays ():void {
-      const openScreenList = this._openScreenList
-      if (openScreenList.length > 1) {
-        openScreenList.length = 1
-        this.rerender()
-      }
+    public ScreenIsOpen (ScreenName:string):boolean {
+      let Screen = this.existingScreenNamed(ScreenName)
+      return (this._openScreen === Screen)
     }
 
   /**** startWithScreen ****/
@@ -650,16 +619,13 @@
       let ProtoUX = PropSet.ProtoUX
       ProtoUX['_View'] = this                          // this is a hack, I know
 
-      const openScreenList = ProtoUX.openScreenList
+      const openScreen = ProtoUX._openScreen
 
       return html`<div style="
         display:block; position:absolute;
         left:0px; top:0px; right:0px; bottom:0px;
       ">
-        <${PUX_ScreenView} ProtoUX=${ProtoUX} Screen=${openScreenList[0]}/>
-        ${openScreenList.slice(1).map(
-          (Overlay:Indexable) => html`<${PUX_OverlayView} ProtoUX=${ProtoUX} Overlay=${Overlay}/>`
-        )}
+        <${PUX_ScreenView} ProtoUX=${ProtoUX} Screen=${openScreen}/>
       </div>`
     }
   }
@@ -781,7 +747,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -807,7 +774,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -833,8 +801,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
-        WidgetList, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value,
+        View, WidgetList, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -862,8 +830,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, x,y, Width,Height, Value, View,
-        WidgetList, ...otherProps
+        Id, Type,Classes,Style, x,y, Width,Height, Value,
+        View, WidgetList, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -889,8 +857,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
-        ImageScaling, ImageAlignment, WidgetList, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        ImageScaling, ImageAlignment, WidgetList, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -918,9 +886,9 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
         PermissionsPolicy, allowsFullscreen, SandboxPermissions,
-        ReferrerPolicy, WidgetList, ...otherProps
+        ReferrerPolicy, WidgetList, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -994,8 +962,8 @@
       Widget.View = this
 
       let {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Color,Options,
-        View, onInput, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height,
+        Value,Color,Options, onInput, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1040,7 +1008,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1068,7 +1037,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1100,7 +1070,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1131,7 +1102,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1159,7 +1131,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1829,8 +1802,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, View,
-        WidgetList, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height,
+        View, WidgetList, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1866,8 +1839,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Expansion, View,
-        WidgetList, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Expansion,
+        View, WidgetList, ...otherProps
       } = Widget
 
       const self = this
@@ -1889,7 +1862,9 @@
         </div>
 
         ${Expansion
-          ? html`<div class="PUX Fold-Content" style="height:${Height}px">
+          ? html`<div class="PUX Fold-Content" style="
+            height:${Height}px; border:none;
+          ">
               ${(WidgetList || []).map(
                 (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
               )}
@@ -1911,8 +1886,8 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
-        WidgetList, ...otherProps
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,activeCardIndex,
+        View, WidgetList, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1921,12 +1896,20 @@
         : ''
       )
 
+      const CardIndex   = (
+        activeCardIndex == null
+        ? 0
+        : (activeCardIndex < 0 ? WidgetList.length+activeCardIndex : activeCardIndex)
+      )
+      const activeCard = WidgetList[CardIndex] || WidgetList[0]
+
       return html`<div class="PUX Deck Widget ${Classes}" id=${Id} style="
         ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}>
-        ${(WidgetList || []).map(
-          (Widget:Indexable) => html`<${PUX_Card} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
-        )}
+        ${activeCard == null
+          ? html`<${PUX_centered}><span>(no card)</span></>`
+          : html`<${PUX_Card} Widget=${activeCard} ProtoUX=${PropSet.ProtoUX}/>`
+        }
       </>`
     }
   }
@@ -1947,7 +1930,8 @@
       } = Widget
 
       return html`<div class="PUX Card Widget ${Classes}" id=${Id} style="
-        ${Style || ''}
+        border:none; ${Style || ''};
+        left:0px; top:0px; right:0px; bottom:0px; width:auto; height:auto
       " ...${otherProps}>
         ${(WidgetList || []).map(
           (Widget:Indexable) => html`<${PUX_Card} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
@@ -1987,5 +1971,17 @@
     }
   }
   ProtoUX.registerWidgetView('Tab',PUX_Tab)
+
+//------------------------------------------------------------------------------
+//--                               PUX_centered                               --
+//------------------------------------------------------------------------------
+
+  class PUX_centered extends Component {
+    public render (PropSet:Indexable):any {
+      return html`<div class="centered">
+        ${PropSet.children}
+      </div>`
+    }
+  }
 
 
