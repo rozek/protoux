@@ -161,8 +161,18 @@
     left:0px; top:0px; right:0px; bottom:0px; width:auto; height:auto;
     border:none;
   }
-  .PUX.Tab        { border:none; border-width:0px 0px 4px 0px }
+  .PUX.TabStrip {
+    display:flex; flex-flow:row nowrap; align-items:stretch;
+  }
+
+  .PUX.Tab {
+    display:block; position:relative;
+    left:0px; top:0px; height:100%; width:auto;
+    border:none; border-width:0px 0px 4px 0px;
+  }
   .PUX.Tab.active { border-style:solid; border-color:black }
+
+  .PUX.Tab > * { pointer-events:none }
 
 
 
@@ -1886,7 +1896,7 @@
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,activeCardIndex,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
         View, WidgetList, ...otherProps
       } = Widget
 
@@ -1896,12 +1906,10 @@
         : ''
       )
 
-      const CardIndex   = (
-        activeCardIndex == null
-        ? 0
-        : (activeCardIndex < 0 ? WidgetList.length+activeCardIndex : activeCardIndex)
+      const activeIndex = (
+        Value == null ? 0 : (Value < 0 ? WidgetList.length+Value : Value)
       )
-      const activeCard = WidgetList[CardIndex] || WidgetList[0]
+      const activeCard = WidgetList[activeIndex] || WidgetList[0]
 
       return html`<div class="PUX Deck Widget ${Classes}" id=${Id} style="
         ${Style || ''}; ${CSSGeometry}
@@ -1942,16 +1950,16 @@
   ProtoUX.registerWidgetView('Card',PUX_Card)
 
 //------------------------------------------------------------------------------
-//--                                 PUX_Tab                                  --
+//--                              PUX_TabStrip                               --
 //------------------------------------------------------------------------------
 
-  class PUX_Tab extends PUX_WidgetView {
+  class PUX_TabStrip extends PUX_WidgetView {
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
       const {
-        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, active,Value,
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
         View, WidgetList, ...otherProps
       } = Widget
 
@@ -1961,9 +1969,51 @@
         : ''
       )
 
-      return html`<div class="PUX ${active ? 'active' : ''} Tab Widget ${Classes}" id=${Id} style="
+      const activeIndex = (
+        Value == null ? 0 : (Value < 0 ? WidgetList.length+Value : Value)
+      )
+      const activeTab = WidgetList[activeIndex] || WidgetList[0]
+
+      const self = this as Component
+      function activateTab (Index:number):void {
+        (self.base as HTMLElement).dispatchEvent(new CustomEvent('ValueChange',{ detail:Index }))
+      }
+
+      return html`<div class="PUX TabStrip Widget ${Classes}" id=${Id} style="
         ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}>
+        ${(WidgetList || []).map((Widget:Indexable, Index:number) => html`
+          <${PUX_Tab} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}
+            active=${Widget === activeTab}
+            onClick=${() => activateTab(Index)}
+          />
+        `
+        )}
+      </>`
+    }
+  }
+  ProtoUX.registerWidgetView('TabStrip',PUX_TabStrip)
+
+//------------------------------------------------------------------------------
+//--                                 PUX_Tab                                  --
+//------------------------------------------------------------------------------
+
+  class PUX_Tab extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, WidgetList, ...otherProps
+      } = Widget
+
+      const { active,onClick } = PropSet
+
+      return html`<div class="PUX ${active ? 'active' : ''} Tab Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; width:${Width}px; border:none; border-width:0px 0px 4px 0px;
+        border-style:solid; border-bottom-color:${active ? 'black' : 'transparent'}
+      " ...${otherProps} onClick=${onClick}>
         ${(WidgetList || []).map(
           (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
         )}
