@@ -70,7 +70,7 @@
   .PUX.Label    { font-size:14px; font-weight:bold;   padding:4px 0px 0px 0px; text-align:left }
   .PUX.Textline { font-size:14px; font-weight:normal; padding:4px 0px 0px 0px; text-align:left }
   .PUX.Hint     { font-size:12px; font-weight:normal; padding:4px 0px 0px 0px; text-align:left }
-  .PUX.Text     { font-size:14px; font-weight:normal; padding:2px 0px 0px 0px; text-aline:justify }
+  .PUX.Text     { font-size:14px; font-weight:normal; padding:2px 0px 0px 0px; text-align:justify }
 
   .PUX.HTMLView  {}
   .PUX.TextView  {}
@@ -123,6 +123,21 @@
   .PUX.verticalSeparator {
     width:1px; margin:0px; margin-left:7px;
     border:none; border-left:solid 1px black
+  }
+
+  .PUX.FileDropArea {
+    display:flex; flex-flow:column nowrap;
+      justify-content:center; align-items:center;
+    border:dashed 4px #DDDDDD; border-radius:4px;
+    color:#DDDDDD;
+  }
+
+  .PUX.FileDropArea * { pointer-events:none }
+
+  .PUX.FileDropArea > input[type="file"] {
+    display:block; position:absolute; appearance:none;
+    left:0px; top:0px; right:0px; bottom:0px;
+    opacity:0.01;
   }
 
   .PUX.Accordion {
@@ -596,22 +611,7 @@
       return ProtoUX._WidgetViewRegistry[Name]
     }
 
-  /**** reactiveTab ****/
 
-    public reactiveTab (ObservableName:string, TabName:string):Indexable {
-      return {
-        active:this.updatedFrom(() => this.observed[ObservableName] === TabName),
-        onClick: () => this.observed[ObservableName] = TabName
-      }
-    }
-
-  /**** reactiveTabPane ****/
-
-    public reactiveTabPane (ObservableName:string, TabName:string):Indexable {
-      return {
-        hidden:this.updatedFrom(() => this.observed[ObservableName] !== TabName)
-      }
-    }
   }
 
 //------------------------------------------------------------------------------
@@ -1801,6 +1801,55 @@
     }
   }
   ProtoUX.registerWidgetView('TextInput',PUX_TextInput)
+
+//------------------------------------------------------------------------------
+//--                             PUX_FileDropArea                             --
+//------------------------------------------------------------------------------
+
+  class PUX_FileDropArea extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, onDrop,
+        View, WidgetList, ...otherProps
+      } = Widget
+
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
+      function onDragEnter (Event:Event):void {
+        Event.stopPropagation()
+        Event.preventDefault()
+      }
+
+      function onDragOver (Event:Event):void {
+        Event.stopPropagation()
+        Event.preventDefault()
+      }
+
+      function onFileDrop (Event:Event):void {// leaves "onDrop" free as a Prop.
+        Event.stopPropagation()
+        Event.preventDefault()
+
+        if (typeof onDrop === 'function') { onDrop(Event) }
+      }               // nota bene: "files" is now in "Event.dataTransfer.files"
+
+      return html`<label class="PUX FileDropArea Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}
+      " onDragEnter=${onDragEnter} onDragOver=${onDragOver} onDrop=${onFileDrop}>
+        <input type="file" ...${otherProps}/>
+        ${(WidgetList || []).map(
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+        )}
+      </label>`
+    }
+  }
+  ProtoUX.registerWidgetView('FileDropArea',PUX_FileDropArea)
 
 //------------------------------------------------------------------------------
 //--                              PUX_Accordion                               --
