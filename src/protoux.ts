@@ -7,8 +7,16 @@
   import {
 //  throwError,
     quoted,
-    ValueIsString, ValueIsPlainObject, ValueIsListSatisfying, ValueIsFunction,
+    ValueIsOrdinal,
+    ValueIsString,
+    ValueIsPlainObject,
+    ValueIsListSatisfying,
+    ValueIsFunction,
     ValidatorForClassifier, acceptNil, rejectNil,
+    allowOrdinal,
+    allowTextline,
+    allowListSatisfying,
+    allowFunction,
     allowURL,
   } from 'javascript-interface-library'
 
@@ -125,9 +133,9 @@
     border:none; border-left:solid 1px black
   }
 
-  .PUX.FileDropArea {
+  .PUX.FileDropArea {/*
     display:flex; flex-flow:column nowrap;
-      justify-content:center; align-items:center;
+      justify-content:center; align-items:center;*/
     border:dashed 4px #DDDDDD; border-radius:4px;
     color:#DDDDDD;
   }
@@ -189,6 +197,27 @@
 
   .PUX.Tab > * { pointer-events:none }
 
+  .PUX.FlatListView {
+    display:flex; flex-flow:column nowrap; align-items:stretch;
+    overflow:scroll; overflow-x:auto; overflow-y:scroll;
+  }
+
+  .PUX.FlatListView > div {
+    display:block; position:relative; overflow:hidden;
+    left:0px; top:0px; width:auto; height:22px; line-height:22px;
+    background:none;
+    border:none; border-bottom:solid 1px light-gray;
+    white-space:nowrap; text-overflow:ellipsis;
+    user-select:none;
+  }
+
+  .PUX.FlatListView > div:last-child {
+    border:none; border-bottom:solid 1px transparent;
+  }
+
+  .PUX.FlatListView > div.selected {
+    background:dodgerblue; color:white;
+  }
 
 
 /**** centered ****/
@@ -217,6 +246,7 @@
     } else {
       let namedError = new Error(Match[2])
         namedError.name = Match[1]
+debugger
       throw namedError
     }
   }
@@ -2070,6 +2100,142 @@
     }
   }
   ProtoUX.registerWidgetView('Tab',PUX_Tab)
+
+//------------------------------------------------------------------------------
+//--                             PUX_FlatListView                             --
+//------------------------------------------------------------------------------
+
+  class PUX_FlatListView extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      let {
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height,
+        List, ItemRenderer, Placeholder, selectedIndices, SelectionLimit,
+        onSelectionChange, onItemSelected, onItemDeselected,
+        View, WidgetList, ...otherProps
+      } = Widget
+
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
+      allowFunction            ('list item renderer',ItemRenderer)
+      allowTextline              ('list placeholder',Placeholder)
+      allowListSatisfying('list of selected indices',selectedIndices, ValueIsOrdinal)
+      allowOrdinal                ('selection limit',SelectionLimit)
+      allowFunction     ('selection change callback',onSelectionChange)
+      allowFunction       ('item selection callback',onItemSelected)
+      allowFunction     ('item deselection callback',onItemDeselected)
+
+      if (ItemRenderer    == null) { ItemRenderer    = (Item:any) => html`${Item+''}` }
+      if (Placeholder     == null) { Placeholder     = '(empty)' }
+      if (selectedIndices == null) { selectedIndices = [] }
+      if (SelectionLimit  == null) { SelectionLimit  = 1 }
+
+      const selectedIndexSet:Indexable = Object.create(null)
+        selectedIndices = selectedIndices.filter((selectedIndex:number) => {
+          if (
+            ValueIsOrdinal(selectedIndex) &&
+            (selectedIndex >= 0) && (selectedIndex < List.length) &&
+            ! (selectedIndex in selectedIndexSet)
+          ) {
+            selectedIndexSet[selectedIndex] = true
+            return true
+          } else {
+            return false
+          }
+        })
+      if (selectedIndices.length > SelectionLimit) {
+        const deselectedIndices = selectedIndices.slice(SelectionLimit)
+
+        selectedIndices.length = SelectionLimit
+        if (onSelectionChange != null) {
+          onSelectionChange(selectedIndices)
+        }
+
+        if (onItemDeselected != null) {
+          deselectedIndices.forEach((deselectedIndex:number) => {
+            onItemDeselected(List[deselectedIndex],deselectedIndex)
+          })
+        }
+      }
+
+      function onClick (Event:MouseEvent, Index:number):void {
+        Event.stopImmediatePropagation()
+        Event.preventDefault()
+
+        if (SelectionLimit === 0) { return }
+
+        let SelectionChanged:boolean = false
+        let IndicesToSelect:number[], IndicesToDeselect:number[]
+        if (Event.shiftKey || Event.metaKey) {
+          SelectionChanged = true
+          if (ItemIsSelected(Index)) {
+            IndicesToDeselect = [Index]
+            selectedIndices   = selectedIndices.filter(
+              (selectedIndex:number) => (selectedIndex !== Index)
+            )
+          } else {
+            if (selectedIndices.length === SelectionLimit) {
+              IndicesToDeselect = [selectedIndices.shift()]
+            }
+            IndicesToSelect = [Index]
+            selectedIndices.push(Index)
+          }
+        } else {
+          IndicesToDeselect = selectedIndices.filter(
+            (selectedIndex:number) => (selectedIndex !== Index)
+          )
+          SelectionChanged = ! ItemIsSelected(Index)
+          IndicesToSelect  = (SelectionChanged ? [Index] : [])
+          selectedIndices  = [Index]
+        }
+
+        if (SelectionChanged && (onSelectionChange != null)) {
+          onSelectionChange(selectedIndices)
+        }
+
+// @ts-ignore TS2454 elt's check IF variables were assigned
+        if ((IndicesToDeselect != null) && (onItemDeselected != null)) {
+          IndicesToDeselect.forEach((deselectedIndex:number) => {
+            onItemDeselected(List[deselectedIndex],deselectedIndex)
+          })
+        }
+
+// @ts-ignore TS2454 elt's check IF variables were assigned
+        if ((IndicesToSelect != null) && (onItemSelected != null)) {
+          IndicesToSelect.forEach((selectedIndex:number) => {
+            onItemSelected(List[selectedIndex],selectedIndex)
+          })
+        }
+      }
+
+      function ItemIsSelected (Index:number):boolean {
+        return (Index in selectedIndexSet)
+      }
+
+      return html`<div class="PUX FlatListView Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}
+      " ...${otherProps}>
+        ${
+          List.length === 0
+          ? html`<div class="centered"><span>${Placeholder}</></>`
+          : List.map((Item:any, Index:number) => html`<div
+              class=${ItemIsSelected(Index) ? 'selected' : undefined}
+              dangerouslySetInnerHTML=${{
+                __html:ItemRenderer(Item, Index, ItemIsSelected(Index))
+              }}
+              onClick=${(Event:MouseEvent) => onClick(Event,Index)}
+            />`)
+        }
+      </>`
+    }
+  }
+  ProtoUX.registerWidgetView('FlatListView',PUX_FlatListView)
 
 //------------------------------------------------------------------------------
 //--                               PUX_centered                               --
