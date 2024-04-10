@@ -10,13 +10,14 @@
     ValueIsOrdinal,
     ValueIsString,
     ValueIsPlainObject,
-    ValueIsListSatisfying,
+    ValueIsArray, ValueIsListSatisfying,
     ValueIsFunction,
     ValidatorForClassifier, acceptNil, rejectNil,
     allowOrdinal,
     allowTextline,
-    allowListSatisfying,
-    allowFunction,
+    expectArray, allowListSatisfying,
+    allowFunction, expectFunction,
+    allowOneOf,
     allowURL,
   } from 'javascript-interface-library'
 
@@ -203,7 +204,7 @@
   }
 
   .PUX.FlatListView > div {
-    display:block; position:relative; overflow:hidden;
+    display:block; position:relative; overflow:hidden; flex:0 0 auto;
     left:0px; top:0px; width:auto; height:22px; line-height:22px;
     background:none;
     border:none; border-bottom:solid 1px light-gray;
@@ -218,6 +219,49 @@
   .PUX.FlatListView > div.selected {
     background:dodgerblue; color:white;
   }
+
+
+  .PUX.NestedListView {
+    display:flex; flex-flow:column nowrap; align-items:stretch;
+    overflow:scroll; overflow-x:auto; overflow-y:scroll;
+  }
+
+  .PUX.NestedListView .ItemView {
+    display:flex; flex-flow:column nowrap; align-items:stretch;
+      position:relative; overflow:hidden; flex:0 0 auto;
+    left:0px; top:0px; width:auto; height:auto;
+    background:none; border:none;
+    user-select:none;
+  }
+
+  .PUX.NestedListView .ItemLine {
+    display:flex; flex-flow:row nowrap; align-items:stretch;
+      position:relative; flex:0 0 auto;
+    height:22px; line-height:22px;
+    white-space:nowrap; text-overflow:ellipsis;
+  }
+
+  .PUX.NestedListView .ItemIcon {
+    display:inline-block; position:relative;
+    margin-top:6px; width:14px; height:10px;
+    pointer-events:none;
+  }
+
+  .PUX.NestedListView .ItemExpander {
+    display:inline-block; position:relative;
+    margin-top:4px; width:14px; height:14px;
+    pointer-events:auto;
+  }
+
+  .PUX.NestedListView .ItemLabel {
+    display:inline-block; position:relative; flex:1 0 auto;
+    pointer-events:none;
+  }
+
+  .PUX.NestedListView .ItemLine.selected > .ItemLabel {
+    background:dodgerblue; color:white;
+  }
+
 
 
 /**** centered ****/
@@ -2123,6 +2167,7 @@ debugger
         : ''
       )
 
+      expectArray                       ('item list',List)
       allowFunction            ('list item renderer',ItemRenderer)
       allowTextline              ('list placeholder',Placeholder)
       allowListSatisfying('list of selected indices',selectedIndices, ValueIsOrdinal)
@@ -2236,6 +2281,269 @@ debugger
     }
   }
   ProtoUX.registerWidgetView('FlatListView',PUX_FlatListView)
+
+//------------------------------------------------------------------------------
+//--                             PUX_NestedListView                             --
+//------------------------------------------------------------------------------
+
+  class PUX_NestedListView extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      let {
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height,
+        List, ItemRenderer, Placeholder, LabelOfItem, ContentListOfItem,
+        selectedPaths, SelectionLimit, SelectionMode,
+        onSelectionChange, onItemSelected, onItemDeselected,
+        expandedPaths, Indentation,
+        onExpansionChange, onItemExpanded, onItemCollapsed,
+        View, WidgetList, ...otherProps
+      } = Widget
+
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
+      function ValueIsOrdinalList (Value:any):boolean {
+        return ValueIsListSatisfying(Value,ValueIsOrdinal)
+      }
+
+      expectArray                     ('item list',List)
+      allowFunction          ('list item renderer',ItemRenderer)
+      allowTextline            ('list placeholder',Placeholder)
+      expectFunction  ('label extraction function',LabelOfItem)
+      expectFunction('content extraction function',ContentListOfItem)
+      allowListSatisfying('list of selected paths',selectedPaths, ValueIsOrdinalList)
+      allowOrdinal              ('selection limit',SelectionLimit)
+      allowOneOf                 ('selection mode',SelectionMode, ['same-container','any-container'])
+      allowFunction   ('selection change callback',onSelectionChange)
+      allowFunction     ('item selection callback',onItemSelected)
+      allowFunction   ('item deselection callback',onItemDeselected)
+      allowListSatisfying('list of expanded paths',expandedPaths, ValueIsOrdinalList)
+      allowOrdinal                  ('indentation',Indentation)
+      allowFunction   ('expansion change callback',onExpansionChange)
+      allowFunction     ('item expansion callback',onItemExpanded)
+      allowFunction      ('item collapse callback',onItemCollapsed)
+
+      function DefaultRenderer (Item:any, Path:number[]):any {
+        return html`<div class="ItemLabel">${LabelOfItem(Item)}</div>`
+      }
+
+      if (ItemRenderer   == null) { ItemRenderer   = DefaultRenderer }
+      if (Placeholder    == null) { Placeholder    = '(empty)' }
+      if (selectedPaths  == null) { selectedPaths  = [] }
+      if (SelectionLimit == null) { SelectionLimit = 1 }
+      if (SelectionMode  == null) { SelectionMode  = 'same-container' }
+      if (expandedPaths  == null) { expandedPaths  = [] }
+      if (Indentation    == null) { Indentation    = 10 }
+
+      function ItemAtPath (Path:number[]):any {
+        let Item:any = List[Path[0]]
+          for (let i = 1, l = Path.length; i < l; i++) {
+            if (Item == null) { return undefined }
+
+            const ContentList = ContentListOfItem(Item)
+            if (! ValueIsArray(ContentList)) { return undefined }
+
+            Item = ContentList[Path[i]]
+          }
+        return Item
+      }
+
+      function ItemAtPathExists (Path:number[]):boolean {
+        return (ItemAtPath(Path) != null)
+      }
+
+      function PathsAreEqual (PathA:number[],PathB:number[]):boolean {
+        return (
+          (PathA.length === PathB.length) &&
+          PathA.every((Item,Index) => Item === PathB[Index])
+        )
+      }
+
+      function IndexOfPathIn (Path:number[],PathList:number[][]):number {
+        for (let i = 0, l = PathList.length; i < l; i++) {
+          if (PathsAreEqual(Path,PathList[i])) { return i }
+        }
+        return -1
+      }
+
+      function ItemInContainer (ItemPath:number[],ContainerPath:number[]):boolean {
+        return (
+          (ItemPath.length === ContainerPath.length+1) &&
+          PathsAreEqual(ItemPath.slice(0,ContainerPath.length),ContainerPath)
+        )
+      }
+
+      function ItemNotInContainer (ItemPath:number[],ContainerPath:number[]):boolean {
+        return (
+          (ItemPath.length !== ContainerPath.length+1) ||
+          ! PathsAreEqual(ItemPath.slice(0,ContainerPath.length),ContainerPath)
+        )
+      }
+
+      function ItemIsSelected (Path:number[]):boolean { return (IndexOfPathIn(Path,selectedPaths) >= 0) }
+      function ItemIsExpanded (Path:number[]):boolean { return (IndexOfPathIn(Path,expandedPaths) >= 0) }
+
+      selectedPaths = selectedPaths.filter(
+        (Path:number[]) => ItemAtPathExists(Path)
+      )
+
+      selectedPaths = selectedPaths.filter((Path:number[], Index:number) => (
+        IndexOfPathIn(Path,selectedPaths) === Index
+      ))
+
+      if ((selectedPaths.length > 1) && (SelectionMode === 'same-container')) {
+        const ContainerPath = selectedPaths[0].slice(0,selectedPaths[0].length-1)
+        selectedPaths = selectedPaths.filter((Path:number[]) => (
+          ItemInContainer(Path,ContainerPath)
+        ))
+      }
+
+      expandedPaths = expandedPaths.filter(
+        (Path:number[]) => ItemAtPathExists(Path)
+      )
+
+      expandedPaths = expandedPaths.filter((Path:number[], Index:number) => (
+        IndexOfPathIn(Path,expandedPaths) === Index
+      ))
+
+      function processSelectionClick (
+        Event:MouseEvent, Item:any, ItemPath:number[]
+      ):void {
+        Event.stopImmediatePropagation()
+        Event.preventDefault()
+
+        if (SelectionLimit === 0) { return }
+
+        let SelectionChanged:boolean = false
+        let PathsToSelect:number[][], PathsToDeselect:number[][]
+
+        if (Event.shiftKey || Event.metaKey) {
+          SelectionChanged = true
+          if (ItemIsSelected(ItemPath)) {
+            PathsToDeselect = [ItemPath]
+            selectedPaths   = selectedPaths.filter(
+              (Path:number[]) => ! PathsAreEqual(ItemPath,Path)
+            )
+          } else {
+            const ContainerPath = ItemPath.slice(0,ItemPath.length-1)
+            PathsToDeselect = selectedPaths.filter((Path:number[]) => (
+              ! ItemInContainer(Path,ContainerPath)
+            ))
+            selectedPaths = selectedPaths.filter((Path:number[]) => (
+              ItemInContainer(Path,ContainerPath)
+            ))
+
+            if (selectedPaths.length === SelectionLimit) {
+              PathsToDeselect.push([selectedPaths.shift()])
+            }
+            PathsToSelect = [ItemPath]
+            selectedPaths.push(ItemPath)
+          }
+        } else {
+          PathsToDeselect = selectedPaths.filter(
+            (Path:number[]) => ! PathsAreEqual(ItemPath,Path)
+          )
+          SelectionChanged = ! ItemIsSelected(ItemPath)
+          PathsToSelect    = (SelectionChanged ? [ItemPath] : [])
+          selectedPaths    = [ItemPath]
+        }
+
+        if (SelectionChanged && (onSelectionChange != null)) {
+          onSelectionChange(selectedPaths)
+        }
+
+// @ts-ignore TS2454 elt's check IF variables were assigned
+        if ((PathsToDeselect != null) && (onItemDeselected != null)) {
+          PathsToDeselect.forEach((Path:number[]) => {
+            onItemDeselected(ItemAtPath(Path),Path)
+          })
+        }
+
+// @ts-ignore TS2454 elt's check IF variables were assigned
+        if ((PathsToSelect != null) && (onItemSelected != null)) {
+          PathsToSelect.forEach((Path:number[]) => {
+            onItemSelected(ItemAtPath(Path),Path)
+          })
+        }
+      }
+
+      function processExpansionClick (Event:MouseEvent, Item:any, Path:number[]):void {
+        Event.stopImmediatePropagation()
+        Event.preventDefault()
+
+        let ExpansionIndex = IndexOfPathIn(Path,expandedPaths)
+        if (ExpansionIndex < 0) {
+          expandedPaths.push(Path)
+        } else {
+          expandedPaths.splice(ExpansionIndex,1)
+        }
+
+        if (onExpansionChange != null) {
+          onExpansionChange(expandedPaths)
+        }
+
+        if (ExpansionIndex < 0) {
+          if (onItemExpanded  != null) { onItemExpanded(Item,Path) }
+        } else {
+          if (onItemCollapsed != null) { onItemCollapsed(Item,Path) }
+        }
+      }
+
+      function renderedItem (Item:any, Path:number[]):any {
+        const Offset = (Path.length-1) * Indentation
+
+        const isSelected = ItemIsSelected(Path)
+        const isExpanded = ItemIsExpanded(Path)
+
+        let ContentList = ContentListOfItem(Item)
+        if (! ValueIsArray(ContentList)) { ContentList = [] }
+
+        const hasContent = (ContentList.length > 0)
+
+        function onSelectionClick (Event:MouseEvent) {
+          processSelectionClick(Event, Item,Path)
+        }
+
+        function onExpansionClick (Event:MouseEvent) {
+          processExpansionClick(Event, Item,Path)
+        }
+
+        return html`<div class="ItemView" style="padding-left:${Offset}px">
+          <div class="ItemLine ${isSelected ? 'selected' : ''}" onClick=${onSelectionClick}>
+            ${hasContent
+              ? (isExpanded
+                  ? html`<img class="ItemExpander" src="/svg/icons/caret-down.svg"  onClick=${onExpansionClick}/>`
+                  : html`<img class="ItemExpander" src="/svg/icons/caret-right.svg" onClick=${onExpansionClick}/>`
+                )
+              : html`<img class="ItemIcon" src="/svg/icons/circle.svg"/>`
+            } ${ItemRenderer(Item,Path)}
+          </div>
+          ${hasContent && isExpanded
+            ? ContentList.map((Item:any, Index:number) => renderedItem(Item,Path.concat(Index)))
+            : ''
+          }
+        </div>`
+      }
+
+
+
+      return html`<div class="PUX NestedListView Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}
+      " ...${otherProps}>
+        ${
+          List.length === 0
+          ? html`<div class="centered"><span>${Placeholder}</></>`
+          : List.map((Item:any, Index:number) => renderedItem(Item,[Index]))
+        }
+      </>`
+    }
+  }
+  ProtoUX.registerWidgetView('NestedListView',PUX_NestedListView)
 
 //------------------------------------------------------------------------------
 //--                               PUX_centered                               --
