@@ -279,6 +279,7 @@
     display:block; position:absolute; overflow:hidden;
     left:0px; top:0px; right:0px; height:30px;
     background:#EEEEEE; border:none; border-radius:3px 3px 0px 0px;
+    user-select:none;
   }
 
   .PUX.Dialog > .Titlebar > .Title, .PUX.ResizableDialog > .Titlebar > .Title {
@@ -286,12 +287,41 @@
     left:6px; top:3px; right:30px; height:18px;
     border:none;
     font-weight:bold; color:black;
+    user-select:none; pointer-events:none;
   }
 
   .PUX.Dialog > .Titlebar > .CloseButton, .PUX.ResizableDialog > .Titlebar > .CloseButton {
     display:block; position:absolute;
     top:0px; right:0px; width:30px; height:30px;
     border:none;
+    user-select:none;
+  }
+
+  .PUX.ResizableDialog > .ContentPane {
+    display:block; position:absolute;
+    left:0px; top:0px; right:0px; bottom:9px;
+    border:none;
+  }
+
+  .PUX.ResizableDialog > .leftResizer {
+    display:block; position:absolute;
+    left:0px; bottom:0px; width:30px; height:9px;
+    border:none; border-top:solid 1px black; border-right:solid 1px black;
+    border-radius:0px 0px 0px 3px;
+  }
+
+  .PUX.ResizableDialog > .middleResizer {
+    display:block; position:absolute;
+    left:30px; bottom:0px; right:30px; height:9px;
+    border:none; border-top:solid 1px black;
+    border-radius:0px;
+  }
+
+  .PUX.ResizableDialog > .rightResizer {
+    display:block; position:absolute;
+    bottom:0px; right:0px; width:30px; height:9px;
+    border:none; border-left:solid 1px black; border-top:solid 1px black;
+    border-radius:0px 0px 3px 0px;
   }
 
 
@@ -1282,6 +1312,21 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_DialogView extends Component {
+    public render (PropSet:Indexable):any {
+      const Dialog = PropSet.Dialog
+      if (Dialog.Type === 'ResizableDialog') {
+        return html`<${PUX_ResizableDialogView} Dialog=${Dialog} ProtoUX=${PropSet.ProtoUX}/>`
+      } else {
+        return html`<${PUX_StandardDialogView}  Dialog=${Dialog} ProtoUX=${PropSet.ProtoUX}/>`
+      }
+    }
+  }
+
+//------------------------------------------------------------------------------
+//--                          PUX_StandardDialogView                          --
+//------------------------------------------------------------------------------
+
+  class PUX_StandardDialogView extends Component {
     public state:Indexable = { Value:0 }
 
     public rerender () {
@@ -1292,16 +1337,16 @@ debugger
       const Dialog = PropSet.Dialog
       Dialog.View = this
 
-      const moveDialog = (x:number,y:number) => {
-        Dialog.x = x-Dialog._DragOffset.x
-        Dialog.y = y-Dialog._DragOffset.y
+      const moveDialog = (x:number,y:number, dx:number,dy:number) => {
+        Dialog.x = Dialog._DragOffset.x + dx
+        Dialog.y = Dialog._DragOffset.y + dy
         Dialog.z = 1000                 // brings dialog to front while dragging
         PropSet.ProtoUX.View.rerender()
 //      this.rerender() // does not seem to work for any reason
       }
 
-      const moveDialogAndFinish = (x:number,y:number) => {
-        moveDialog(x,y)
+      const moveDialogAndFinish = (x:number,y:number, dx:number,dy:number) => {
+        moveDialog(x,y, dx,dy)
         Dialog.z = 0
         PropSet.ProtoUX.bringDialogToFront(Dialog.Name)
       }
@@ -1309,9 +1354,9 @@ debugger
       const DragRecognizer = DragRecognizerFor(Dialog, {
         neverFrom:      '.CloseButton',
         Threshold:      4,
-        onDragStarted:  (x:number,y:number,dx:number,dy:number) => {
-          Dialog._DragOffset = { x:x-dx-Dialog.x, y:y-dy-Dialog.y }
-          moveDialog(x,y)
+        onDragStarted:  (x:number,y:number, dx:number,dy:number) => {
+          Dialog._DragOffset = { x:Dialog.x, y:Dialog.y }
+          moveDialog(x,y, dx,dy)
         },
         onDragContinued: moveDialog,
         onDragFinished:  moveDialogAndFinish,
@@ -1358,12 +1403,73 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_ResizableDialogView extends Component {
+    public state:Indexable = { Value:0 }
+
+    public rerender () {
+      (this as Component).setState({ Value:this.state.Value+1 })
+    }
+
     public render (PropSet:Indexable):any {
       const Dialog = PropSet.Dialog
       Dialog.View = this
 
+      const handleDrag = (x:number,y:number, dx:number,dy:number) => {
+        if (Dialog._DragMode === 'drag') {
+          moveDialog(dx,dy)
+        } else {
+          resizeDialog(dx,dy)
+        }
+        Dialog.z = 1000                 // brings dialog to front while dragging
+        PropSet.ProtoUX.View.rerender()
+//      this.rerender() // does not seem to work for any reason
+      }
+
+      const handleDragAndFinish = (x:number,y:number, dx:number,dy:number) => {
+        handleDrag(x,y, dx,dy)
+        Dialog.z = 0
+        PropSet.ProtoUX.bringDialogToFront(Dialog.Name)
+      }
+
+      const moveDialog = (dx:number,dy:number) => {
+        Dialog.x = Dialog._DragOffset.x + dx
+        Dialog.y = Dialog._DragOffset.y + dy
+      }
+
+      const resizeDialog = (dx:number,dy:number) => {
+        switch (Dialog._DragMode) {
+          case 'resize-sw': Dialog.x     = Dialog._DragOffset.x + dx
+                            Dialog.Width = Dialog._DragOffset.Width - dx
+                            break
+          case 'resize-se': Dialog.Width = Dialog._DragOffset.Width + dx
+        }
+        Dialog.Height = Dialog._DragOffset.Height + dy
+      }
+
+      const DragRecognizer = DragRecognizerFor(Dialog, {
+        onlyFrom:       '.Titlebar,.leftResizer,.middleResizer,.rightResizer',
+        neverFrom:      '.CloseButton',
+        Threshold:      4,
+        onDragStarted:  (x:number,y:number, dx:number,dy:number, Event:PointerEvent) => {
+          let ClassList = (Event.target as HTMLElement).classList; Dialog._DragMode = undefined
+          switch (true) {
+            case ClassList.contains('leftResizer'):   Dialog._DragMode = 'resize-sw'; break
+            case ClassList.contains('middleResizer'): Dialog._DragMode = 'resize-s';  break
+            case ClassList.contains('rightResizer'):  Dialog._DragMode = 'resize-se'; break
+            default:                                  Dialog._DragMode = 'drag'
+          }
+          Dialog._DragOffset = {
+            x:Dialog.x, Width:Dialog.Width,
+            y:Dialog.y, Height:Dialog.Height
+          }
+          handleDrag(x,y, dx,dy)
+        },
+        onDragContinued: handleDrag,
+        onDragFinished:  handleDragAndFinish,
+        onDragCancelled: handleDragAndFinish,
+      })
+
       const {
-        Id, Classes,Style, x,y, Width,Height, Value,
+        Id, Classes,Style, x,y,z, Width,Height, Title,
         View, WidgetList, ...otherProps
       } = Dialog
 
@@ -1371,12 +1477,43 @@ debugger
         `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
       )
 
-      return html`<div class="PUX Dialog ${Classes}" id=${Id} style="
-        ${Style || ''}; ${CSSGeometry}
+      function onClose (Event:MouseEvent) {
+        Event.stopImmediatePropagation()
+        Event.preventDefault()
+
+        PropSet.ProtoUX.closeDialog(Dialog.Name)
+      }
+
+      return html`<div class="PUX ResizableDialog ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}; z-index:${z || 0};
       " ...${otherProps}>
-        ${(WidgetList || []).map(
-          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
-        )}
+        <div class="ContentPane">
+          ${(WidgetList || []).map(
+            (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
+          )}
+        </div>
+
+        <div class="Titlebar"
+          onPointerDown=${DragRecognizer} onPointerUp=${DragRecognizer}
+          onPointerMove=${DragRecognizer} onPointerCancel=${DragRecognizer}
+        >
+          <div class="Title">${Title}</div>
+          <img class="CloseButton" src="${PropSet.ProtoUX._ImageFolder}/xmark.png"
+            onClick=${onClose}/>
+        </div>
+
+        <div class="leftResizer"
+          onPointerDown=${DragRecognizer} onPointerUp=${DragRecognizer}
+          onPointerMove=${DragRecognizer} onPointerCancel=${DragRecognizer}
+        />
+        <div class="middleResizer"
+          onPointerDown=${DragRecognizer} onPointerUp=${DragRecognizer}
+          onPointerMove=${DragRecognizer} onPointerCancel=${DragRecognizer}
+        />
+        <div class="rightResizer"
+          onPointerDown=${DragRecognizer} onPointerUp=${DragRecognizer}
+          onPointerMove=${DragRecognizer} onPointerCancel=${DragRecognizer}
+        />
       </>`
     }
   }
