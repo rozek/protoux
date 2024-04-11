@@ -8,7 +8,7 @@
 //  throwError,
     quoted,
     ValueIsOrdinal,
-    ValueIsString,
+    ValueIsString, ValueIsNonEmptyString,
     ValueIsPlainObject,
     ValueIsArray, ValueIsListSatisfying,
     ValueIsFunction,
@@ -262,6 +262,38 @@
     background:dodgerblue; color:white;
   }
 
+  .PUX.ModalLayer {
+    display:block; position:absolute;
+    background:rgba(0,0,0,0.3); border:none;
+  }
+
+
+  .PUX.Dialog, .PUX.ResizableDialog {
+    display:block; position:absolute;
+    border:solid 1px #000000; border-radius:4px;
+    background:white; color:black;
+    box-shadow:0px 0px 10px 0px rgba(0,0,0,0.3);
+  }
+
+  .PUX.Dialog > .Titlebar, .PUX.ResizableDialog > .Titlebar {
+    display:block; position:absolute; overflow:hidden;
+    left:0px; top:0px; right:0px; height:30px;
+    background:#EEEEEE; border:none; border-radius:3px 3px 0px 0px;
+  }
+
+  .PUX.Dialog > .Titlebar > .Title, .PUX.ResizableDialog > .Titlebar > .Title {
+    display:block; position:absolute;
+    left:6px; top:3px; right:30px; height:18px;
+    border:none;
+    font-weight:bold; color:black;
+  }
+
+  .PUX.Dialog > .Titlebar > .CloseButton, .PUX.ResizableDialog > .Titlebar > .CloseButton {
+    display:block; position:absolute;
+    top:0px; right:0px; width:30px; height:30px;
+    border:none;
+  }
+
 
 
 /**** centered ****/
@@ -304,6 +336,283 @@ debugger
     )
   }
 
+/**** DragRecognizerFor ****/
+
+  const DragRecognizerForWidget:WeakMap<Indexable,Function> = new WeakMap()
+
+  function DragRecognizerFor (Widget:Indexable, OptionSet:Indexable):Function {
+    let DragRecognizer = DragRecognizerForWidget.get(Widget)
+    if (DragRecognizer != null) { return DragRecognizer }
+
+    function DummyCallback () {}
+
+    function consumeEvent (Event:Event):void {
+      Event.stopImmediatePropagation()
+      Event.preventDefault()
+    }
+
+    let {
+      onlyFrom, neverFrom, Threshold = 0, consumingEvent = true,
+      onDragStarted  = DummyCallback, onDragContinued = DummyCallback,
+      onDragFinished = DummyCallback, onDragCancelled = DummyCallback
+    } = OptionSet
+
+    let State = 'idle'                       // one of 'idle','observing','busy'
+    let x0:number,y0:number
+
+  /**** PointerEvent Handlers ****/
+
+    function onPointerDown (Event:PointerEvent):void {
+      if (onlyFrom != null) {
+        if (
+          (onlyFrom instanceof HTMLElement) && (onlyFrom !== Event.target) ||
+          (typeof onlyFrom === 'string') && ! (Event.target as HTMLElement).matches(onlyFrom)
+        ) { return }
+      }
+
+      if (neverFrom != null) {
+        if (
+          (neverFrom instanceof HTMLElement) && (neverFrom === Event.target) ||
+          (typeof neverFrom === 'string') && (Event.target as HTMLElement).matches(neverFrom)
+        ) { return }
+      }
+
+      if (Event.button === 0) {
+        (Event.target as HTMLElement).setPointerCapture(Event.pointerId)
+        if (State === 'idle') {
+          ;({ pageX:x0, pageY:y0 } = Event)
+          if (Threshold > 0) {
+            State = 'observing'    // wait for actual movement to start dragging
+          } else {
+            startDragging(Event)
+          }
+        }
+      } else {
+        if (State === 'busy') { abortDragging(Event) }
+      }
+    }
+
+    function onPointerMove (Event:PointerEvent):void {
+      if (State === 'observing') {                     // before actual dragging
+        let { pageX:x,pageY:y } = Event
+        if ((x0-x)**2 + (y0-y)**2 >= Threshold**2) { startDragging(Event) }
+      } else {
+        if (State === 'busy') { continueDragging(Event) }
+      }
+    }
+
+    function onPointerUp (Event:PointerEvent):void {
+      if (State === 'busy') { finishDragging(Event) } else { State = 'idle' }
+    } // no need to releasePointerCapture
+
+    function onPointerCancel (Event:PointerEvent):void {
+      if (State === 'busy') { abortDragging(Event) } else { State = 'idle' }
+    } // no need to releasePointerCapture
+
+  /**** State Transitions ****/
+
+    function startDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      State = 'busy'
+      let { pageX:x,pageY:y } = Event
+      onDragStarted(
+        Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
+      )
+    }
+
+    function continueDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      let { pageX:x,pageY:y } = Event
+      onDragContinued(
+        Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
+      )
+    }
+
+    function finishDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      State = 'idle'
+      let { pageX:x,pageY:y } = Event
+      onDragFinished(
+        Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
+      )
+    }
+
+    function abortDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      if (State !== 'busy') { return }
+
+      State = 'idle';
+      (Event.target as HTMLElement).releasePointerCapture(Event.pointerId) // if called from ext.
+      onDragCancelled(Math.round(x0),Math.round(y0), 0,0, Event)
+    }
+
+  /**** return generic callback ****/
+
+    DragRecognizer = function (Event:PointerEvent):void {
+      switch (Event.type) {
+        case 'pointerdown':  return onPointerDown(Event)
+        case 'pointermove':  return onPointerMove(Event)
+        case 'pointerup':    return onPointerUp(Event)
+        case 'pointercancel':return onPointerCancel(Event)
+      }
+    }
+// @ts-ignore TS2339 allow assignment
+      DragRecognizer.abortDragging = abortDragging        // externally callable
+    DragRecognizerForWidget.set(Widget,DragRecognizer)
+
+    return DragRecognizer
+  }
+
+/**** DragClickRecognizerFor ****/
+
+  const DragClickRecognizerForWidget:WeakMap<Indexable,Function> = new WeakMap()
+
+  function DragClickRecognizerFor (Widget:Indexable, OptionSet:Indexable):Function {
+    let DragClickRecognizer = DragClickRecognizerForWidget.get(Widget)
+    if (DragClickRecognizer != null) { return DragClickRecognizer }
+
+    function DummyCallback () {}
+
+    function consumeEvent (Event:Event):void {
+      Event.stopImmediatePropagation()
+      Event.preventDefault()
+    }
+
+    let {
+      onlyFrom, neverFrom, Threshold = 0, consumingEvent = true,
+      onDragStarted  = DummyCallback, onDragContinued = DummyCallback,
+      onDragFinished = DummyCallback, onDragCancelled = DummyCallback,
+      onClicked = DummyCallback,
+      MultiClickTimeSpan = 300, onMultiClick = DummyCallback
+    } = OptionSet
+
+    let State = 'idle'                       // one of 'idle','observing','busy'
+    let x0:number,y0:number
+    let lastClickTime = 0, lastClickType = 0
+
+  /**** PointerEvent Handlers ****/
+
+    function onPointerDown (Event:PointerEvent):void {
+      if (onlyFrom != null) {
+        if (
+          (onlyFrom instanceof HTMLElement) && (onlyFrom !== Event.target) ||
+          (typeof onlyFrom === 'string') && ! (Event.target as HTMLElement).matches(onlyFrom)
+        ) { return }
+      }
+
+      if (neverFrom != null) {
+        if (
+          (neverFrom instanceof HTMLElement) && (neverFrom === Event.target) ||
+          (typeof neverFrom === 'string') && (Event.target as HTMLElement).matches(neverFrom)
+        ) { return }
+      }
+
+      if (Event.button === 0) {
+        (Event.target as HTMLElement).setPointerCapture(Event.pointerId)
+        if (State === 'idle') {
+          ;({ pageX:x0, pageY:y0 } = Event)
+          if (Threshold > 0) {
+            State = 'observing'    // wait for actual movement to start dragging
+          } else {
+            startDragging(Event)
+          }
+        }
+      } else {
+        if (State === 'busy') { abortDragging(Event) }
+      }
+    }
+
+    function onPointerMove (Event:PointerEvent):void {
+      if (State === 'busy')      { continueDragging(Event) }
+      if (State === 'observing') {                     // before actual dragging
+        let { pageX:x,pageY:y } = Event
+        if ((x0-x)**2 + (y0-y)**2 >= Threshold**2) { startDragging(Event) }
+      }
+    }
+
+    function onPointerUp (Event:PointerEvent):void {
+      if (State === 'busy')      { finishDragging(Event) }
+      if (State === 'observing') {
+        State = 'idle'
+        onClicked(x0,y0, Event)
+
+        let now = Date.now()
+        if (now-lastClickTime < MultiClickTimeSpan) {
+          lastClickType += 1
+          if (lastClickType > 1) { onMultiClick(lastClickType, x0,y0, Event) }
+        } else {
+          lastClickType = 1
+        }
+        lastClickTime = now
+      }
+    } // no need to releasePointerCapture
+
+    function onPointerCancel (Event:PointerEvent):void {
+      if (State === 'busy') { abortDragging(Event) } else { State = 'idle' }
+    } // no need to releasePointerCapture
+
+  /**** State Transitions ****/
+
+    function startDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      State = 'busy'
+      let { pageX:x,pageY:y } = Event
+      onDragStarted(
+        Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
+      )
+    }
+
+    function continueDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      let { pageX:x,pageY:y } = Event
+      onDragContinued(
+        Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
+      )
+    }
+
+    function finishDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      State = 'idle'
+      let { pageX:x,pageY:y } = Event
+      onDragFinished(
+        Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
+      )
+    }
+
+    function abortDragging (Event:PointerEvent):void {
+      if (consumingEvent) { consumeEvent(Event) }
+
+      if (State !== 'busy') { return }
+
+      State = 'idle';
+      (Event.target as HTMLElement).releasePointerCapture(Event.pointerId) // if called from ext.
+      onDragCancelled(Math.round(x0),Math.round(y0), 0,0, Event)
+    }
+
+  /**** return generic callback ****/
+
+    DragClickRecognizer = function (Event:PointerEvent):void {
+      switch (Event.type) {
+        case 'pointerdown':  return onPointerDown(Event)
+        case 'pointermove':  return onPointerMove(Event)
+        case 'pointerup':    return onPointerUp(Event)
+        case 'pointercancel':return onPointerCancel(Event)
+      }
+    }
+// @ts-ignore TS2339 allow assignment
+      DragClickRecognizer.abortDragging = abortDragging   // externally callable
+    DragClickRecognizerForWidget.set(Widget,DragClickRecognizer)
+
+    return DragClickRecognizer
+  }
+
 //------------------------------------------------------------------------------
 //--                                 ProtoUX                                  --
 //------------------------------------------------------------------------------
@@ -314,11 +623,13 @@ debugger
     private _ImageFolder:string = ''
 
     private _ScreenSet:Indexable    = {}         // just to satisfy the compiler
+    private _DialogSet:Indexable    = {}                                 // dto.
     private _observed:Indexable     = observe({})
     private _UpdaterList:Function[] = []
 
-    private _StartScreen:Indexable = {}          // just to satisfy the compiler
-    private _openScreen:Indexable  = {}                                  // dto.
+    private _StartScreen:Indexable   = {}        // just to satisfy the compiler
+    private _openScreen:Indexable    = {}                                // dto.
+    private _openDialogs:Indexable[] = []
 
     private _View:PUX_View|undefined
 
@@ -396,7 +707,7 @@ debugger
   /**** existingScreenNamed ****/
 
     public existingScreenNamed (ScreenName:string):Indexable {
-      let Screen = this._ScreenSet[ScreenName]
+      const Screen = this._ScreenSet[ScreenName]
       if (Screen == null) throwError(
         'NoSuchScreen: a screen named ' + quoted(ScreenName) + ' does not exist'
       )
@@ -431,7 +742,7 @@ debugger
   /**** openScreen ****/
 
     public openScreen (ScreenName:string):void {
-      let Screen = this.existingScreenNamed(ScreenName)
+      const Screen = this.existingScreenNamed(ScreenName)
       if (this._openScreen === Screen) { return }
 
       this._openScreen = Screen
@@ -441,7 +752,7 @@ debugger
   /**** closeScreen ****/
 
     public closeScreen (ScreenName:string):void {
-      let Screen = this.ScreenNamed(ScreenName)
+      const Screen = this.ScreenNamed(ScreenName)
       if (Screen == null) { return }
 
       if (this._openScreen !== Screen) { return }
@@ -453,7 +764,7 @@ debugger
   /**** ScreenIsOpen ****/
 
     public ScreenIsOpen (ScreenName:string):boolean {
-      let Screen = this.existingScreenNamed(ScreenName)
+      const Screen = this.existingScreenNamed(ScreenName)
       return (this._openScreen === Screen)
     }
 
@@ -469,12 +780,114 @@ debugger
     public get StartScreen ():Indexable  { return this._StartScreen }
     public set StartScreen (_:Indexable) { throwReadOnlyError('StartScreen') }
 
+  /**** extractAllDialogs ****/
+
+    public extractAllDialogs ():void {
+      for (let ScreenName in this._ScreenSet) {
+        const WidgetList = this._ScreenSet[ScreenName].WidgetList
+        for (let i = WidgetList.length-1; i >= 0; i--) {
+          const Widget = WidgetList[i]
+          if ((Widget.Type === 'Dialog') || (Widget.Type === 'ResizableDialog')) {
+            if (! ValueIsNonEmptyString(Widget.Name)) {
+              console.error('Dialog without name in screen "' + ScreenName + '"')
+              continue
+            }
+
+            if (Widget.Name in this._DialogSet) {
+              console.error('a dialog with name "' + Widget.Name + '" has already been registered')
+              continue
+            }
+
+            this._DialogSet[Widget.Name] = Widget
+            delete WidgetList[i]
+          }
+        }
+      }
+    }
+
+  /**** DialogNamed ****/
+
+    public DialogNamed (DialogName:string):Indexable|undefined {
+      return this._DialogSet[DialogName]
+    }
+
+  /**** existingDialogNamed ****/
+
+    public existingDialogNamed (DialogName:string):Indexable {
+      const Dialog = this._DialogSet[DialogName]
+      if (Dialog == null) throwError(
+        'NoSuchDialog: a dialog named ' + quoted(DialogName) + ' does not exist'
+      )
+
+      return Dialog
+    }
+
+  /**** openDialog ****/
+
+    public openDialog (DialogName:string):void {
+      const Dialog = this.existingDialogNamed(DialogName)
+
+      const DialogIndex = this._openDialogs.indexOf(Dialog)
+      if (DialogIndex >= 0) {
+        if (DialogIndex === this._openDialogs.length-1) { return }
+        this._openDialogs.splice(DialogIndex,1)
+      }
+
+      this._openDialogs.push(Dialog)
+      this.rerender()
+    }
+
+  /**** closeDialog ****/
+
+    public closeDialog (DialogName:string):void {
+      let Dialog = this.DialogNamed(DialogName)
+      if (Dialog == null) { return }
+
+      const DialogIndex = this._openDialogs.indexOf(Dialog)
+      if (DialogIndex < 0) { return }
+
+      this._openDialogs.splice(DialogIndex,1)
+      this.rerender()
+    }
+
+  /**** DialogIsOpen ****/
+
+    public DialogIsOpen (DialogName:string):boolean {
+      let Dialog = this.existingDialogNamed(DialogName)
+      return (this._openDialogs.indexOf(Dialog) >= 0)
+    }
+
+  /**** openDialogs ****/
+
+    public get openDialogs ():Indexable[]  { return this._openDialogs.slice() }
+    public set openDialogs (_:Indexable[]) { throwReadOnlyError('openDialogs') }
+
+  /**** closeAllDialogs ****/
+
+    public closeAllDialogs ():void {
+      this._openDialogs.length = 0
+      this.rerender()
+    }
+
+  /**** DialogIsFrontMost ****/
+
+    public DialogIsFrontMost (DialogName:string):boolean {
+      let Dialog = this.existingDialogNamed(DialogName)
+      return (this._openDialogs.indexOf(Dialog) === this._openDialogs.length-1)
+    }
+
+  /**** bringDialogToFront ****/
+
+    public bringDialogToFront (DialogName:string):void {
+      this.openDialog(DialogName)
+    }
+
   /**** WidgetNamed ****/
 
     public WidgetNamed (WidgetName:string):Indexable|undefined {
       const ScreenSet = this._ScreenSet
       for (let ScreenName in ScreenSet) {
-        let WidgetList = ScreenSet[ScreenName].WidgetList
+        const WidgetList = ScreenSet[ScreenName].WidgetList
         for (let i = 0, l = WidgetList.length; i < l; i++) {
           if (WidgetList[i].Name === WidgetName) { return WidgetList[i] }
         }
@@ -485,7 +898,7 @@ debugger
   /**** existingWidgetNamed ****/
 
     public existingWidgetNamed (WidgetName:string):Indexable {
-      let Widget = this.WidgetNamed(WidgetName)
+      const Widget = this.WidgetNamed(WidgetName)
       if (Widget == null) throwError(
         'NoSuchWidget: a widget named ' + quoted(WidgetName) + ' does not exist'
       )
@@ -493,22 +906,36 @@ debugger
       return Widget
     }
 
-  /**** WidgetOnScreen ****/
+  /**** WidgetOnScreen/Dialog ****/
 
     public WidgetOnScreen (WidgetName:string, Screen:Indexable):Indexable|undefined {
-      let WidgetList = Screen.WidgetList
+      const WidgetList = Screen.WidgetList || []
       for (let i = 0, l = WidgetList.length; i < l; i++) {
         if (WidgetList[i].Name === WidgetName) { return WidgetList[i] }
       }
       return undefined
     }
 
-  /**** existingWidgetOnScreen ****/
+    public WidgetOnDialog (WidgetName:string, Dialog:Indexable):Indexable|undefined {
+      return this.WidgetOnScreen(WidgetName,Dialog)            // keeps code DRY
+    }
+
+  /**** existingWidgetOnScreen/Dialog ****/
 
     public existingWidgetOnScreen (WidgetName:string, Screen:Indexable):Indexable {
-      let Widget = this.WidgetOnScreen(WidgetName,Screen)
+      const Widget = this.WidgetOnScreen(WidgetName,Screen)
       if (Widget == null) throwError(
         'NoSuchWidget: screen ' + quoted(Screen.Name) + ' does not contain ' +
+        'a widget named ' + quoted(WidgetName)
+      )
+
+      return Widget
+    }
+
+    public existingWidgetOnDialog (WidgetName:string, Dialog:Indexable):Indexable {
+      const Widget = this.WidgetOnDialog(WidgetName,Dialog)
+      if (Widget == null) throwError(
+        'NoSuchWidget: dialog ' + quoted(Dialog.Name) + ' does not contain ' +
         'a widget named ' + quoted(WidgetName)
       )
 
@@ -518,7 +945,7 @@ debugger
   /**** WidgetInContainer ****/
 
     public WidgetInContainer (WidgetName:string, Container:Indexable):Indexable|undefined {
-      let WidgetList = Container.WidgetList || []
+      const WidgetList = Container.WidgetList || []
       for (let i = 0, l = WidgetList.length; i < l; i++) {
         if (WidgetList[i].Name === WidgetName) { return WidgetList[i] }
       }
@@ -528,7 +955,7 @@ debugger
   /**** existingWidgetInContainer ****/
 
     public existingWidgetInContainer (WidgetName:string, Container:Indexable):Indexable {
-      let Widget = this.WidgetInContainer(WidgetName,Container)
+      const Widget = this.WidgetInContainer(WidgetName,Container)
       if (Widget == null) throwError(
         'NoSuchWidget: could not find widget named ' + quoted(WidgetName)
       )
@@ -539,13 +966,26 @@ debugger
   /**** stuffing ****/
 
     public stuff (PropSet:Indexable):void {
-      for (let ScreenName in PropSet) {
-        let Screen = this.existingScreenNamed(ScreenName)
-        this.stuffScreen(Screen,PropSet[ScreenName])
+      for (let Name in PropSet) {
+        const Screen = this.ScreenNamed(Name)
+        if (Screen != null) {
+          this.stuffScreen(Screen,PropSet[Name])
+          continue
+        }
+
+        const Dialog = this.DialogNamed(Name)
+        if (Dialog != null) {
+          this.stuffDialog(Dialog,PropSet[Name])
+          continue
+        }
+
+        throwError(
+          'NoSuchScreenOrDialog: no screen or dialog named ' + quoted(Name) + ' found'
+        )
       }
     }
 
-  /**** stuffScreen  ****/
+  /**** stuffScreen ****/
 
     public stuffScreen (Screen:Indexable, PropSet:Indexable):void {
       for (let WidgetName in PropSet) {
@@ -554,7 +994,16 @@ debugger
       }
     }
 
-  /**** stuffWidget  ****/
+  /**** stuffDialog ****/
+
+    public stuffDialog (Dialog:Indexable, PropSet:Indexable):void {
+      for (let WidgetName in PropSet) {
+        let Widget = this.existingWidgetOnDialog(WidgetName,Dialog)
+        this.stuffWidget(Widget,PropSet[WidgetName])
+      }
+    }
+
+  /**** stuffWidget ****/
 
     public stuffWidget (Widget:Indexable, PropSet:Indexable):void {
       if (this.ValueIsStuff(PropSet)) {
@@ -570,7 +1019,7 @@ debugger
       }
     }
 
-  /**** ValueIsStuff  ****/
+  /**** ValueIsStuff ****/
 
     public ValueIsStuff (Candidate:any):boolean {
       return (
@@ -583,18 +1032,48 @@ debugger
   /**** configure (w/o rerendering) ****/
 
     public configure (PropSet:Indexable):void {
-      for (let ScreenName in PropSet) {
-        let Screen = this.existingScreenNamed(ScreenName)
-        this.configureScreen(Screen,PropSet[ScreenName])
+      for (let Name in PropSet) {
+        const Screen = this.ScreenNamed(Name)
+        if (Screen != null) {
+          this.configureScreen(Screen,PropSet[Name])
+          continue
+        }
+
+        const Dialog = this.DialogNamed(Name)
+        if (Dialog != null) {
+          this.configureDialog(Dialog,PropSet[Name])
+          continue
+        }
+
+        throwError(
+          'NoSuchScreenOrDialog: no screen or dialog named ' + quoted(Name) + ' found'
+        )
       }
     }
 
   /**** configureScreen (w/o rerendering) ****/
 
     public configureScreen (Screen:Indexable, PropSet:Indexable):void {
-      for (let WidgetName in PropSet) {
-        let Widget = this.existingWidgetOnScreen(WidgetName,Screen)
-        this.configureWidget(Widget,PropSet[WidgetName])
+      for (let Name in PropSet) {
+        if (Name === 'self') {
+          this.configureWidget(Screen,PropSet.self)
+        } else {
+          const Widget = this.existingWidgetOnScreen(Name,Screen)
+          this.configureWidget(Widget,PropSet[Name])
+        }
+      }
+    }
+
+  /**** configureDialog (w/o rerendering) ****/
+
+    public configureDialog (Dialog:Indexable, PropSet:Indexable):void {
+      for (let Name in PropSet) {
+        if (Name === 'self') {
+          this.configureWidget(Dialog,PropSet.self)
+        } else {
+          const Widget = this.existingWidgetOnDialog(Name,Dialog)
+          this.configureWidget(Widget,PropSet[Name])
+        }
       }
     }
 
@@ -624,18 +1103,48 @@ debugger
   /**** update (w/ rerendering) ****/
 
     public update (PropSet:Indexable):void {
-      for (let ScreenName in PropSet) {
-        let Screen = this.existingScreenNamed(ScreenName)
-        this.updateScreen(Screen,PropSet[ScreenName])
+      for (let Name in PropSet) {
+        const Screen = this.ScreenNamed(Name)
+        if (Screen != null) {
+          this.updateScreen(Screen,PropSet[Name])
+          continue
+        }
+
+        const Dialog = this.DialogNamed(Name)
+        if (Dialog != null) {
+          this.updateDialog(Dialog,PropSet[Name])
+          continue
+        }
+
+        throwError(
+          'NoSuchScreenOrDialog: no screen or dialog named ' + quoted(Name) + ' found'
+        )
       }
     }
 
   /**** updateScreen (w/o rerendering) ****/
 
     public updateScreen (Screen:Indexable, PropSet:Indexable):void {
-      for (let WidgetName in PropSet) {
-        let Widget = this.existingWidgetOnScreen(WidgetName,Screen)
-        this.updateWidget(Widget,PropSet[WidgetName])
+      for (let Name in PropSet) {
+        if (Name === 'self') {
+          this.updateWidget(Screen,PropSet.self)
+        } else {
+          const Widget = this.existingWidgetOnScreen(Name,Screen)
+          this.updateWidget(Widget,PropSet[Name])
+        }
+      }
+    }
+
+  /**** updateDialog (w/o rerendering) ****/
+
+    public updateDialog (Dialog:Indexable, PropSet:Indexable):void {
+      for (let Name in PropSet) {
+        if (Name === 'self') {
+          this.updateWidget(Dialog,PropSet.self)
+        } else {
+          const Widget = this.existingWidgetOnDialog(Name,Dialog)
+          this.updateWidget(Widget,PropSet[Name])
+        }
       }
     }
 
@@ -646,7 +1155,7 @@ debugger
         Widget[Property] = PropSet[Property]
       }
 
-      let View = Widget.View
+      const View = Widget.View
       if (View != null) { View.rerender() }
     }
 
@@ -693,10 +1202,10 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_View extends Component {
-    public state:number = 0
+    public state:Indexable = { Value:0 }
 
     public rerender () {
-      (this as Component).setState(this.state + 1)
+      (this as Component).setState({ Value:this.state.Value+1 })
     }
 
     public render (PropSet:Indexable):any {
@@ -705,11 +1214,23 @@ debugger
 
       const openScreen = ProtoUX._openScreen
 
+      const openDialogs      = ProtoUX._openDialogs.slice()
+      const frontmostDialog  = openDialogs.pop()
+      const frontmostIsModal = (frontmostDialog?.isModal == true)
+
       return html`<div style="
         display:block; position:absolute;
         left:0px; top:0px; right:0px; bottom:0px;
       ">
         <${PUX_ScreenView} ProtoUX=${ProtoUX} Screen=${openScreen}/>
+        ${openDialogs.map((Dialog:Indexable) => {
+          return html`<${PUX_DialogView} ProtoUX=${ProtoUX} Dialog=${Dialog} key=${Dialog.Name}/>`
+        })}
+        ${frontmostIsModal ? html`<${PUX_ModalLayer}/>` : ''}
+        ${frontmostDialog == null
+          ? ''
+          : html`<${PUX_DialogView} ProtoUX=${ProtoUX} Dialog=${frontmostDialog} key=${frontmostDialog.Name}/>`
+        }
       </div>`
     }
   }
@@ -729,30 +1250,134 @@ debugger
         width:${Width}px; height:${Height}px; ${Style || ''}
       ">
         ${WidgetList.map(
-          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
         )}
       </div>`
     }
   }
 
 //------------------------------------------------------------------------------
-//--                             PUX_OverlayView                              --
+//--                             PUX_ModalLayer                             --
 //------------------------------------------------------------------------------
 
-  class PUX_OverlayView extends Component {
+  class PUX_ModalLayer extends Component {
     public render (PropSet:Indexable):any {
-      const Overlay = PropSet.Overlay
-      Overlay['View'] = this                           // this is a hack, I know
+      const { Style } = PropSet
 
-      const { Id, Classes,Style, Width,Height, WidgetList } = Overlay
+      function onClick (Event:MouseEvent):void {
+        Event.stopImmediatePropagation()
+        Event.preventDefault()
+      }
 
-      return html`<div class="PUX Overlay ${Classes}" id=${Id} style="
-        width:${Width}px; height:${Height}px; ${Style || ''}
-      ">
-        ${WidgetList.map(
-          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+      return html`<div class="PUX ModalLayer" style="
+        ${Style || ''};
+        display:block; position:absolute;
+        left:0px; top:0px; right:0px; bottom:0px;
+      " onClick=${onClick}/>`
+    }
+  }
+
+//------------------------------------------------------------------------------
+//--                              PUX_DialogView                              --
+//------------------------------------------------------------------------------
+
+  class PUX_DialogView extends Component {
+    public state:Indexable = { Value:0 }
+
+    public rerender () {
+      (this as Component).setState({ Value:this.state.Value+1 })
+    }
+
+    public render (PropSet:Indexable):any {
+      const Dialog = PropSet.Dialog
+      Dialog.View = this
+
+      const moveDialog = (x:number,y:number) => {
+        Dialog.x = x-Dialog._DragOffset.x
+        Dialog.y = y-Dialog._DragOffset.y
+        Dialog.z = 1000                 // brings dialog to front while dragging
+        PropSet.ProtoUX.View.rerender()
+//      this.rerender() // does not seem to work for any reason
+      }
+
+      const moveDialogAndFinish = (x:number,y:number) => {
+        moveDialog(x,y)
+        Dialog.z = 0
+        PropSet.ProtoUX.bringDialogToFront(Dialog.Name)
+      }
+
+      const DragRecognizer = DragRecognizerFor(Dialog, {
+        neverFrom:      '.CloseButton',
+        Threshold:      4,
+        onDragStarted:  (x:number,y:number,dx:number,dy:number) => {
+          Dialog._DragOffset = { x:x-dx-Dialog.x, y:y-dy-Dialog.y }
+          moveDialog(x,y)
+        },
+        onDragContinued: moveDialog,
+        onDragFinished:  moveDialogAndFinish,
+        onDragCancelled: moveDialogAndFinish,
+      })
+
+      const {
+        Id, Classes,Style, x,y,z, Width,Height, Title,
+        View, WidgetList, ...otherProps
+      } = Dialog
+
+      const CSSGeometry = (
+        `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+      )
+
+      function onClose (Event:MouseEvent) {
+        Event.stopImmediatePropagation()
+        Event.preventDefault()
+
+        PropSet.ProtoUX.closeDialog(Dialog.Name)
+      }
+
+      return html`<div class="PUX Dialog ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}; z-index:${z || 0};
+      " ...${otherProps}>
+        <div class="Titlebar"
+          onPointerDown=${DragRecognizer} onPointerUp=${DragRecognizer}
+          onPointerMove=${DragRecognizer} onPointerCancel=${DragRecognizer}
+        >
+          <div class="Title">${Title}</div>
+          <img class="CloseButton" src="${PropSet.ProtoUX._ImageFolder}/xmark.png"
+            onClick=${onClose}/>
+        </div>
+
+        ${(WidgetList || []).map(
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
         )}
-      </div>`
+      </>`
+    }
+  }
+
+//------------------------------------------------------------------------------
+//--                         PUX_ResizableDialogView                          --
+//------------------------------------------------------------------------------
+
+  class PUX_ResizableDialogView extends Component {
+    public render (PropSet:Indexable):any {
+      const Dialog = PropSet.Dialog
+      Dialog.View = this
+
+      const {
+        Id, Classes,Style, x,y, Width,Height, Value,
+        View, WidgetList, ...otherProps
+      } = Dialog
+
+      const CSSGeometry = (
+        `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+      )
+
+      return html`<div class="PUX Dialog ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}
+      " ...${otherProps}>
+        ${(WidgetList || []).map(
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
+        )}
+      </>`
     }
   }
 
@@ -761,10 +1386,10 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_WidgetView extends Component {
-    public state:number = 0
+    public state:Indexable = { Value:0 }
 
     public rerender () {
-      (this as Component).setState(this.state + 1)
+      (this as Component).setState({ Value:this.state.Value+1 })
     }
 
     public render (PropSet:Indexable):any {
@@ -790,14 +1415,14 @@ debugger
         case 'Group':                                  // an invisible container
           return html`<div class="PUX Widget ${Classes}" id=${Id} style="${CSSGeometry}" ...${otherProps}>
             ${(WidgetList || []).map(
-              (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+              (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
             )}
           </div>`
 //      case 'Container':                            // a box with inner widgets
         case 'Box':                                 // without any inner widgets
           return html`<div class="PUX Widget ${Classes}" id=${Id} style="
             ${Style || ''}; ${CSSGeometry}
-          " ...${otherProps}/>`
+          " ...${otherProps} key=${Widget.Name}/>`
         default:                         // default rendering like a "container"
           const WidgetView = ProtoUX.WidgetViewForType(Widget.Type)
           if (WidgetView == null) {
@@ -811,11 +1436,11 @@ debugger
             " ...${otherProps}>
               ${Value || ''}
               ${(WidgetList || []).map(
-                (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+                (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
               )}
             </div>`
           } else {
-            return html`<${WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+            return html`<${WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX} key=${Widget.Name}/>`
           }
       }
     }
@@ -1961,12 +2586,6 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_Fold extends PUX_WidgetView {
-    public state:number = 0
-
-    public rerender () {
-      (this as Component).setState(this.state + 1)
-    }
-
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
@@ -1996,8 +2615,8 @@ debugger
 
         ${Expansion
           ? html`<div class="PUX Fold-Content" style="
-            height:${Height}px; border:none;
-          ">
+              height:${Height}px; border:none;
+            ">
               ${(WidgetList || []).map(
                 (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
               )}
@@ -2065,7 +2684,7 @@ debugger
         left:0px; top:0px; right:0px; bottom:0px; width:auto; height:auto
       " ...${otherProps}>
         ${(WidgetList || []).map(
-          (Widget:Indexable) => html`<${PUX_Card} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
+          (Widget:Indexable) => html`<${PUX_WidgetView} Widget=${Widget} ProtoUX=${PropSet.ProtoUX}/>`
         )}
       </>`
     }
