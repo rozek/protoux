@@ -1413,6 +1413,27 @@ debugger
       const Dialog = PropSet.Dialog
       Dialog.View = this
 
+      let {
+        Id, Classes,Style, x,y,z, Width,Height, Title,
+        minWidth, minHeight, maxWidth, maxHeight,
+        View, WidgetList, ...otherProps
+      } = Dialog
+
+      allowOrdinal('minimal width', minWidth)
+      allowOrdinal('maximal width', maxWidth)
+      allowOrdinal('minimal height',minHeight)
+      allowOrdinal('maximal height',maxHeight)
+
+      if (minWidth  == null) { minWidth  = 120 }
+      if (maxWidth  == null) { maxWidth  = Infinity }
+      if (minHeight == null) { minHeight = 80 }
+      if (maxHeight == null) { maxHeight = Infinity }
+
+      minWidth  = Math.max(0,minWidth)
+      maxWidth  = Math.max(minWidth,maxWidth)
+      minHeight = Math.max(0,minHeight)
+      maxHeight = Math.max(minHeight,maxHeight)
+
       const handleDrag = (x:number,y:number, dx:number,dy:number) => {
         if (Dialog._DragMode === 'drag') {
           moveDialog(dx,dy)
@@ -1437,12 +1458,16 @@ debugger
 
       const resizeDialog = (dx:number,dy:number) => {
         switch (Dialog._DragMode) {
-          case 'resize-sw': Dialog.x     = Dialog._DragOffset.x + dx
-                            Dialog.Width = Dialog._DragOffset.Width - dx
-                            break
-          case 'resize-se': Dialog.Width = Dialog._DragOffset.Width + dx
+          case 'resize-sw':
+            let newWidth =  Math.max(minWidth,Math.min(Dialog._DragOffset.Width - dx,maxWidth))
+              dx = newWidth - Dialog._DragOffset.Width
+            Dialog.x     = Dialog._DragOffset.x     - dx
+            Dialog.Width = Dialog._DragOffset.Width + dx
+            break
+          case 'resize-se':
+            Dialog.Width = Math.max(minWidth,Math.min(Dialog._DragOffset.Width + dx,maxWidth))
         }
-        Dialog.Height = Dialog._DragOffset.Height + dy
+        Dialog.Height = Math.max(minHeight,Math.min(Dialog._DragOffset.Height + dy,maxHeight))
       }
 
       const DragRecognizer = DragRecognizerFor(Dialog, {
@@ -1468,21 +1493,16 @@ debugger
         onDragCancelled: handleDragAndFinish,
       })
 
-      const {
-        Id, Classes,Style, x,y,z, Width,Height, Title,
-        View, WidgetList, ...otherProps
-      } = Dialog
-
-      const CSSGeometry = (
-        `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
-      )
-
       function onClose (Event:MouseEvent) {
         Event.stopImmediatePropagation()
         Event.preventDefault()
 
         PropSet.ProtoUX.closeDialog(Dialog.Name)
       }
+
+      const CSSGeometry = (
+        `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+      )
 
       return html`<div class="PUX ResizableDialog ${Classes}" id=${Id} style="
         ${Style || ''}; ${CSSGeometry}; z-index:${z || 0};
@@ -3302,6 +3322,33 @@ debugger
   ProtoUX.registerWidgetView('NestedListView',PUX_NestedListView)
 
 //------------------------------------------------------------------------------
+//--                             PUX_Placeholder                              --
+//------------------------------------------------------------------------------
+
+  class PUX_Placeholder extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      const {
+        Id, Type,Classes,Style, x,y, Width,Height, Substitute,
+        View, WidgetList, ...otherProps
+      } = Widget
+
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
+      return html`<div class="PUX Placeholder Widget ${Classes}" id=${Id} style="
+        ${Style || ''}; ${CSSGeometry}
+      " ...${otherProps}>
+        <${Substitute}/>
+      </div>`
+    }
+  }
+  ProtoUX.registerWidgetView('Placeholder',PUX_Placeholder)//------------------------------------------------------------------------------
 //--                               PUX_centered                               --
 //------------------------------------------------------------------------------
 
