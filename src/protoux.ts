@@ -3330,10 +3330,15 @@ debugger
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
-        Id, Type,Classes,Style, x,y, Width,Height, Substitute,
+      let {
+        Id, Type,Classes,Style, x,y, Width,Height, Substitute,Placeholder,
         View, WidgetList, ...otherProps
       } = Widget
+
+      allowFunction      ('Substitute',Substitute)
+      allowTextline('placeholder text',Placeholder)
+
+      if (Placeholder == null) { Placeholder = '(empty)' }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -3344,7 +3349,10 @@ debugger
       return html`<div class="PUX Placeholder Widget ${Classes}" id=${Id} style="
         ${Style || ''}; ${CSSGeometry}
       " ...${otherProps}>
-        <${Substitute}/>
+        ${Substitute == null
+          ? html`<div class="centered"><span>${Placeholder}</></>`
+          : html`<${Substitute}/>`
+        }
       </div>`
     }
   }
