@@ -370,7 +370,9 @@ debugger
 
   const DragRecognizerForWidget:WeakMap<Indexable,Function> = new WeakMap()
 
-  function DragRecognizerFor (Widget:Indexable, OptionSet:Indexable):Function {
+  export function DragRecognizerFor (
+    Widget:Indexable, OptionSet:Indexable
+  ):Function {
     let DragRecognizer = DragRecognizerForWidget.get(Widget)
     if (DragRecognizer != null) { return DragRecognizer }
 
@@ -501,7 +503,9 @@ debugger
 
   const DragClickRecognizerForWidget:WeakMap<Indexable,Function> = new WeakMap()
 
-  function DragClickRecognizerFor (Widget:Indexable, OptionSet:Indexable):Function {
+  export function DragClickRecognizerFor (
+    Widget:Indexable, OptionSet:Indexable
+  ):Function {
     let DragClickRecognizer = DragClickRecognizerForWidget.get(Widget)
     if (DragClickRecognizer != null) { return DragClickRecognizer }
 
@@ -654,7 +658,7 @@ debugger
 
     private _ScreenSet:Indexable    = {}         // just to satisfy the compiler
     private _DialogSet:Indexable    = {}                                 // dto.
-    private _observed:Indexable     = observe({})
+    private _observed:Indexable     = observe({}, { deep:false })
     private _UpdaterList:Function[] = []
 
     private _StartScreen:Indexable   = {}        // just to satisfy the compiler
@@ -3020,14 +3024,14 @@ debugger
           onSelectionChange(selectedIndices)
         }
 
-// @ts-ignore TS2454 elt's check IF variables were assigned
+// @ts-ignore TS2454 let's check IF variables were assigned
         if ((IndicesToDeselect != null) && (onItemDeselected != null)) {
           IndicesToDeselect.forEach((deselectedIndex:number) => {
             onItemDeselected(List[deselectedIndex],deselectedIndex)
           })
         }
 
-// @ts-ignore TS2454 elt's check IF variables were assigned
+// @ts-ignore TS2454 let's check IF variables were assigned
         if ((IndicesToSelect != null) && (onItemSelected != null)) {
           IndicesToSelect.forEach((selectedIndex:number) => {
             onItemSelected(List[selectedIndex],selectedIndex)
@@ -3233,14 +3237,14 @@ debugger
           onSelectionChange(selectedPaths)
         }
 
-// @ts-ignore TS2454 elt's check IF variables were assigned
+// @ts-ignore TS2454 let's check IF variables were assigned
         if ((PathsToDeselect != null) && (onItemDeselected != null)) {
           PathsToDeselect.forEach((Path:number[]) => {
             onItemDeselected(ItemAtPath(Path),Path)
           })
         }
 
-// @ts-ignore TS2454 elt's check IF variables were assigned
+// @ts-ignore TS2454 let's check IF variables were assigned
         if ((PathsToSelect != null) && (onItemSelected != null)) {
           PathsToSelect.forEach((Path:number[]) => {
             onItemSelected(ItemAtPath(Path),Path)
@@ -3348,10 +3352,10 @@ debugger
 
       return html`<div class="PUX Placeholder Widget ${Classes}" id=${Id} style="
         ${Style || ''}; ${CSSGeometry}
-      " ...${otherProps}>
+      ">
         ${Substitute == null
           ? html`<div class="centered"><span>${Placeholder}</></>`
-          : html`<${Substitute}/>`
+          : html`<${Substitute} ...${otherProps}/>`
         }
       </div>`
     }
