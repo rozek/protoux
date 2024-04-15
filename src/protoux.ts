@@ -383,6 +383,9 @@ debugger
       Event.preventDefault()
     }
 
+/*C*/ let PointerTarget:HTMLElement|undefined
+/*C*/        // workaround for undesired disappearance of pointer capture target
+
     let {
       onlyFrom, neverFrom, Threshold = 0, consumingEvent = true,
       onDragStarted  = DummyCallback, onDragContinued = DummyCallback,
@@ -411,6 +414,7 @@ debugger
 
       if (Event.button === 0) {
         (Event.target as HTMLElement).setPointerCapture(Event.pointerId)
+/*C*/ PointerTarget = Event.target as HTMLElement
         if (State === 'idle') {
           ;({ pageX:x0, pageY:y0 } = Event)
           if (Threshold > 0) {
@@ -420,11 +424,16 @@ debugger
           }
         }
       } else {
-        if (State === 'busy') { abortDragging(Event) }
+        abortDragging(Event)
       }
     }
 
     function onPointerMove (Event:PointerEvent):void {
+/*C*/ if ((State !== 'idle') && (Event.target !== PointerTarget)) {
+/*C*/   ;(Event.target as HTMLElement).setPointerCapture(Event.pointerId)
+/*C*/   PointerTarget = Event.target as HTMLElement
+/*C*/ console.log('PointerTarget changed')
+/*C*/ }
       if (State === 'observing') {                     // before actual dragging
         let { pageX:x,pageY:y } = Event
         if ((x0-x)**2 + (y0-y)**2 >= Threshold**2) { startDragging(Event) }
@@ -434,12 +443,16 @@ debugger
     }
 
     function onPointerUp (Event:PointerEvent):void {
-      if (State === 'busy') { finishDragging(Event) } else { State = 'idle' }
-    } // no need to releasePointerCapture
+      if (State === 'busy') {
+        finishDragging(Event)
+      } else {
+        abortDragging(Event)
+      }
+    }
 
     function onPointerCancel (Event:PointerEvent):void {
-      if (State === 'busy') { abortDragging(Event) } else { State = 'idle' }
-    } // no need to releasePointerCapture
+      abortDragging(Event)
+    }
 
   /**** State Transitions ****/
 
@@ -470,16 +483,19 @@ debugger
       onDragFinished(
         Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
       )
+/*C*/ PointerTarget = undefined
     }
 
     function abortDragging (Event:PointerEvent):void {
       if (consumingEvent) { consumeEvent(Event) }
 
-      if (State !== 'busy') { return }
-
-      State = 'idle';
-      (Event.target as HTMLElement).releasePointerCapture(Event.pointerId) // if called from ext.
-      onDragCancelled(Math.round(x0),Math.round(y0), 0,0, Event)
+      if (State !== 'idle') {
+        const wasBusy = (State === 'busy')
+          State = 'idle'
+          ;(Event.target as HTMLElement).releasePointerCapture(Event.pointerId) // if called from ext.
+        if (wasBusy) { onDragCancelled(Math.round(x0),Math.round(y0), 0,0, Event) }
+      }
+/*C*/ PointerTarget = undefined
     }
 
   /**** return generic callback ****/
@@ -516,6 +532,9 @@ debugger
       Event.preventDefault()
     }
 
+/*C*/ let PointerTarget:HTMLElement|undefined
+/*C*/        // workaround for undesired disappearance of pointer capture target
+
     let {
       onlyFrom, neverFrom, Threshold = 0, consumingEvent = true,
       onDragStarted  = DummyCallback, onDragContinued = DummyCallback,
@@ -547,6 +566,7 @@ debugger
 
       if (Event.button === 0) {
         (Event.target as HTMLElement).setPointerCapture(Event.pointerId)
+/*C*/ PointerTarget = Event.target as HTMLElement
         if (State === 'idle') {
           ;({ pageX:x0, pageY:y0 } = Event)
           if (Threshold > 0) {
@@ -556,11 +576,16 @@ debugger
           }
         }
       } else {
-        if (State === 'busy') { abortDragging(Event) }
+        abortDragging(Event)
       }
     }
 
     function onPointerMove (Event:PointerEvent):void {
+/*C*/ if ((State !== 'idle') && (Event.target !== PointerTarget)) {
+/*C*/   ;(Event.target as HTMLElement).setPointerCapture(Event.pointerId)
+/*C*/   PointerTarget = Event.target as HTMLElement
+/*C*/ console.log('PointerTarget changed')
+/*C*/ }
       if (State === 'busy')      { continueDragging(Event) }
       if (State === 'observing') {                     // before actual dragging
         let { pageX:x,pageY:y } = Event
@@ -583,11 +608,11 @@ debugger
         }
         lastClickTime = now
       }
-    } // no need to releasePointerCapture
+    }
 
     function onPointerCancel (Event:PointerEvent):void {
-      if (State === 'busy') { abortDragging(Event) } else { State = 'idle' }
-    } // no need to releasePointerCapture
+      abortDragging(Event)
+    }
 
   /**** State Transitions ****/
 
@@ -618,16 +643,19 @@ debugger
       onDragFinished(
         Math.round(x),Math.round(y), Math.round(x-x0),Math.round(y-y0), Event
       )
+/*C*/ PointerTarget = undefined
     }
 
     function abortDragging (Event:PointerEvent):void {
       if (consumingEvent) { consumeEvent(Event) }
 
-      if (State !== 'busy') { return }
-
-      State = 'idle';
-      (Event.target as HTMLElement).releasePointerCapture(Event.pointerId) // if called from ext.
-      onDragCancelled(Math.round(x0),Math.round(y0), 0,0, Event)
+      if (State !== 'idle') {
+        const wasBusy = (State === 'busy')
+          State = 'idle'
+          ;(Event.target as HTMLElement).releasePointerCapture(Event.pointerId) // if called from ext.
+        if (wasBusy) { onDragCancelled(Math.round(x0),Math.round(y0), 0,0, Event) }
+      }
+/*C*/ PointerTarget = undefined
     }
 
   /**** return generic callback ****/
