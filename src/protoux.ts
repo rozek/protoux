@@ -1690,6 +1690,38 @@ debugger
   ProtoUX.registerWidgetView('verticalSeparator',PUX_verticalSeparator)
 
 //------------------------------------------------------------------------------
+//--                                PUX_Badge                                 --
+//------------------------------------------------------------------------------
+
+  class PUX_Badge extends PUX_WidgetView {
+    public render (PropSet:Indexable):any {
+      const Widget = PropSet.Widget
+      Widget.View = this
+
+      let {
+        Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,
+        View, ...otherProps
+      } = Widget
+
+      const CSSGeometry = (
+        (x != null) && (Width  != null) && (y != null) && (Height != null)
+        ? `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
+        : ''
+      )
+
+      Value = (''+(Value || '')).trim()
+      switch (true) {
+        case (Value === ''):     return ''
+        case (Value.length > 1): Value = '#'
+        default: return html`<div class="PUX Badge Widget ${Classes}" id=${Id} style="
+          ${Style || ''}; ${CSSGeometry}
+        " ...${otherProps}>${Value}</div>`
+      }
+    }
+  }
+  ProtoUX.registerWidgetView('Badge',PUX_Badge)
+
+//------------------------------------------------------------------------------
 //--                               PUX_HTMLView                               --
 //------------------------------------------------------------------------------
 
