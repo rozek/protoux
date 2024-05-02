@@ -106,6 +106,7 @@
   .PUX.TextInput > textarea {
     display:block; position:absolute;
     left:0px; top:0px; width:100%; height:100%;
+    margin:0px; padding:0px;
   }
 
   .PUX.Button > button {
@@ -123,6 +124,7 @@
     padding:0px 2px 0px 2px; text-overflow:ellipsis;
   }
 
+  .PUX.TextInput > textarea { border:none }
   .PUX.TextInput.no-resize > textarea { resize:none }
 
   .PUX.horizontalSeparator {
@@ -1070,9 +1072,9 @@ debugger
     public stuffWidget (Widget:Indexable, PropSet:Indexable):void {
       if (this.ValueIsStuff(PropSet)) {
         const fromScreen = this.existingScreenNamed(PropSet.from)
-        Widget.WidgetList = PropSet.with.map(
+        Widget.WidgetList = (Widget.WidgetList || []).concat(PropSet.with.map(
           (WidgetName:string) => this.existingWidgetOnScreen(WidgetName,fromScreen)
-        )
+        ))
       } else {
         for (let Property in PropSet) {
           const innerWidget = this.existingWidgetInContainer(Property,Widget)
@@ -2716,7 +2718,7 @@ debugger
       return html`<div class="PUX TextInput Widget ${Classes}" id=${Id} style="
         ${Style || ''}; ${CSSGeometry}
       ">
-        <textarea ...${otherProps}>${Value || ''}</textarea>
+        <textarea ...${otherProps} value=${Value || ''}></textarea>
       </div>`
     }
   }
@@ -3411,7 +3413,7 @@ debugger
       )
 
       return html`<div class="PUX Placeholder Widget ${Classes}" id=${Id} style="
-        ${Style || ''}; ${CSSGeometry}
+        ${CSSGeometry}; ${Style || ''}
       ">
         ${Substitute == null
           ? html`<div class="centered"><span>${Placeholder}</></>`
