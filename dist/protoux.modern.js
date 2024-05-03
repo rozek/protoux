@@ -55,39 +55,39 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
           onPointerDown=${0} onPointerUp=${0}
           onPointerMove=${0} onPointerCancel=${0}
         />
-      </>`),l,i,o||"",W,a||0,y,($||[]).map(e=>oe(Vt||(Vt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)),v,v,v,v,c,t.ProtoUX._ImageFolder,function(e){e.stopImmediatePropagation(),e.preventDefault(),t.ProtoUX.closeDialog(n.Name)},v,v,v,v,v,v,v,v,v,v,v,v)}}class Mi extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Widget;if(n.View=this,1==t.hidden||1==n.hidden)return"";const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,c=e(n,Se),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(n.Type){case"Group":return oe(It||(It=mi`<div class="PUX Widget ${0}" id=${0} style="${0}" ...${0}>
+      </>`),l,i,o||"",W,a||0,y,($||[]).map(e=>oe(Vt||(Vt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)),v,v,v,v,c,t.ProtoUX._ImageFolder,function(e){e.stopImmediatePropagation(),e.preventDefault(),t.ProtoUX.closeDialog(n.Name)},v,v,v,v,v,v,v,v,v,v,v,v)}}class Mi extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Widget;if(n.View=this,1==t.hidden||1==n.hidden)return"";const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,c=e(n,Se),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(n.Type){case"Group":return oe(It||(It=mi`<div class="PUX Widget ${0}" id=${0} style="${0} ${0}" ...${0}>
             ${0}
-          </div>`),l,i,p,c,(u||[]).map(e=>oe(Ut||(Ut=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)));case"Box":return oe(Dt||(Dt=mi`<div class="PUX Widget ${0}" id=${0} style="
-            ${0}; ${0}
-          " ...${0} key=${0}/>`),l,i,o||"",p,c,n.Name);default:const r=ki.WidgetViewForType(n.Type);if(null==r){const{Id:i,Classes:l,Style:o,Value:r,WidgetList:s}=n,a=e(n,Pe);return oe(kt||(kt=mi`<div class="PUX Widget ${0}" id=${0} style="
-              ${0}; ${0}
+          </div>`),l,i,p,o||"",c,(u||[]).map(e=>oe(Ut||(Ut=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)));case"Box":return oe(Dt||(Dt=mi`<div class="PUX Widget ${0}" id=${0} style="
+            ${0} ${0}
+          " ...${0} key=${0}/>`),l,i,p,o||"",c,n.Name);default:const r=ki.WidgetViewForType(n.Type);if(null==r){const{Id:i,Classes:l,Style:o,Value:r,WidgetList:s}=n,a=e(n,Pe);return oe(kt||(kt=mi`<div class="PUX Widget ${0}" id=${0} style="
+              ${0} ${0}
             " ...${0}>
               ${0}
               ${0}
-            </div>`),l,i,o||"",p,a,r||"",(s||[]).map(e=>oe(Xt||(Xt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)))}return oe(Ct||(Ct=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),r,n,t.ProtoUX,n.Name)}}}ki.registerWidgetView("horizontalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ve),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(At||(At=mi`<div class="PUX horizontalSeparator Widget ${0}" id=${0} style="
-        ${0}; ${0}
-      " ...${0}/>`),l,i,o||"",c,u)}}),ki.registerWidgetView("verticalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ie),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Tt||(Tt=mi`<div class="PUX verticalSeparator Widget ${0}" id=${0} style="
-        ${0}; ${0}
-      " ...${0}/>`),l,i,o||"",c,u)}}),ki.registerWidgetView("Badge",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Ue);const p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(u=(""+(u||"")).trim(),!0){case""===u:return"";case u.length>1:u="#";default:return oe(Ht||(Ht=mi`<div class="PUX Badge Widget ${0}" id=${0} style="
-          ${0}; ${0}
-        " ...${0}>${0}</div>`),l,i,o||"",p,c,u)}}}),ki.registerWidgetView("HTMLView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,De),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Lt||(Lt=mi`<div class="PUX HTMLView Widget ${0}" id=${0} style="
-        ${0}; ${0}
+            </div>`),l,i,p,o||"",a,r||"",(s||[]).map(e=>oe(Xt||(Xt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)))}return oe(Ct||(Ct=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),r,n,t.ProtoUX,n.Name)}}}ki.registerWidgetView("horizontalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ve),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(At||(At=mi`<div class="PUX horizontalSeparator Widget ${0}" id=${0} style="
+        ${0} ${0}
+      " ...${0}/>`),l,i,c,o||"",u)}}),ki.registerWidgetView("verticalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ie),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Tt||(Tt=mi`<div class="PUX verticalSeparator Widget ${0}" id=${0} style="
+        ${0} ${0}
+      " ...${0}/>`),l,i,c,o||"",u)}}),ki.registerWidgetView("Badge",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Ue);const p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(u=(""+(u||"")).trim(),!0){case""===u:return"";case u.length>1:u="#";default:return oe(Ht||(Ht=mi`<div class="PUX Badge Widget ${0}" id=${0} style="
+          ${0} ${0}
+        " ...${0}>${0}</div>`),l,i,p,o||"",c,u)}}}),ki.registerWidgetView("HTMLView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,De),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Lt||(Lt=mi`<div class="PUX HTMLView Widget ${0}" id=${0} style="
+        ${0} ${0}
       " ...${0}
         dangerouslySetInnerHTML=${0}
-      />`),l,i,o||"",p,c,{__html:u})}}),ki.registerWidgetView("TextView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,ke),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Mt||(Mt=mi`<div class="PUX TextView Widget ${0}" id=${0} style="
-        ${0}; ${0}
-      " ...${0}>${0}</>`),l,i,o||"",p,c,u)}}),ki.registerWidgetView("ImageView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,ImageScaling:c,ImageAlignment:p}=n,g=e(n,Xe),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nt||(Nt=mi`<img class="PUX ImageView Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      />`),l,i,p,o||"",c,{__html:u})}}),ki.registerWidgetView("TextView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,ke),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Mt||(Mt=mi`<div class="PUX TextView Widget ${0}" id=${0} style="
+        ${0} ${0}
+      " ...${0}>${0}</>`),l,i,p,o||"",c,u)}}),ki.registerWidgetView("ImageView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,ImageScaling:c,ImageAlignment:p}=n,g=e(n,Xe),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nt||(Nt=mi`<img class="PUX ImageView Widget ${0}" id=${0} style="
+        ${0} ${0};
         object-fit:${0};
         object-position:${0};
-      " ...${0} src=${0}/>`),l,i,o||"",h,"stretch"===c?"fill ":c,p,g,u)}}),ki.registerWidgetView("WebView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,PermissionsPolicy:c,allowsFullscreen:p,SandboxPermissions:g,ReferrerPolicy:h}=n,f=e(n,Ce),x=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Ot||(Ot=mi`<iframe class="PUX WebView Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      " ...${0} src=${0}/>`),l,i,h,o||"","stretch"===c?"fill ":c,p,g,u)}}),ki.registerWidgetView("WebView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,PermissionsPolicy:c,allowsFullscreen:p,SandboxPermissions:g,ReferrerPolicy:h}=n,f=e(n,Ce),x=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Ot||(Ot=mi`<iframe class="PUX WebView Widget ${0}" id=${0} style="
+        ${0} ${0}
       " ...${0} src=${0}
         allow=${0} allowfullscreen=${0}
         sandbox=${0}
         referrerpolicy=${0}
-      />`),l,i,o||"",x,f,u,c,p,g||"allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-same-origin allow-scripts",h)}}),ki.registerWidgetView("Icon",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:c}=n,p=e(n,Ae);const g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+h)),oe(Ft||(Ft=mi`<div class="PUX Icon Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      />`),l,i,x,o||"",f,u,c,p,g||"allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-same-origin allow-scripts",h)}}),ki.registerWidgetView("Icon",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:c}=n,p=e(n,Ae);const g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+h)),oe(Ft||(Ft=mi`<div class="PUX Icon Widget ${0}" id=${0} style="
+        ${0} ${0}
       "><div style="
         display:block; position:absolute;
         left:0px; top:0px; width:100%; height:100%;
@@ -95,8 +95,8 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
         -webkit-mask-size:contain;           mask-size:contain;
         -webkit-mask-position:center center; mask-position:center center;
         background-color:${0};
-      " ...${0}/></>`),l,i,o||"",g,u,u,c||"black",p)}}),ki.registerWidgetView("PseudoDropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:c,Options:p,onInput:g}=n,h=e(n,Te);const f=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let x=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+x)),oe(Et||(Et=mi`<div class="PUX PseudoDropDown Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      " ...${0}/></>`),l,i,g,o||"",u,u,c||"black",p)}}),ki.registerWidgetView("PseudoDropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:c,Options:p,onInput:g}=n,h=e(n,Te);const f=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let x=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+x)),oe(Et||(Et=mi`<div class="PUX PseudoDropDown Widget ${0}" id=${0} style="
+        ${0} ${0}
       "><div style="
         display:block; position:absolute;
         left:0px; top:0px; width:100%; height:100%;
@@ -109,135 +109,135 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
           <option value="" disabled selected>please select</option>
           ${0}
         </select>
-      </div>`),l,i,o||"",f,u,u,c||"black",h,g,(p||[]).map(e=>oe(zt||(zt=mi`<option>${0}</>`),e)))}}),ki.registerWidgetView("Button",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,He),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Rt||(Rt=mi`<div class="PUX Button Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>`),l,i,f,o||"",u,u,c||"black",h,g,(p||[]).map(e=>oe(zt||(zt=mi`<option>${0}</>`),e)))}}),ki.registerWidgetView("Button",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,He),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Rt||(Rt=mi`<div class="PUX Button Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <button ...${0}>${0}</button>
-      </div>`),l,i,o||"",p,c,u||"")}}),ki.registerWidgetView("Checkbox",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Le),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g,indeterminate:h}=t;return null==g&&(g=1==u),null==h&&(h=null==u),oe(jt||(jt=mi`<div class="PUX Checkbox Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>`),l,i,p,o||"",c,u||"")}}),ki.registerWidgetView("Checkbox",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Le),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g,indeterminate:h}=t;return null==g&&(g=1==u),null==h&&(h=null==u),oe(jt||(jt=mi`<div class="PUX Checkbox Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <input type="checkbox" checked=${0} indeterminate=${0} ...${0}/>
-      </div>`),l,i,o||"",p,g,h,c)}}),ki.registerWidgetView("Radiobutton",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Me),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g}=t;return null==g&&(g=1==u),oe(Bt||(Bt=mi`<div class="PUX Radiobutton Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>`),l,i,p,o||"",g,h,c)}}),ki.registerWidgetView("Radiobutton",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Me),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g}=t;return null==g&&(g=1==u),oe(Bt||(Bt=mi`<div class="PUX Radiobutton Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <input type="radio" checked=${0} ...${0}/>
-      </div>`),l,i,o||"",p,g,c)}}),ki.registerWidgetView("Gauge",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Ne),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Yt||(Yt=mi`<div class="PUX Gauge Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>`),l,i,p,o||"",g,c)}}),ki.registerWidgetView("Gauge",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Ne),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Yt||(Yt=mi`<div class="PUX Gauge Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <meter value=${0} ...${0}/>
-      </div>`),l,i,o||"",p,u||"",c)}}),ki.registerWidgetView("Progressbar",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Oe),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Zt||(Zt=mi`<div class="PUX Progressbar Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>`),l,i,p,o||"",u||"",c)}}),ki.registerWidgetView("Progressbar",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,Oe),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Zt||(Zt=mi`<div class="PUX Progressbar Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <progress value=${0} ...${0}/>
-      </div>`),l,i,o||"",p,u||"",c)}}),ki.registerWidgetView("Slider",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Hashmarks:c}=n,p=e(n,Fe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Hashmarks",f=oe(Gt||(Gt=mi`\n<datalist id=${0}>
+      </div>`),l,i,p,o||"",u||"",c)}}),ki.registerWidgetView("Slider",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Hashmarks:c}=n,p=e(n,Fe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Hashmarks",f=oe(Gt||(Gt=mi`\n<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>{const t=e.replace(/:.*$/,"").trim(),n=e.replace(/^[^:]+:/,"").trim();return oe(Jt||(Jt=mi`<option label=${0} value=${0}></option>`),t,n)}))),oe(Kt||(Kt=mi`<div class="PUX Slider Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="range" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("TextlineInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ee),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(qt||(qt=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("TextlineInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ee),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(qt||(qt=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(Qt||(Qt=mi`<option value=${0}></option>`),e)))),oe(en||(en=mi`<div class="PUX TextlineInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="text" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("PasswordInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,ze),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(tn||(tn=mi`<div class="PUX PasswordInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("PasswordInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,ze),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(tn||(tn=mi`<div class="PUX PasswordInput Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <input type="password" value=${0} ...${0}/>
-      </div>`),l,i,o||"",p,u||"",c)}}),ki.registerWidgetView("NumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Re),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(nn||(nn=mi`<datalist id=${0}>
+      </div>`),l,i,p,o||"",u||"",c)}}),ki.registerWidgetView("NumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Re),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(nn||(nn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(ln||(ln=mi`<option value=${0}></option>`),e)))),oe(on||(on=mi`<div class="PUX NumberInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="number" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("PhoneNumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(rn||(rn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("PhoneNumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(rn||(rn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(sn||(sn=mi`<option value=${0}></option>`),e)))),oe(an||(an=mi`<div class="PUX PhoneNumberInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="tel" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("EMailAddressInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Be),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(dn||(dn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("EMailAddressInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Be),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(dn||(dn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(un||(un=mi`<option value=${0}></option>`),e)))),oe(cn||(cn=mi`<div class="PUX EMailAddressInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="email" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("URLInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ye),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(pn||(pn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("URLInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ye),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(pn||(pn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(gn||(gn=mi`<option value=${0}></option>`),e)))),oe(hn||(hn=mi`<div class="PUX URLInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="url" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("TimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ze),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(fn||(fn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("TimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ze),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(fn||(fn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(xn||(xn=mi`<option value=${0}></option>`),e)))),oe($n||($n=mi`<div class="PUX TimeInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="time" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("DateTimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ge),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(yn||(yn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("DateTimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ge),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(yn||(yn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(_n||(_n=mi`<option value=${0}></option>`),e)))),oe(mn||(mn=mi`<div class="PUX DateTimeInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="datetime-local" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("DateInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(bn||(bn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("DateInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(bn||(bn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(wn||(wn=mi`<option value=${0}></option>`),e)))),oe(vn||(vn=mi`<div class="PUX DateInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="date" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("WeekInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ke),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Wn||(Wn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("WeekInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Ke),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Wn||(Wn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(Sn||(Sn=mi`<option value=${0}></option>`),e)))),oe(Pn||(Pn=mi`<div class="PUX WeekInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="week" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("MonthInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Vn||(Vn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("MonthInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Vn||(Vn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(In||(In=mi`<option value=${0}></option>`),e)))),oe(Un||(Un=mi`<div class="PUX MonthInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="month" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("SearchInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Dn||(Dn=mi`<datalist id=${0}>
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("SearchInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,Qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Dn||(Dn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(kn||(kn=mi`<option value=${0}></option>`),e)))),oe(Xn||(Xn=mi`<div class="PUX SearchInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="search" value=${0} ...${0}/>
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("FileInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Placeholder:c,onDrop:p}=n,g=e(n,et),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Cn||(Cn=mi`<label class="PUX FileInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("FileInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Placeholder:c,onDrop:p}=n,g=e(n,et),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Cn||(Cn=mi`<label class="PUX FileInput Widget ${0}" id=${0} style="
+        ${0} ${0}
       " onDragEnter=${0} onDragOver=${0} onDrop=${0}>
         <input type="file" style="display:none" ...${0}/>
         ${0}
         ${0}
-      </label>`),l,i,o||"",h,function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof p&&p(e)},g,""===(u||"")?"":oe(An||(An=mi`<span>${0}</span>`),u),""===(u||"")?""===(c||"")?"":oe(Tn||(Tn=mi`<span>${0}</span>`),c):"")}}),ki.registerWidgetView("ColorInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,tt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Hn||(Hn=mi`<datalist id=${0}>
+      </label>`),l,i,h,o||"",function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof p&&p(e)},g,""===(u||"")?"":oe(An||(An=mi`<span>${0}</span>`),u),""===(u||"")?""===(c||"")?"":oe(Tn||(Tn=mi`<span>${0}</span>`),c):"")}}),ki.registerWidgetView("ColorInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:c}=n,p=e(n,tt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(c)&&c.length>0&&(h=i+"-Suggestions",f=oe(Hn||(Hn=mi`<datalist id=${0}>
           ${0}
         </datalist>`),h,c.map(e=>oe(Ln||(Ln=mi`<option value=${0}></option>`),e)))),oe(Mn||(Mn=mi`<div class="PUX ColorInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " list=${0}>
         <input type="color" value=${0} ...${0} />
-      </div>${0}`),l,i,o||"",g,h,u||"",p,f)}}),ki.registerWidgetView("DropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Options:c,Placeholder:p}=n,g=e(n,nt),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nn||(Nn=mi`<div class="PUX DropDown Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>${0}`),l,i,g,o||"",h,u||"",p,f)}}),ki.registerWidgetView("DropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Options:c,Placeholder:p}=n,g=e(n,nt),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nn||(Nn=mi`<div class="PUX DropDown Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <select ...${0}>
           ${0}
           ${0}
         </select>
-      </div>`),l,i,o||"",h,g,null==p?"":oe(On||(On=mi`<option value="" disabled>${0}</option>`),p),(c||[]).map(e=>oe(Fn||(Fn=mi`<option selected=${0}>${0}</>`),e===u,e)))}}),ki.registerWidgetView("TextInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,it),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(En||(En=mi`<div class="PUX TextInput Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>`),l,i,h,o||"",g,null==p?"":oe(On||(On=mi`<option value="" disabled>${0}</option>`),p),(c||[]).map(e=>oe(Fn||(Fn=mi`<option selected=${0}>${0}</>`),e===u,e)))}}),ki.registerWidgetView("TextInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,c=e(n,it),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(En||(En=mi`<div class="PUX TextInput Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         <textarea ...${0} value=${0}></textarea>
-      </div>`),l,i,o||"",p,c,u||"")}}),ki.registerWidgetView("FileDropArea",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,onDrop:u,WidgetList:c}=n,p=e(n,lt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(zn||(zn=mi`<label class="PUX FileDropArea Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </div>`),l,i,p,o||"",c,u||"")}}),ki.registerWidgetView("FileDropArea",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,onDrop:u,WidgetList:c}=n,p=e(n,lt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(zn||(zn=mi`<label class="PUX FileDropArea Widget ${0}" id=${0} style="
+        ${0} ${0}
       " onDragEnter=${0} onDragOver=${0} onDrop=${0}>
         <input type="file" ...${0}/>
         ${0}
-      </label>`),l,i,o||"",g,function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof u&&u(e)},p,(c||[]).map(e=>oe(Rn||(Rn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}),ki.registerWidgetView("Accordion",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,c=e(n,ot),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(jn||(jn=mi`<div class="PUX Accordion Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </label>`),l,i,g,o||"",function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof u&&u(e)},p,(c||[]).map(e=>oe(Rn||(Rn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}),ki.registerWidgetView("Accordion",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,c=e(n,ot),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(jn||(jn=mi`<div class="PUX Accordion Widget ${0}" id=${0} style="
+        ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),l,i,o||"",p,c,(u||[]).map(e=>oe(Bn||(Bn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Ni,e,t.ProtoUX)))}});class Ni extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,Height:r,Value:s,Expansion:a,WidgetList:d}=n,u=e(n,rt),c=this;return oe(Yn||(Yn=mi`<div class="PUX Fold Widget ${0}" id=${0} style="
+      </>`),l,i,p,o||"",c,(u||[]).map(e=>oe(Bn||(Bn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Ni,e,t.ProtoUX)))}});class Ni extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,Height:r,Value:s,Expansion:a,WidgetList:d}=n,u=e(n,rt),c=this;return oe(Yn||(Yn=mi`<div class="PUX Fold Widget ${0}" id=${0} style="
         ${0}; left:0px; top:0px; width:100%; height:auto;
       " ...${0}>
         <div class="PUX Fold-Header">
@@ -252,19 +252,19 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
             ">
               ${0}
             </>`),r,(d||[]).map(e=>oe(Gn||(Gn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX))):"")}}ki.registerWidgetView("Fold",Ni),ki.registerWidgetView("Deck",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,WidgetList:c}=n,p=e(n,st),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"",h=c[null==u?0:u<0?c.length+u:u]||c[0];return oe(Jn||(Jn=mi`<div class="PUX Deck Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),l,i,o||"",g,p,null==h?oe(Kn||(Kn=mi`<${0}><span>(no card)</span></>`),Ei):oe(qn||(qn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Oi,h,t.ProtoUX))}});class Oi extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,WidgetList:r}=n,s=e(n,at);return oe(Qn||(Qn=mi`<div class="PUX Card Widget ${0}" id=${0} style="
+      </>`),l,i,g,o||"",p,null==h?oe(Kn||(Kn=mi`<${0}><span>(no card)</span></>`),Ei):oe(qn||(qn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Oi,h,t.ProtoUX))}});class Oi extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,WidgetList:r}=n,s=e(n,at);return oe(Qn||(Qn=mi`<div class="PUX Card Widget ${0}" id=${0} style="
         border:none; ${0};
         left:0px; top:0px; right:0px; bottom:0px; width:auto; height:auto
       " ...${0}>
         ${0}
       </>`),l,i,o||"",s,(r||[]).map(e=>oe(ei||(ei=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}ki.registerWidgetView("Card",Oi),ki.registerWidgetView("TabStrip",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,WidgetList:c}=n,p=e(n,dt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"",h=c[null==u?0:u<0?c.length+u:u]||c[0],f=this;return oe(ti||(ti=mi`<div class="PUX TabStrip Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),l,i,o||"",g,p,(c||[]).map((e,n)=>oe(ni||(ni=mi`
+      </>`),l,i,g,o||"",p,(c||[]).map((e,n)=>oe(ni||(ni=mi`
           <${0} Widget=${0} ProtoUX=${0}
             active=${0}
             onClick=${0}
@@ -275,10 +275,10 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
       " ...${0} onClick=${0}>
         ${0}
       </div>`),d?"active":"",l,i,o||"",r,d?"black":"transparent",a,u,(s||[]).map(e=>oe(li||(li=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}ki.registerWidgetView("Tab",Fi),ki.registerWidgetView("FlatListView",class extends Mi{render(t){const i=t.Widget;i.View=this;let{Id:l,Classes:o,Style:r,x:s,y:a,Width:d,Height:u,List:c,ItemRenderer:p,Placeholder:x,selectedIndices:_,SelectionLimit:m,onSelectionChange:b,onItemSelected:w,onItemDeselected:v}=i,W=e(i,ct);const S=null!=s&&null!=d&&null!=a&&null!=u?`left:${s}px; top:${a}px; width:${d}px; height:${u}px; right:auto; bottom:auto;`:"";$("item list",c),f("list item renderer",p),h("list placeholder",x),y("list of selected indices",_,n),g("selection limit",m),f("selection change callback",b),f("item selection callback",w),f("item deselection callback",v),null==p&&(p=e=>oe(oi||(oi=mi`${0}`),e+"")),null==x&&(x="(empty)"),null==_&&(_=[]),null==m&&(m=1);const P=Object.create(null);if(_=_.filter(e=>!(!(n(e)&&e>=0&&e<c.length)||e in P||(P[e]=!0,0))),_.length>m){const e=_.slice(m);_.length=m,null!=b&&b(_),null!=v&&e.forEach(e=>{v(c[e],e)})}function V(e){return e in P}return oe(ri||(ri=mi`<div class="PUX FlatListView Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),o,l,r||"",S,W,0===c.length?oe(si||(si=mi`<div class="centered"><span>${0}</></>`),x):c.map((e,t)=>oe(ai||(ai=mi`<div
+      </>`),o,l,S,r||"",W,0===c.length?oe(si||(si=mi`<div class="centered"><span>${0}</></>`),x):c.map((e,t)=>oe(ai||(ai=mi`<div
               class=${0}
               dangerouslySetInnerHTML=${0}
               onClick=${0}
@@ -288,11 +288,11 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
           </div>
           ${0}
         </div>`),n,i?"selected":"",function(e){!function(e,t,n){if(e.stopImmediatePropagation(),e.preventDefault(),0===V)return;let i,l,o=!1;if(e.shiftKey||e.metaKey)if(o=!0,B(n))l=[n],P=P.filter(e=>!z(n,e));else{const e=n.slice(0,n.length-1);l=P.filter(t=>!j(t,e)),P=P.filter(t=>j(t,e)),P.length===V&&l.push([P.shift()]),i=[n],P.push(n)}else l=P.filter(e=>!z(n,e)),o=!B(n),i=o?[n]:[],P=[n];o&&null!=U&&U(P),null!=l&&null!=k&&l.forEach(e=>{k(F(e),e)}),null!=i&&null!=D&&i.forEach(e=>{D(F(e),e)})}(e,0,t)},r?oe(l?ci||(ci=mi`<img class="ItemExpander" src="/svg/icons/caret-down.svg"  onClick=${0}/>`):pi||(pi=mi`<img class="ItemExpander" src="/svg/icons/caret-right.svg" onClick=${0}/>`),function(n){!function(e,t,n){e.stopImmediatePropagation(),e.preventDefault();let i=R(n,X);i<0?X.push(n):X.splice(i,1),null!=A&&A(X),i<0?null!=T&&T(t,n):null!=H&&H(t,n)}(n,e,t)}):oe(gi||(gi=mi`<img class="ItemIcon" src="/svg/icons/circle.svg"/>`)),w(e,t),r&&l?o.map((e,n)=>Y(e,t.concat(n))):"")}return X=X.filter(e=>E(e)),X=X.filter((e,t)=>R(e,X)===t),oe(hi||(hi=mi`<div class="PUX NestedListView Widget ${0}" id=${0} style="
-        ${0}; ${0}
+        ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),r,o,s||"",M,L,0===b.length?oe(fi||(fi=mi`<div class="centered"><span>${0}</></>`),v):b.map((e,t)=>Y(e,[t])))}}),ki.registerWidgetView("Placeholder",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Substitute:u,Placeholder:c}=n,p=e(n,gt);f("Substitute",u),h("placeholder text",c),null==c&&(c="(empty)");const g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(xi||(xi=mi`<div class="PUX Placeholder Widget ${0}" id=${0} style="
-        ${0}; ${0}
+      </>`),r,o,M,s||"",L,0===b.length?oe(fi||(fi=mi`<div class="centered"><span>${0}</></>`),v):b.map((e,t)=>Y(e,[t])))}}),ki.registerWidgetView("Placeholder",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Substitute:u,Placeholder:c}=n,p=e(n,gt);f("Substitute",u),h("placeholder text",c),null==c&&(c="(empty)");const g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(xi||(xi=mi`<div class="PUX Placeholder Widget ${0}" id=${0} style="
+        ${0} ${0}
       ">
         ${0}
       </div>`),l,i,g,o||"",null==u?oe($i||($i=mi`<div class="centered"><span>${0}</></>`),c):oe(yi||(yi=mi`<${0} ...${0}/>`),u,p))}});class Ei extends M{render(e){return oe(_i||(_i=mi`<div class="centered">
