@@ -864,7 +864,7 @@ debugger
             }
 
             this._DialogSet[Widget.Name] = Widget
-            delete WidgetList[i]
+            WidgetList.splice(i,1)
           }
         }
       }
