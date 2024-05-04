@@ -63,9 +63,9 @@
     display:flex; align-items:center;
   }
 
-  .disabled            { opacity:0.3 }
-  .readonly            { background:none }
-  .no-pointer-events   { pointer-events:none }
+  .disabled, [disabled] { opacity:0.3 }
+  .readonly             { background:none }
+  .no-pointer-events    { pointer-events:none }
 
   .scrollable   { overflow:scroll }
   .scrollable-x { overflow-x:scroll; overflow-y:hidden }
@@ -1857,7 +1857,7 @@ debugger
 
       let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Color,
-        View, ...otherProps
+        disabled, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1873,7 +1873,7 @@ debugger
 
       return html`<div class="PUX Icon Widget ${Classes}" id=${Id} style="
         ${CSSGeometry} ${Style || ''}
-      "><div style="
+      " disabled=${disabled}><div style="
         display:block; position:absolute;
         left:0px; top:0px; width:100%; height:100%;
         -webkit-mask-image:${Value};         mask-image:${Value};
