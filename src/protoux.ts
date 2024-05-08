@@ -105,14 +105,37 @@
   .PUX.WeekInput > input, .PUX.MonthInput > input, .PUX.SearchInput > input,
   .PUX.ColorInput > input, .PUX.DropDown > select, .PUX.FileInput > input,
   .PUX.TextInput > textarea {
-    display:block; position:absolute;
     left:0px; top:0px; width:100%; height:100%;
     margin:0px; padding:0px;
+    background:transparent; color:inherit;
+  }
+
+  .PUX.TextlineInput > input, .PUX.PasswordInput > input,
+  .PUX.NumberInput > input, .PUX.PhoneNumberInput > input,
+  .PUX.EMailAddressInput > input, .PUX.URLInput > input,
+  .PUX.TimeInput > input, .PUX.DateTimeInput > input, .PUX.DateInput > input,
+  .PUX.WeekInput > input, .PUX.MonthInput > input, .PUX.SearchInput > input,
+  .PUX.ColorInput > input, .PUX.DropDown > select, .PUX.FileInput > input,
+  .PUX.TextInput > textarea {
+    border:solid 1px #888888; border-radius:2px;
+    background:#e8f0ff; padding:0px 2px 0px 2px;
+  }
+
+  .PUX.TextlineInput > input:read-only, .PUX.PasswordInput > input:read-only,
+  .PUX.NumberInput > input:read-only, .PUX.PhoneNumberInput > input:read-only,
+  .PUX.EMailAddressInput > input:read-only, .PUX.URLInput > input:read-only,
+  .PUX.TimeInput > input:read-only, .PUX.DateTimeInput > input:read-only,
+  .PUX.DateInput > input:read-only, .PUX.WeekInput > input:read-only,
+  .PUX.MonthInput > input:read-only, .PUX.SearchInput > input:read-only,
+  .PUX.ColorInput > input:read-only, .PUX.DropDown > select:read-only,
+  .PUX.FileInput > input:read-only, .PUX.TextInput > textarea:read-only {
+    background:transparent;
   }
 
   .PUX.Button > button {
     background:white;
     border:solid 1px black; border-radius:4px;
+    background:transparent; color:inherit;
   }
 
   .PUX.FileInput {
@@ -125,7 +148,7 @@
     padding:0px 2px 0px 2px; text-overflow:ellipsis;
   }
 
-  .PUX.TextInput > textarea { border:none }
+  .PUX.TextInput > textarea { border:none; background:#e8f0ff; padding:2px }
   .PUX.TextInput.no-resize > textarea { resize:none }
 
   .PUX.horizontalSeparator {
@@ -311,6 +334,7 @@
     left:0px; bottom:0px; width:30px; height:9px;
     border:none; border-top:solid 1px black; border-right:solid 1px black;
     border-radius:0px 0px 0px 3px;
+    cursor:nesw-resize;
   }
 
   .PUX.ResizableDialog > .middleResizer {
@@ -318,6 +342,7 @@
     left:30px; bottom:0px; right:30px; height:9px;
     border:none; border-top:solid 1px black;
     border-radius:0px;
+    cursor:ns-resize;
   }
 
   .PUX.ResizableDialog > .rightResizer {
@@ -325,6 +350,7 @@
     bottom:0px; right:0px; width:30px; height:9px;
     border:none; border-left:solid 1px black; border-top:solid 1px black;
     border-radius:0px 0px 3px 0px;
+    cursor:nwse-resize;
   }
 
 
