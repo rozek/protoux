@@ -31,7 +31,7 @@
 
   interface Indexable { [Key:string]:any }
 
-/**** install stylesheet for SSS ****/
+/**** install stylesheet for ProtoUX ****/
 
   const Stylesheet = document.createElement('style')
     Stylesheet.setAttribute('id','ProtoUX')
@@ -1337,7 +1337,7 @@ debugger
 
       const { Id, Classes,Style, Width,Height, WidgetList } = Screen
 
-      return html`<div class="PUX Screen ${Classes || ''}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Screen',Classes)} id=${Id} style="
         width:${Width}px; height:${Height}px; ${Style || ''}
       ">
         ${WidgetList.map(
@@ -1440,7 +1440,7 @@ debugger
         PropSet.ProtoUX.closeDialog(Dialog.Name)
       }
 
-      return html`<div class="PUX Dialog ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Dialog',Classes)} id=${Id} style="
         ${Style || ''}; ${CSSGeometry}; z-index:${z || 0};
       " ...${otherProps}>
         <div class="Titlebar"
@@ -1565,7 +1565,7 @@ debugger
         `left:${x}px; top:${y}px; width:${Width}px; height:${Height}px; right:auto; bottom:auto;`
       )
 
-      return html`<div class="PUX ResizableDialog ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX ResizableDialog',Classes)} id=${Id} style="
         ${Style || ''}; ${CSSGeometry}; z-index:${z || 0};
       " ...${otherProps}>
         <div class="ContentPane">
@@ -1684,7 +1684,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX horizontalSeparator Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX horizontalSeparator Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}/>`
     }
@@ -1711,7 +1711,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX verticalSeparator Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX verticalSeparator Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}/>`
     }
@@ -1742,7 +1742,7 @@ debugger
       switch (true) {
         case (Value === ''):     return ''
         case (Value.length > 1): Value = '#'
-        default: return html`<div class="PUX Badge Widget ${Classes}" id=${Id} style="
+        default: return html`<div class=${ClassesWith('PUX Badge Widget',Classes)} id=${Id} style="
           ${CSSGeometry} ${Style || ''}
         " ...${otherProps}>${Value}</div>`
       }
@@ -1770,7 +1770,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX HTMLView Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX HTMLView Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}
         dangerouslySetInnerHTML=${{__html:Value}}
@@ -1799,7 +1799,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX TextView Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX TextView Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}>${Value}</>`
     }
@@ -1826,7 +1826,7 @@ debugger
         : ''
       )
 
-      return html`<img class="PUX ImageView Widget ${Classes}" id=${Id} style="
+      return html`<img class=${ClassesWith('PUX ImageView Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''};
         object-fit:${ImageScaling === 'stretch' ? 'fill ' : ImageScaling};
         object-position:${ImageAlignment};
@@ -1861,7 +1861,7 @@ debugger
         'allow-pointer-lock allow-popups allow-same-origin allow-scripts'
       )
 
-      return html`<iframe class="PUX WebView Widget ${Classes}" id=${Id} style="
+      return html`<iframe class=${ClassesWith('PUX WebView Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps} src=${Value}
         allow=${PermissionsPolicy} allowfullscreen=${allowsFullscreen}
@@ -1897,7 +1897,7 @@ debugger
         Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
       }
 
-      return html`<div class="PUX Icon Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Icon Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " disabled=${disabled}><div style="
         display:block; position:absolute;
@@ -1936,7 +1936,7 @@ debugger
         Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
       }
 
-      return html`<div class="PUX PseudoDropDown Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX PseudoDropDown Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       "><div style="
         display:block; position:absolute;
@@ -1977,7 +1977,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX Button Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Button Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <button ...${otherProps}>${Value || ''}</button>
@@ -2010,7 +2010,7 @@ debugger
       if (checked       == null) { checked       = (Value == true)}
       if (indeterminate == null) { indeterminate = (Value == null) }
 
-      return html`<div class="PUX Checkbox Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Checkbox Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <input type="checkbox" checked=${checked} indeterminate=${indeterminate} ...${otherProps}/>
@@ -2042,7 +2042,7 @@ debugger
       let { checked } = PropSet
       if (checked == null) { checked = (Value == true)}
 
-      return html`<div class="PUX Radiobutton Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Radiobutton Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <input type="radio" checked=${checked} ...${otherProps}/>
@@ -2071,7 +2071,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX Gauge Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Gauge Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <meter value=${Value || ''} ...${otherProps}/>
@@ -2100,7 +2100,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX Progressbar Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Progressbar Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <progress value=${Value || ''} ...${otherProps}/>
@@ -2145,7 +2145,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX Slider Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Slider Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${HashmarkId}>
         <input type="range" value=${Value || ''} ...${otherProps}/>
@@ -2183,7 +2183,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX TextlineInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX TextlineInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="text" value=${Value || ''} ...${otherProps}/>
@@ -2211,7 +2211,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX PasswordInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX PasswordInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <input type="password" value=${Value || ''} ...${otherProps}/>
@@ -2249,7 +2249,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX NumberInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX NumberInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="number" value=${Value || ''} ...${otherProps}/>
@@ -2287,7 +2287,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX PhoneNumberInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX PhoneNumberInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="tel" value=${Value || ''} ...${otherProps}/>
@@ -2325,7 +2325,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX EMailAddressInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX EMailAddressInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="email" value=${Value || ''} ...${otherProps}/>
@@ -2363,7 +2363,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX URLInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX URLInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="url" value=${Value || ''} ...${otherProps}/>
@@ -2401,7 +2401,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX TimeInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX TimeInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="time" value=${Value || ''} ...${otherProps}/>
@@ -2439,7 +2439,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX DateTimeInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX DateTimeInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="datetime-local" value=${Value || ''} ...${otherProps}/>
@@ -2477,7 +2477,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX DateInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX DateInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="date" value=${Value || ''} ...${otherProps}/>
@@ -2515,7 +2515,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX WeekInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX WeekInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="week" value=${Value || ''} ...${otherProps}/>
@@ -2553,7 +2553,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX MonthInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX MonthInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="month" value=${Value || ''} ...${otherProps}/>
@@ -2591,7 +2591,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX SearchInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX SearchInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="search" value=${Value || ''} ...${otherProps}/>
@@ -2637,7 +2637,7 @@ debugger
         if (typeof onDrop === 'function') { onDrop(Event) }
       }               // nota bene: "files" is now in "Event.dataTransfer.files"
 
-      return html`<label class="PUX FileInput Widget ${Classes}" id=${Id} style="
+      return html`<label class=${ClassesWith('PUX FileInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " onDragEnter=${onDragEnter} onDragOver=${onDragOver} onDrop=${onFileDrop}>
         <input type="file" style="display:none" ...${otherProps}/>
@@ -2677,7 +2677,7 @@ debugger
         </datalist>`
       }
 
-      return html`<div class="PUX ColorInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX ColorInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
         <input type="color" value=${Value || ''} ...${otherProps} />
@@ -2706,7 +2706,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX DropDown Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX DropDown Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <select ...${otherProps}>
@@ -2742,7 +2742,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX TextInput Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX TextInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         <textarea ...${otherProps} value=${Value || ''}></textarea>
@@ -2788,7 +2788,7 @@ debugger
         if (typeof onDrop === 'function') { onDrop(Event) }
       }               // nota bene: "files" is now in "Event.dataTransfer.files"
 
-      return html`<label class="PUX FileDropArea Widget ${Classes}" id=${Id} style="
+      return html`<label class=${ClassesWith('PUX FileDropArea Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " onDragEnter=${onDragEnter} onDragOver=${onDragOver} onDrop=${onFileDrop}>
         <input type="file" ...${otherProps}/>
@@ -2820,7 +2820,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX Accordion Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Accordion Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}>
         ${(WidgetList || []).map(
@@ -2851,7 +2851,7 @@ debugger
         self.rerender()
       }
 
-      return html`<div class="PUX Fold Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Fold Widget',Classes)} id=${Id} style="
         ${Style || ''}; left:0px; top:0px; width:100%; height:auto;
       " ...${otherProps}>
         <div class="PUX Fold-Header">
@@ -2903,7 +2903,7 @@ debugger
       )
       const activeCard = WidgetList[activeIndex] || WidgetList[0]
 
-      return html`<div class="PUX Deck Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Deck Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}>
         ${activeCard == null
@@ -2929,7 +2929,7 @@ debugger
         View, WidgetList, ...otherProps
       } = Widget
 
-      return html`<div class="PUX Card Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Card Widget',Classes)} id=${Id} style="
         border:none; ${Style || ''};
         left:0px; top:0px; right:0px; bottom:0px; width:auto; height:auto
       " ...${otherProps}>
@@ -2971,7 +2971,7 @@ debugger
         (self.base as HTMLElement).dispatchEvent(new CustomEvent('ValueChange',{ detail:Index }))
       }
 
-      return html`<div class="PUX TabStrip Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX TabStrip Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}>
         ${(WidgetList || []).map((Widget:Indexable, Index:number) => html`
@@ -3002,7 +3002,7 @@ debugger
 
       const { active,onClick } = PropSet
 
-      return html`<div class="PUX ${active ? 'active' : ''} Tab Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX ${active ? "active" : ""} Tab Widget',Classes)} id=${Id} style="
         ${Style || ''}; width:${Width}px; border:none; border-width:0px 0px 4px 0px;
         border-style:solid; border-bottom-color:${active ? 'black' : 'transparent'}
       " ...${otherProps} onClick=${onClick}>
@@ -3132,7 +3132,7 @@ debugger
         return (Index in selectedIndexSet)
       }
 
-      return html`<div class="PUX FlatListView Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX FlatListView Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}>
         ${
@@ -3401,7 +3401,7 @@ debugger
 
 
 
-      return html`<div class="PUX NestedListView Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX NestedListView Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " ...${otherProps}>
         ${
@@ -3439,7 +3439,7 @@ debugger
         : ''
       )
 
-      return html`<div class="PUX Placeholder Widget ${Classes}" id=${Id} style="
+      return html`<div class=${ClassesWith('PUX Placeholder Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
         ${Substitute == null
@@ -3449,7 +3449,26 @@ debugger
       </div>`
     }
   }
-  ProtoUX.registerWidgetView('Placeholder',PUX_Placeholder)//------------------------------------------------------------------------------
+  ProtoUX.registerWidgetView('Placeholder',PUX_Placeholder)
+
+/**** ClassesWith ****/
+
+  function ClassesWith (Prefix:string, ClassNames:string):string {
+    const ClassSet = Object.create(null)
+
+    const combinedClasses = (
+      Prefix + ' ' + (ClassNames || '')
+    ).trim().replace(/\s+/g,' ')
+
+    return combinedClasses.split(' ').filter((ClassName:string) => {
+      if (ClassName in ClassSet) {
+        return false
+      } else {
+        ClassSet[ClassName] = true
+        return true
+      }
+    }).join(' ')
+  }//------------------------------------------------------------------------------
 //--                               PUX_centered                               --
 //------------------------------------------------------------------------------
 
