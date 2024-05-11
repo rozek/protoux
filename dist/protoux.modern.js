@@ -6,15 +6,15 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
         ${0}
         ${0}
         ${0}
-      </div>`),Ci,t,n,i.map(e=>oe(xt||(xt=mi`<${0} ProtoUX=${0} Dialog=${0} key=${0}/>`),Ai,t,e,e.Name)),o?oe($t||($t=mi`<${0}/>`),Ti):"",null==l?"":oe(yt||(yt=mi`<${0} ProtoUX=${0} Dialog=${0} key=${0}/>`),Ai,t,l,l.Name))}}class Ci extends M{render(e){const t=e.Screen;t.View=this;const{Id:n,Classes:i,Style:l,Width:o,Height:r,WidgetList:s}=t;return oe(_t||(_t=mi`<div class="PUX Screen ${0}" id=${0} style="
+      </div>`),Ci,t,n,i.map(e=>oe(xt||(xt=mi`<${0} ProtoUX=${0} Dialog=${0} key=${0}/>`),Ai,t,e,e.Name)),o?oe($t||($t=mi`<${0}/>`),Ti):"",null==l?"":oe(yt||(yt=mi`<${0} ProtoUX=${0} Dialog=${0} key=${0}/>`),Ai,t,l,l.Name))}}class Ci extends M{render(e){const t=e.Screen;t.View=this;const{Id:n,Classes:i,Style:l,Width:o,Height:r,WidgetList:s}=t;return oe(_t||(_t=mi`<div class=${0} id=${0} style="
         width:${0}px; height:${0}px; ${0}
       ">
         ${0}
-      </div>`),i||"",n,o,r,l||"",s.map(t=>oe(mt||(mt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,t,e.ProtoUX,t.Name)))}}class Ti extends M{render(e){const{Style:t}=e;return oe(bt||(bt=mi`<div class="PUX ModalLayer" style="
+      </div>`),Ei("PUX Screen",i),n,o,r,l||"",s.map(t=>oe(mt||(mt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,t,e.ProtoUX,t.Name)))}}class Ti extends M{render(e){const{Style:t}=e;return oe(bt||(bt=mi`<div class="PUX ModalLayer" style="
         ${0};
         display:block; position:absolute;
         left:0px; top:0px; right:0px; bottom:0px;
-      " onClick=${0}/>`),t||"",function(e){e.stopImmediatePropagation(),e.preventDefault()})}}class Ai extends M{render(e){const t=e.Dialog;return"ResizableDialog"===t.Type?oe(wt||(wt=mi`<${0} Dialog=${0} ProtoUX=${0}/>`),Li,t,e.ProtoUX):oe(vt||(vt=mi`<${0}  Dialog=${0} ProtoUX=${0}/>`),Hi,t,e.ProtoUX)}}class Hi extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Dialog;n.View=this;const i=(e,i,l,o)=>{n.x=n._DragOffset.x+l,n.y=n._DragOffset.y+o,n.z=1e3,t.ProtoUX.View.rerender()},l=(e,l,o,r)=>{i(0,0,o,r),n.z=0,t.ProtoUX.bringDialogToFront(n.Name)},o=Vi(n,{neverFrom:".CloseButton",Threshold:4,onDragStarted:(e,t,l,o)=>{n._DragOffset={x:n.x,y:n.y},i(0,0,l,o)},onDragContinued:i,onDragFinished:l,onDragCancelled:l}),{Id:r,Classes:s,Style:a,x:d,y:u,z:p,Width:c,Height:g,Title:h,WidgetList:f}=n,x=e(n,ve),$=`left:${d}px; top:${u}px; width:${c}px; height:${g}px; right:auto; bottom:auto;`;return oe(Wt||(Wt=mi`<div class="PUX Dialog ${0}" id=${0} style="
+      " onClick=${0}/>`),t||"",function(e){e.stopImmediatePropagation(),e.preventDefault()})}}class Ai extends M{render(e){const t=e.Dialog;return"ResizableDialog"===t.Type?oe(wt||(wt=mi`<${0} Dialog=${0} ProtoUX=${0}/>`),Li,t,e.ProtoUX):oe(vt||(vt=mi`<${0}  Dialog=${0} ProtoUX=${0}/>`),Hi,t,e.ProtoUX)}}class Hi extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Dialog;n.View=this;const i=(e,i,l,o)=>{n.x=n._DragOffset.x+l,n.y=n._DragOffset.y+o,n.z=1e3,t.ProtoUX.View.rerender()},l=(e,l,o,r)=>{i(0,0,o,r),n.z=0,t.ProtoUX.bringDialogToFront(n.Name)},o=Vi(n,{neverFrom:".CloseButton",Threshold:4,onDragStarted:(e,t,l,o)=>{n._DragOffset={x:n.x,y:n.y},i(0,0,l,o)},onDragContinued:i,onDragFinished:l,onDragCancelled:l}),{Id:r,Classes:s,Style:a,x:d,y:u,z:p,Width:c,Height:g,Title:h,WidgetList:f}=n,x=e(n,ve),$=`left:${d}px; top:${u}px; width:${c}px; height:${g}px; right:auto; bottom:auto;`;return oe(Wt||(Wt=mi`<div class=${0} id=${0} style="
         ${0}; ${0}; z-index:${0};
       " ...${0}>
         <div class="Titlebar"
@@ -27,7 +27,7 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
         </div>
 
         ${0}
-      </>`),s,r,a||"",$,p||0,x,o,o,o,o,h,t.ProtoUX._ImageFolder,function(e){e.stopImmediatePropagation(),e.preventDefault(),t.ProtoUX.closeDialog(n.Name)},(f||[]).map(e=>oe(Pt||(Pt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)))}}class Li extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Dialog;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,z:a,Width:d,Height:u,Title:p,minWidth:c,minHeight:h,maxWidth:f,maxHeight:x,WidgetList:$}=n,y=e(n,We);g("minimal width",c),g("maximal width",f),g("minimal height",h),g("maximal height",x),null==c&&(c=120),null==f&&(f=Infinity),null==h&&(h=80),null==x&&(x=Infinity),c=Math.max(0,c),f=Math.max(c,f),h=Math.max(0,h),x=Math.max(h,x);const _=(e,i,l,o)=>{"drag"===n._DragMode?b(l,o):w(l,o),n.z=1e3,t.ProtoUX.View.rerender()},m=(e,i,l,o)=>{_(0,0,l,o),n.z=0,t.ProtoUX.bringDialogToFront(n.Name)},b=(e,t)=>{n.x=n._DragOffset.x+e,n.y=n._DragOffset.y+t},w=(e,t)=>{switch(n._DragMode){case"resize-sw":let t=Math.max(c,Math.min(n._DragOffset.Width-e,f));n.x=n._DragOffset.x-(e=t-n._DragOffset.Width),n.Width=n._DragOffset.Width+e;break;case"resize-se":n.Width=Math.max(c,Math.min(n._DragOffset.Width+e,f))}n.Height=Math.max(h,Math.min(n._DragOffset.Height+t,x))},v=Vi(n,{onlyFrom:".Titlebar,.leftResizer,.middleResizer,.rightResizer",neverFrom:".CloseButton",Threshold:4,onDragStarted:(e,t,i,l,o)=>{let r=o.target.classList;switch(n._DragMode=void 0,!0){case r.contains("leftResizer"):n._DragMode="resize-sw";break;case r.contains("middleResizer"):n._DragMode="resize-s";break;case r.contains("rightResizer"):n._DragMode="resize-se";break;default:n._DragMode="drag"}n._DragOffset={x:n.x,Width:n.Width,y:n.y,Height:n.Height},_(0,0,i,l)},onDragContinued:_,onDragFinished:m,onDragCancelled:m}),W=`left:${r}px; top:${s}px; width:${d}px; height:${u}px; right:auto; bottom:auto;`;return oe(St||(St=mi`<div class="PUX ResizableDialog ${0}" id=${0} style="
+      </>`),Ei("PUX Dialog",s),r,a||"",$,p||0,x,o,o,o,o,h,t.ProtoUX._ImageFolder,function(e){e.stopImmediatePropagation(),e.preventDefault(),t.ProtoUX.closeDialog(n.Name)},(f||[]).map(e=>oe(Pt||(Pt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)))}}class Li extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Dialog;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,z:a,Width:d,Height:u,Title:p,minWidth:c,minHeight:h,maxWidth:f,maxHeight:x,WidgetList:$}=n,y=e(n,We);g("minimal width",c),g("maximal width",f),g("minimal height",h),g("maximal height",x),null==c&&(c=120),null==f&&(f=Infinity),null==h&&(h=80),null==x&&(x=Infinity),c=Math.max(0,c),f=Math.max(c,f),h=Math.max(0,h),x=Math.max(h,x);const _=(e,i,l,o)=>{"drag"===n._DragMode?b(l,o):w(l,o),n.z=1e3,t.ProtoUX.View.rerender()},m=(e,i,l,o)=>{_(0,0,l,o),n.z=0,t.ProtoUX.bringDialogToFront(n.Name)},b=(e,t)=>{n.x=n._DragOffset.x+e,n.y=n._DragOffset.y+t},w=(e,t)=>{switch(n._DragMode){case"resize-sw":let t=Math.max(c,Math.min(n._DragOffset.Width-e,f));n.x=n._DragOffset.x-(e=t-n._DragOffset.Width),n.Width=n._DragOffset.Width+e;break;case"resize-se":n.Width=Math.max(c,Math.min(n._DragOffset.Width+e,f))}n.Height=Math.max(h,Math.min(n._DragOffset.Height+t,x))},v=Vi(n,{onlyFrom:".Titlebar,.leftResizer,.middleResizer,.rightResizer",neverFrom:".CloseButton",Threshold:4,onDragStarted:(e,t,i,l,o)=>{let r=o.target.classList;switch(n._DragMode=void 0,!0){case r.contains("leftResizer"):n._DragMode="resize-sw";break;case r.contains("middleResizer"):n._DragMode="resize-s";break;case r.contains("rightResizer"):n._DragMode="resize-se";break;default:n._DragMode="drag"}n._DragOffset={x:n.x,Width:n.Width,y:n.y,Height:n.Height},_(0,0,i,l)},onDragContinued:_,onDragFinished:m,onDragCancelled:m}),W=`left:${r}px; top:${s}px; width:${d}px; height:${u}px; right:auto; bottom:auto;`;return oe(St||(St=mi`<div class=${0} id=${0} style="
         ${0}; ${0}; z-index:${0};
       " ...${0}>
         <div class="ContentPane">
@@ -55,7 +55,7 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
           onPointerDown=${0} onPointerUp=${0}
           onPointerMove=${0} onPointerCancel=${0}
         />
-      </>`),l,i,o||"",W,a||0,y,($||[]).map(e=>oe(It||(It=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)),v,v,v,v,p,t.ProtoUX._ImageFolder,function(e){e.stopImmediatePropagation(),e.preventDefault(),t.ProtoUX.closeDialog(n.Name)},v,v,v,v,v,v,v,v,v,v,v,v)}}class Mi extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Widget;if(n.View=this,1==t.hidden||1==n.hidden)return"";const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,p=e(n,Pe),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(n.Type){case"Group":return oe(Vt||(Vt=mi`<div class="PUX Widget ${0}" id=${0} style="${0} ${0}" ...${0}>
+      </>`),Ei("PUX ResizableDialog",l),i,o||"",W,a||0,y,($||[]).map(e=>oe(It||(It=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)),v,v,v,v,p,t.ProtoUX._ImageFolder,function(e){e.stopImmediatePropagation(),e.preventDefault(),t.ProtoUX.closeDialog(n.Name)},v,v,v,v,v,v,v,v,v,v,v,v)}}class Mi extends M{constructor(...e){super(...e),this.state={Value:0}}rerender(){this.setState({Value:this.state.Value+1})}render(t){const n=t.Widget;if(n.View=this,1==t.hidden||1==n.hidden)return"";const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,p=e(n,Pe),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(n.Type){case"Group":return oe(Vt||(Vt=mi`<div class="PUX Widget ${0}" id=${0} style="${0} ${0}" ...${0}>
             ${0}
           </div>`),l,i,c,o||"",p,(u||[]).map(e=>oe(Ut||(Ut=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)));case"Box":return oe(Xt||(Xt=mi`<div class="PUX Widget ${0}" id=${0} style="
             ${0} ${0}
@@ -64,29 +64,29 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
             " ...${0}>
               ${0}
               ${0}
-            </div>`),l,i,c,o||"",a,r||"",(s||[]).map(e=>oe(kt||(kt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)))}return oe(Ct||(Ct=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),r,n,t.ProtoUX,n.Name)}}}Di.registerWidgetView("horizontalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ie),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Tt||(Tt=mi`<div class="PUX horizontalSeparator Widget ${0}" id=${0} style="
+            </div>`),l,i,c,o||"",a,r||"",(s||[]).map(e=>oe(kt||(kt=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),Mi,e,t.ProtoUX,e.Name)))}return oe(Ct||(Ct=mi`<${0} Widget=${0} ProtoUX=${0} key=${0}/>`),r,n,t.ProtoUX,n.Name)}}}Di.registerWidgetView("horizontalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ie),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Tt||(Tt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
-      " ...${0}/>`),l,i,p,o||"",u)}}),Di.registerWidgetView("verticalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ve),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(At||(At=mi`<div class="PUX verticalSeparator Widget ${0}" id=${0} style="
+      " ...${0}/>`),Ei("PUX horizontalSeparator Widget",l),i,p,o||"",u)}}),Di.registerWidgetView("verticalSeparator",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d}=n,u=e(n,Ve),p=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(At||(At=mi`<div class=${0} id=${0} style="
         ${0} ${0}
-      " ...${0}/>`),l,i,p,o||"",u)}}),Di.registerWidgetView("Badge",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Ue);const c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(u=(""+(u||"")).trim(),!0){case""===u:return"";case u.length>1:u="#";default:return oe(Ht||(Ht=mi`<div class="PUX Badge Widget ${0}" id=${0} style="
+      " ...${0}/>`),Ei("PUX verticalSeparator Widget",l),i,p,o||"",u)}}),Di.registerWidgetView("Badge",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Ue);const c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";switch(u=(""+(u||"")).trim(),!0){case""===u:return"";case u.length>1:u="#";default:return oe(Ht||(Ht=mi`<div class=${0} id=${0} style="
           ${0} ${0}
-        " ...${0}>${0}</div>`),l,i,c,o||"",p,u)}}}),Di.registerWidgetView("HTMLView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Xe),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Lt||(Lt=mi`<div class="PUX HTMLView Widget ${0}" id=${0} style="
+        " ...${0}>${0}</div>`),Ei("PUX Badge Widget",l),i,c,o||"",p,u)}}}),Di.registerWidgetView("HTMLView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Xe),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Lt||(Lt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " ...${0}
         dangerouslySetInnerHTML=${0}
-      />`),l,i,c,o||"",p,{__html:u})}}),Di.registerWidgetView("TextView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,De),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Mt||(Mt=mi`<div class="PUX TextView Widget ${0}" id=${0} style="
+      />`),Ei("PUX HTMLView Widget",l),i,c,o||"",p,{__html:u})}}),Di.registerWidgetView("TextView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,De),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Mt||(Mt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
-      " ...${0}>${0}</>`),l,i,c,o||"",p,u)}}),Di.registerWidgetView("ImageView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,ImageScaling:p,ImageAlignment:c}=n,g=e(n,ke),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nt||(Nt=mi`<img class="PUX ImageView Widget ${0}" id=${0} style="
+      " ...${0}>${0}</>`),Ei("PUX TextView Widget",l),i,c,o||"",p,u)}}),Di.registerWidgetView("ImageView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,ImageScaling:p,ImageAlignment:c}=n,g=e(n,ke),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nt||(Nt=mi`<img class=${0} id=${0} style="
         ${0} ${0};
         object-fit:${0};
         object-position:${0};
-      " ...${0} src=${0}/>`),l,i,h,o||"","stretch"===p?"fill ":p,c,g,u)}}),Di.registerWidgetView("WebView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,PermissionsPolicy:p,allowsFullscreen:c,SandboxPermissions:g,ReferrerPolicy:h}=n,f=e(n,Ce),x=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Ft||(Ft=mi`<iframe class="PUX WebView Widget ${0}" id=${0} style="
+      " ...${0} src=${0}/>`),Ei("PUX ImageView Widget",l),i,h,o||"","stretch"===p?"fill ":p,c,g,u)}}),Di.registerWidgetView("WebView",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,PermissionsPolicy:p,allowsFullscreen:c,SandboxPermissions:g,ReferrerPolicy:h}=n,f=e(n,Ce),x=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Ft||(Ft=mi`<iframe class=${0} id=${0} style="
         ${0} ${0}
       " ...${0} src=${0}
         allow=${0} allowfullscreen=${0}
         sandbox=${0}
         referrerpolicy=${0}
-      />`),l,i,x,o||"",f,u,p,c,g||"allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-same-origin allow-scripts",h)}}),Di.registerWidgetView("Icon",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:p,disabled:c}=n,g=e(n,Te);const h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let f=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+f)),oe(Ot||(Ot=mi`<div class="PUX Icon Widget ${0}" id=${0} style="
+      />`),Ei("PUX WebView Widget",l),i,x,o||"",f,u,p,c,g||"allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-same-origin allow-scripts",h)}}),Di.registerWidgetView("Icon",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:p,disabled:c}=n,g=e(n,Te);const h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let f=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+f)),oe(Ot||(Ot=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " disabled=${0}><div style="
         display:block; position:absolute;
@@ -95,7 +95,7 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
         -webkit-mask-size:contain;           mask-size:contain;
         -webkit-mask-position:center center; mask-position:center center;
         background-color:${0};
-      " ...${0}/></>`),l,i,h,o||"",c,u,u,p||"black",g)}}),Di.registerWidgetView("PseudoDropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:p,Options:c,onInput:g}=n,h=e(n,Ae);const f=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let x=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+x)),oe(Et||(Et=mi`<div class="PUX PseudoDropDown Widget ${0}" id=${0} style="
+      " ...${0}/></>`),Ei("PUX Icon Widget",l),i,h,o||"",c,u,u,p||"black",g)}}),Di.registerWidgetView("PseudoDropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Color:p,Options:c,onInput:g}=n,h=e(n,Ae);const f=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let x=t.ProtoUX.ImageFolder;return null!=u&&""!==u.trim()&&(u=u.trim().replace(/url\("\/images\//g,'url("'+x)),oe(Et||(Et=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       "><div style="
         display:block; position:absolute;
@@ -109,135 +109,135 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
           <option value="" disabled selected>please select</option>
           ${0}
         </select>
-      </div>`),l,i,f,o||"",u,u,p||"black",h,g,(c||[]).map(e=>oe(zt||(zt=mi`<option>${0}</>`),e)))}}),Di.registerWidgetView("Button",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,He),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Rt||(Rt=mi`<div class="PUX Button Widget ${0}" id=${0} style="
+      </div>`),Ei("PUX PseudoDropDown Widget",l),i,f,o||"",u,u,p||"black",h,g,(c||[]).map(e=>oe(zt||(zt=mi`<option>${0}</>`),e)))}}),Di.registerWidgetView("Button",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,He),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Rt||(Rt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <button ...${0}>${0}</button>
-      </div>`),l,i,c,o||"",p,u||"")}}),Di.registerWidgetView("Checkbox",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Le),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g,indeterminate:h}=t;return null==g&&(g=1==u),null==h&&(h=null==u),oe(jt||(jt=mi`<div class="PUX Checkbox Widget ${0}" id=${0} style="
+      </div>`),Ei("PUX Button Widget",l),i,c,o||"",p,u||"")}}),Di.registerWidgetView("Checkbox",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Le),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g,indeterminate:h}=t;return null==g&&(g=1==u),null==h&&(h=null==u),oe(jt||(jt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <input type="checkbox" checked=${0} indeterminate=${0} ...${0}/>
-      </div>`),l,i,c,o||"",g,h,p)}}),Di.registerWidgetView("Radiobutton",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Me),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g}=t;return null==g&&(g=1==u),oe(Bt||(Bt=mi`<div class="PUX Radiobutton Widget ${0}" id=${0} style="
+      </div>`),Ei("PUX Checkbox Widget",l),i,c,o||"",g,h,p)}}),Di.registerWidgetView("Radiobutton",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Me),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let{checked:g}=t;return null==g&&(g=1==u),oe(Bt||(Bt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <input type="radio" checked=${0} ...${0}/>
-      </div>`),l,i,c,o||"",g,p)}}),Di.registerWidgetView("Gauge",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Ne),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Yt||(Yt=mi`<div class="PUX Gauge Widget ${0}" id=${0} style="
+      </div>`),Ei("PUX Radiobutton Widget",l),i,c,o||"",g,p)}}),Di.registerWidgetView("Gauge",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Ne),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Yt||(Yt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <meter value=${0} ...${0}/>
-      </div>`),l,i,c,o||"",u||"",p)}}),Di.registerWidgetView("Progressbar",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Fe),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Zt||(Zt=mi`<div class="PUX Progressbar Widget ${0}" id=${0} style="
+      </div>`),Ei("PUX Gauge Widget",l),i,c,o||"",u||"",p)}}),Di.registerWidgetView("Progressbar",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,Fe),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Zt||(Zt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <progress value=${0} ...${0}/>
-      </div>`),l,i,c,o||"",u||"",p)}}),Di.registerWidgetView("Slider",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Hashmarks:p}=n,c=e(n,Oe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Hashmarks",f=oe(Gt||(Gt=mi`\n<datalist id=${0}>
+      </div>`),Ei("PUX Progressbar Widget",l),i,c,o||"",u||"",p)}}),Di.registerWidgetView("Slider",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Hashmarks:p}=n,c=e(n,Oe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Hashmarks",f=oe(Gt||(Gt=mi`\n<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>{const t=e.replace(/:.*$/,"").trim(),n=e.replace(/^[^:]+:/,"").trim();return oe(Jt||(Jt=mi`<option label=${0} value=${0}></option>`),t,n)}))),oe(Kt||(Kt=mi`<div class="PUX Slider Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>{const t=e.replace(/:.*$/,"").trim(),n=e.replace(/^[^:]+:/,"").trim();return oe(Jt||(Jt=mi`<option label=${0} value=${0}></option>`),t,n)}))),oe(Kt||(Kt=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="range" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("TextlineInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ee),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(qt||(qt=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX Slider Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("TextlineInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ee),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(qt||(qt=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(Qt||(Qt=mi`<option value=${0}></option>`),e)))),oe(en||(en=mi`<div class="PUX TextlineInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(Qt||(Qt=mi`<option value=${0}></option>`),e)))),oe(en||(en=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="text" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("PasswordInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,ze),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(tn||(tn=mi`<div class="PUX PasswordInput Widget ${0}" id=${0} style="
+      </div>${0}`),Ei("PUX TextlineInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("PasswordInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,ze),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(tn||(tn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <input type="password" value=${0} ...${0}/>
-      </div>`),l,i,c,o||"",u||"",p)}}),Di.registerWidgetView("NumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Re),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(nn||(nn=mi`<datalist id=${0}>
+      </div>`),Ei("PUX PasswordInput Widget",l),i,c,o||"",u||"",p)}}),Di.registerWidgetView("NumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Re),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(nn||(nn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(ln||(ln=mi`<option value=${0}></option>`),e)))),oe(on||(on=mi`<div class="PUX NumberInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(ln||(ln=mi`<option value=${0}></option>`),e)))),oe(on||(on=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="number" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("PhoneNumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(rn||(rn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX NumberInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("PhoneNumberInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(rn||(rn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(sn||(sn=mi`<option value=${0}></option>`),e)))),oe(an||(an=mi`<div class="PUX PhoneNumberInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(sn||(sn=mi`<option value=${0}></option>`),e)))),oe(an||(an=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="tel" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("EMailAddressInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Be),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(dn||(dn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX PhoneNumberInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("EMailAddressInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Be),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(dn||(dn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(un||(un=mi`<option value=${0}></option>`),e)))),oe(pn||(pn=mi`<div class="PUX EMailAddressInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(un||(un=mi`<option value=${0}></option>`),e)))),oe(pn||(pn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="email" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("URLInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ye),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(cn||(cn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX EMailAddressInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("URLInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ye),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(cn||(cn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(gn||(gn=mi`<option value=${0}></option>`),e)))),oe(hn||(hn=mi`<div class="PUX URLInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(gn||(gn=mi`<option value=${0}></option>`),e)))),oe(hn||(hn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="url" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("TimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ze),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(fn||(fn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX URLInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("TimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ze),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(fn||(fn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(xn||(xn=mi`<option value=${0}></option>`),e)))),oe($n||($n=mi`<div class="PUX TimeInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(xn||(xn=mi`<option value=${0}></option>`),e)))),oe($n||($n=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="time" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("DateTimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ge),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(yn||(yn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX TimeInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("DateTimeInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ge),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(yn||(yn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(_n||(_n=mi`<option value=${0}></option>`),e)))),oe(mn||(mn=mi`<div class="PUX DateTimeInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(_n||(_n=mi`<option value=${0}></option>`),e)))),oe(mn||(mn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="datetime-local" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("DateInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(bn||(bn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX DateTimeInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("DateInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Je),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(bn||(bn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(wn||(wn=mi`<option value=${0}></option>`),e)))),oe(vn||(vn=mi`<div class="PUX DateInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(wn||(wn=mi`<option value=${0}></option>`),e)))),oe(vn||(vn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="date" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("WeekInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ke),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(Wn||(Wn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX DateInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("WeekInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Ke),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(Wn||(Wn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(Pn||(Pn=mi`<option value=${0}></option>`),e)))),oe(Sn||(Sn=mi`<div class="PUX WeekInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(Pn||(Pn=mi`<option value=${0}></option>`),e)))),oe(Sn||(Sn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="week" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("MonthInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(In||(In=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX WeekInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("MonthInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(In||(In=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(Vn||(Vn=mi`<option value=${0}></option>`),e)))),oe(Un||(Un=mi`<div class="PUX MonthInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(Vn||(Vn=mi`<option value=${0}></option>`),e)))),oe(Un||(Un=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="month" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("SearchInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(Xn||(Xn=mi`<datalist id=${0}>
+      </div>${0}`),Ei("PUX MonthInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("SearchInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,Qe),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(Xn||(Xn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(Dn||(Dn=mi`<option value=${0}></option>`),e)))),oe(kn||(kn=mi`<div class="PUX SearchInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(Dn||(Dn=mi`<option value=${0}></option>`),e)))),oe(kn||(kn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="search" value=${0} ...${0}/>
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("FileInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Placeholder:p,onDrop:c}=n,g=e(n,et),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Cn||(Cn=mi`<label class="PUX FileInput Widget ${0}" id=${0} style="
+      </div>${0}`),Ei("PUX SearchInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("FileInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Placeholder:p,onDrop:c}=n,g=e(n,et),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Cn||(Cn=mi`<label class=${0} id=${0} style="
         ${0} ${0}
       " onDragEnter=${0} onDragOver=${0} onDrop=${0}>
         <input type="file" style="display:none" ...${0}/>
         ${0}
         ${0}
-      </label>`),l,i,h,o||"",function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof c&&c(e)},g,""===(u||"")?"":oe(Tn||(Tn=mi`<span>${0}</span>`),u),""===(u||"")?""===(p||"")?"":oe(An||(An=mi`<span>${0}</span>`),p):"")}}),Di.registerWidgetView("ColorInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,tt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(Hn||(Hn=mi`<datalist id=${0}>
+      </label>`),Ei("PUX FileInput Widget",l),i,h,o||"",function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof c&&c(e)},g,""===(u||"")?"":oe(Tn||(Tn=mi`<span>${0}</span>`),u),""===(u||"")?""===(p||"")?"":oe(An||(An=mi`<span>${0}</span>`),p):"")}}),Di.registerWidgetView("ColorInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Suggestions:p}=n,c=e(n,tt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";let h,f="";return Array.isArray(p)&&p.length>0&&(h=i+"-Suggestions",f=oe(Hn||(Hn=mi`<datalist id=${0}>
           ${0}
-        </datalist>`),h,p.map(e=>oe(Ln||(Ln=mi`<option value=${0}></option>`),e)))),oe(Mn||(Mn=mi`<div class="PUX ColorInput Widget ${0}" id=${0} style="
+        </datalist>`),h,p.map(e=>oe(Ln||(Ln=mi`<option value=${0}></option>`),e)))),oe(Mn||(Mn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " list=${0}>
         <input type="color" value=${0} ...${0} />
-      </div>${0}`),l,i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("DropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Options:p,Placeholder:c}=n,g=e(n,nt),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nn||(Nn=mi`<div class="PUX DropDown Widget ${0}" id=${0} style="
+      </div>${0}`),Ei("PUX ColorInput Widget",l),i,g,o||"",h,u||"",c,f)}}),Di.registerWidgetView("DropDown",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,Options:p,Placeholder:c}=n,g=e(n,nt),h=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(Nn||(Nn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <select ...${0}>
           ${0}
           ${0}
         </select>
-      </div>`),l,i,h,o||"",g,null==c?"":oe(Fn||(Fn=mi`<option value="" disabled>${0}</option>`),c),(p||[]).map(e=>oe(On||(On=mi`<option selected=${0}>${0}</>`),e===u,e)))}}),Di.registerWidgetView("TextInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,it),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(En||(En=mi`<div class="PUX TextInput Widget ${0}" id=${0} style="
+      </div>`),Ei("PUX DropDown Widget",l),i,h,o||"",g,null==c?"":oe(Fn||(Fn=mi`<option value="" disabled>${0}</option>`),c),(p||[]).map(e=>oe(On||(On=mi`<option selected=${0}>${0}</>`),e===u,e)))}}),Di.registerWidgetView("TextInput",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u}=n,p=e(n,it),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(En||(En=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         <textarea ...${0} value=${0}></textarea>
-      </div>`),l,i,c,o||"",p,u||"")}}),Di.registerWidgetView("FileDropArea",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,onDrop:u,WidgetList:p}=n,c=e(n,lt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(zn||(zn=mi`<label class="PUX FileDropArea Widget ${0}" id=${0} style="
+      </div>`),Ei("PUX TextInput Widget",l),i,c,o||"",p,u||"")}}),Di.registerWidgetView("FileDropArea",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,onDrop:u,WidgetList:p}=n,c=e(n,lt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(zn||(zn=mi`<label class=${0} id=${0} style="
         ${0} ${0}
       " onDragEnter=${0} onDragOver=${0} onDrop=${0}>
         <input type="file" ...${0}/>
         ${0}
-      </label>`),l,i,g,o||"",function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof u&&u(e)},c,(p||[]).map(e=>oe(Rn||(Rn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}),Di.registerWidgetView("Accordion",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,p=e(n,ot),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(jn||(jn=mi`<div class="PUX Accordion Widget ${0}" id=${0} style="
+      </label>`),Ei("PUX FileDropArea Widget",l),i,g,o||"",function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault()},function(e){e.stopPropagation(),e.preventDefault(),"function"==typeof u&&u(e)},c,(p||[]).map(e=>oe(Rn||(Rn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}),Di.registerWidgetView("Accordion",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,WidgetList:u}=n,p=e(n,ot),c=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(jn||(jn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),l,i,c,o||"",p,(u||[]).map(e=>oe(Bn||(Bn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Ni,e,t.ProtoUX)))}});class Ni extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,Height:r,Value:s,Expansion:a,WidgetList:d}=n,u=e(n,rt),p=this;return oe(Yn||(Yn=mi`<div class="PUX Fold Widget ${0}" id=${0} style="
+      </>`),Ei("PUX Accordion Widget",l),i,c,o||"",p,(u||[]).map(e=>oe(Bn||(Bn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Ni,e,t.ProtoUX)))}});class Ni extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,Height:r,Value:s,Expansion:a,WidgetList:d}=n,u=e(n,rt),p=this;return oe(Yn||(Yn=mi`<div class=${0} id=${0} style="
         ${0}; left:0px; top:0px; width:100%; height:auto;
       " ...${0}>
         <div class="PUX Fold-Header">
@@ -247,38 +247,38 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
         </div>
 
         ${0}
-      </>`),l,i,o||"",u,a?`${t.ProtoUX._ImageFolder}caret-down.png`:`${t.ProtoUX._ImageFolder}caret-right.png`,function(){n.Expansion=!n.Expansion,p.rerender()},s,a?oe(Zn||(Zn=mi`<div class="PUX Fold-Content" style="
+      </>`),Ei("PUX Fold Widget",l),i,o||"",u,a?`${t.ProtoUX._ImageFolder}caret-down.png`:`${t.ProtoUX._ImageFolder}caret-right.png`,function(){n.Expansion=!n.Expansion,p.rerender()},s,a?oe(Zn||(Zn=mi`<div class="PUX Fold-Content" style="
               height:${0}px; border:none;
             ">
               ${0}
-            </>`),r,(d||[]).map(e=>oe(Gn||(Gn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX))):"")}}Di.registerWidgetView("Fold",Ni),Di.registerWidgetView("Deck",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,WidgetList:p}=n,c=e(n,st),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"",h=p[null==u?0:u<0?p.length+u:u]||p[0];return oe(Jn||(Jn=mi`<div class="PUX Deck Widget ${0}" id=${0} style="
+            </>`),r,(d||[]).map(e=>oe(Gn||(Gn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX))):"")}}Di.registerWidgetView("Fold",Ni),Di.registerWidgetView("Deck",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,WidgetList:p}=n,c=e(n,st),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"",h=p[null==u?0:u<0?p.length+u:u]||p[0];return oe(Jn||(Jn=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),l,i,g,o||"",c,null==h?oe(Kn||(Kn=mi`<${0}><span>(no card)</span></>`),Ei):oe(qn||(qn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Fi,h,t.ProtoUX))}});class Fi extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,WidgetList:r}=n,s=e(n,at);return oe(Qn||(Qn=mi`<div class="PUX Card Widget ${0}" id=${0} style="
+      </>`),Ei("PUX Deck Widget",l),i,g,o||"",c,null==h?oe(Kn||(Kn=mi`<${0}><span>(no card)</span></>`),zi):oe(qn||(qn=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Fi,h,t.ProtoUX))}});class Fi extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,WidgetList:r}=n,s=e(n,at);return oe(Qn||(Qn=mi`<div class=${0} id=${0} style="
         border:none; ${0};
         left:0px; top:0px; right:0px; bottom:0px; width:auto; height:auto
       " ...${0}>
         ${0}
-      </>`),l,i,o||"",s,(r||[]).map(e=>oe(ei||(ei=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}Di.registerWidgetView("Card",Fi),Di.registerWidgetView("TabStrip",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,WidgetList:p}=n,c=e(n,dt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"",h=p[null==u?0:u<0?p.length+u:u]||p[0],f=this;return oe(ti||(ti=mi`<div class="PUX TabStrip Widget ${0}" id=${0} style="
+      </>`),Ei("PUX Card Widget",l),i,o||"",s,(r||[]).map(e=>oe(ei||(ei=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}Di.registerWidgetView("Card",Fi),Di.registerWidgetView("TabStrip",class extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Value:u,WidgetList:p}=n,c=e(n,dt),g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"",h=p[null==u?0:u<0?p.length+u:u]||p[0],f=this;return oe(ti||(ti=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),l,i,g,o||"",c,(p||[]).map((e,n)=>oe(ni||(ni=mi`
+      </>`),Ei("PUX TabStrip Widget",l),i,g,o||"",c,(p||[]).map((e,n)=>oe(ni||(ni=mi`
           <${0} Widget=${0} ProtoUX=${0}
             active=${0}
             onClick=${0}
           />
-        `),Oi,e,t.ProtoUX,e===h,()=>function(e){f.base.dispatchEvent(new CustomEvent("ValueChange",{detail:e}))}(n))))}});class Oi extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,Width:r,WidgetList:s}=n,a=e(n,ut),{active:d,onClick:u}=t;return oe(ii||(ii=mi`<div class="PUX ${0} Tab Widget ${0}" id=${0} style="
+        `),Oi,e,t.ProtoUX,e===h,()=>function(e){f.base.dispatchEvent(new CustomEvent("ValueChange",{detail:e}))}(n))))}});class Oi extends Mi{render(t){const n=t.Widget;n.View=this;const{Id:i,Classes:l,Style:o,Width:r,WidgetList:s}=n,a=e(n,ut),{active:d,onClick:u}=t;return oe(ii||(ii=mi`<div class=${0} id=${0} style="
         ${0}; width:${0}px; border:none; border-width:0px 0px 4px 0px;
         border-style:solid; border-bottom-color:${0}
       " ...${0} onClick=${0}>
         ${0}
-      </div>`),d?"active":"",l,i,o||"",r,d?"black":"transparent",a,u,(s||[]).map(e=>oe(li||(li=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}Di.registerWidgetView("Tab",Oi),Di.registerWidgetView("FlatListView",class extends Mi{render(t){const i=t.Widget;i.View=this;let{Id:l,Classes:o,Style:r,x:s,y:a,Width:d,Height:u,List:p,ItemRenderer:c,Placeholder:x,selectedIndices:_,SelectionLimit:m,onSelectionChange:b,onItemSelected:w,onItemDeselected:v}=i,W=e(i,pt);const P=null!=s&&null!=d&&null!=a&&null!=u?`left:${s}px; top:${a}px; width:${d}px; height:${u}px; right:auto; bottom:auto;`:"";$("item list",p),f("list item renderer",c),h("list placeholder",x),y("list of selected indices",_,n),g("selection limit",m),f("selection change callback",b),f("item selection callback",w),f("item deselection callback",v),null==c&&(c=e=>oe(oi||(oi=mi`${0}`),e+"")),null==x&&(x="(empty)"),null==_&&(_=[]),null==m&&(m=1);const S=Object.create(null);if(_=_.filter(e=>!(!(n(e)&&e>=0&&e<p.length)||e in S||(S[e]=!0,0))),_.length>m){const e=_.slice(m);_.length=m,null!=b&&b(_),null!=v&&e.forEach(e=>{v(p[e],e)})}function I(e){return e in S}return oe(ri||(ri=mi`<div class="PUX FlatListView Widget ${0}" id=${0} style="
+      </div>`),Ei('PUX ${active ? "active" : ""} Tab Widget',l),i,o||"",r,d?"black":"transparent",a,u,(s||[]).map(e=>oe(li||(li=mi`<${0} Widget=${0} ProtoUX=${0}/>`),Mi,e,t.ProtoUX)))}}function Ei(e,t){const n=Object.create(null);return(e+" "+(t||"")).trim().replace(/\s+/g," ").split(" ").filter(e=>!(e in n)&&(n[e]=!0,!0)).join(" ")}Di.registerWidgetView("Tab",Oi),Di.registerWidgetView("FlatListView",class extends Mi{render(t){const i=t.Widget;i.View=this;let{Id:l,Classes:o,Style:r,x:s,y:a,Width:d,Height:u,List:p,ItemRenderer:c,Placeholder:x,selectedIndices:_,SelectionLimit:m,onSelectionChange:b,onItemSelected:w,onItemDeselected:v}=i,W=e(i,pt);const P=null!=s&&null!=d&&null!=a&&null!=u?`left:${s}px; top:${a}px; width:${d}px; height:${u}px; right:auto; bottom:auto;`:"";$("item list",p),f("list item renderer",c),h("list placeholder",x),y("list of selected indices",_,n),g("selection limit",m),f("selection change callback",b),f("item selection callback",w),f("item deselection callback",v),null==c&&(c=e=>oe(oi||(oi=mi`${0}`),e+"")),null==x&&(x="(empty)"),null==_&&(_=[]),null==m&&(m=1);const S=Object.create(null);if(_=_.filter(e=>!(!(n(e)&&e>=0&&e<p.length)||e in S||(S[e]=!0,0))),_.length>m){const e=_.slice(m);_.length=m,null!=b&&b(_),null!=v&&e.forEach(e=>{v(p[e],e)})}function I(e){return e in S}return oe(ri||(ri=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),o,l,P,r||"",W,0===p.length?oe(si||(si=mi`<div class="centered"><span>${0}</></>`),x):p.map((e,t)=>oe(ai||(ai=mi`<div
+      </>`),Ei("PUX FlatListView Widget",o),l,P,r||"",W,0===p.length?oe(si||(si=mi`<div class="centered"><span>${0}</></>`),x):p.map((e,t)=>oe(ai||(ai=mi`<div
               class=${0}
               dangerouslySetInnerHTML=${0}
               onClick=${0}
@@ -287,15 +287,15 @@ function e(e,t){if(null==e)return{};var n,i,l={},o=Object.keys(e);for(i=0;i<o.le
             ${0} ${0}
           </div>
           ${0}
-        </div>`),n,i?"selected":"",function(e){!function(e,t,n){if(e.stopImmediatePropagation(),e.preventDefault(),0===I)return;let i,l,o=!1;if(e.shiftKey||e.metaKey)if(o=!0,B(n))l=[n],S=S.filter(e=>!z(n,e));else{const e=n.slice(0,n.length-1);l=S.filter(t=>!j(t,e)),S=S.filter(t=>j(t,e)),S.length===I&&l.push([S.shift()]),i=[n],S.push(n)}else l=S.filter(e=>!z(n,e)),o=!B(n),i=o?[n]:[],S=[n];o&&null!=U&&U(S),null!=l&&null!=D&&l.forEach(e=>{D(O(e),e)}),null!=i&&null!=X&&i.forEach(e=>{X(O(e),e)})}(e,0,t)},r?oe(l?pi||(pi=mi`<img class="ItemExpander" src="/svg/icons/caret-down.svg"  onClick=${0}/>`):ci||(ci=mi`<img class="ItemExpander" src="/svg/icons/caret-right.svg" onClick=${0}/>`),function(n){!function(e,t,n){e.stopImmediatePropagation(),e.preventDefault();let i=R(n,k);i<0?k.push(n):k.splice(i,1),null!=T&&T(k),i<0?null!=A&&A(t,n):null!=H&&H(t,n)}(n,e,t)}):oe(gi||(gi=mi`<img class="ItemIcon" src="/svg/icons/circle.svg"/>`)),w(e,t),r&&l?o.map((e,n)=>Y(e,t.concat(n))):"")}return k=k.filter(e=>E(e)),k=k.filter((e,t)=>R(e,k)===t),oe(hi||(hi=mi`<div class="PUX NestedListView Widget ${0}" id=${0} style="
+        </div>`),n,i?"selected":"",function(e){!function(e,t,n){if(e.stopImmediatePropagation(),e.preventDefault(),0===I)return;let i,l,o=!1;if(e.shiftKey||e.metaKey)if(o=!0,B(n))l=[n],S=S.filter(e=>!z(n,e));else{const e=n.slice(0,n.length-1);l=S.filter(t=>!j(t,e)),S=S.filter(t=>j(t,e)),S.length===I&&l.push([S.shift()]),i=[n],S.push(n)}else l=S.filter(e=>!z(n,e)),o=!B(n),i=o?[n]:[],S=[n];o&&null!=U&&U(S),null!=l&&null!=D&&l.forEach(e=>{D(O(e),e)}),null!=i&&null!=X&&i.forEach(e=>{X(O(e),e)})}(e,0,t)},r?oe(l?pi||(pi=mi`<img class="ItemExpander" src="/svg/icons/caret-down.svg"  onClick=${0}/>`):ci||(ci=mi`<img class="ItemExpander" src="/svg/icons/caret-right.svg" onClick=${0}/>`),function(n){!function(e,t,n){e.stopImmediatePropagation(),e.preventDefault();let i=R(n,k);i<0?k.push(n):k.splice(i,1),null!=T&&T(k),i<0?null!=A&&A(t,n):null!=H&&H(t,n)}(n,e,t)}):oe(gi||(gi=mi`<img class="ItemIcon" src="/svg/icons/circle.svg"/>`)),w(e,t),r&&l?o.map((e,n)=>Y(e,t.concat(n))):"")}return k=k.filter(e=>E(e)),k=k.filter((e,t)=>R(e,k)===t),oe(hi||(hi=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       " ...${0}>
         ${0}
-      </>`),r,o,M,s||"",L,0===b.length?oe(fi||(fi=mi`<div class="centered"><span>${0}</></>`),v):b.map((e,t)=>Y(e,[t])))}}),Di.registerWidgetView("Placeholder",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Substitute:u,Placeholder:p}=n,c=e(n,gt);f("Substitute",u),h("placeholder text",p),null==p&&(p="(empty)");const g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(xi||(xi=mi`<div class="PUX Placeholder Widget ${0}" id=${0} style="
+      </>`),Ei("PUX NestedListView Widget",r),o,M,s||"",L,0===b.length?oe(fi||(fi=mi`<div class="centered"><span>${0}</></>`),v):b.map((e,t)=>Y(e,[t])))}}),Di.registerWidgetView("Placeholder",class extends Mi{render(t){const n=t.Widget;n.View=this;let{Id:i,Classes:l,Style:o,x:r,y:s,Width:a,Height:d,Substitute:u,Placeholder:p}=n,c=e(n,gt);f("Substitute",u),h("placeholder text",p),null==p&&(p="(empty)");const g=null!=r&&null!=a&&null!=s&&null!=d?`left:${r}px; top:${s}px; width:${a}px; height:${d}px; right:auto; bottom:auto;`:"";return oe(xi||(xi=mi`<div class=${0} id=${0} style="
         ${0} ${0}
       ">
         ${0}
-      </div>`),l,i,g,o||"",null==u?oe($i||($i=mi`<div class="centered"><span>${0}</></>`),p):oe(yi||(yi=mi`<${0} ...${0}/>`),u,c))}});class Ei extends M{render(e){return oe(_i||(_i=mi`<div class="centered">
+      </div>`),Ei("PUX Placeholder Widget",l),i,g,o||"",null==u?oe($i||($i=mi`<div class="centered"><span>${0}</></>`),p):oe(yi||(yi=mi`<${0} ...${0}/>`),u,c))}});class zi extends M{render(e){return oe(_i||(_i=mi`<div class="centered">
         ${0}
       </div>`),e.children)}}export{Xi as DragClickRecognizerFor,Vi as DragRecognizerFor,Di as ProtoUX,wi as computed,vi as dispose,bi as observe,Pi as throwError,Si as throwReadOnlyError};
 //# sourceMappingURL=protoux.modern.js.map
