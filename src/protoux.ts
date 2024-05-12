@@ -925,6 +925,7 @@ debugger
       }
 
       this._openDialogs.push(Dialog)
+        if (typeof Dialog.onOpen === 'function') { Dialog.onOpen(Dialog) }
       this.rerender()
     }
 
@@ -938,6 +939,7 @@ debugger
       if (DialogIndex < 0) { return }
 
       this._openDialogs.splice(DialogIndex,1)
+        if (typeof Dialog.onClose === 'function') { Dialog.onClose(Dialog) }
       this.rerender()
     }
 
