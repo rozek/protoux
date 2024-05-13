@@ -3167,6 +3167,7 @@ debugger
         List, ItemRenderer, Placeholder, LabelOfItem, ContentListOfItem,
         selectedPaths, SelectionLimit, SelectionMode,
         onSelectionChange, onItemSelected, onItemDeselected,
+        onItemDoubleClicked,
         expandedPaths, Indentation,
         onExpansionChange, onItemExpanded, onItemCollapsed,
         View, WidgetList, ...otherProps
@@ -3193,6 +3194,7 @@ debugger
       allowFunction   ('selection change callback',onSelectionChange)
       allowFunction     ('item selection callback',onItemSelected)
       allowFunction   ('item deselection callback',onItemDeselected)
+      allowFunction  ('item double-click callback',onItemDoubleClicked)
       allowListSatisfying('list of expanded paths',expandedPaths, ValueIsOrdinalList)
       allowOrdinal                  ('indentation',Indentation)
       allowFunction   ('expansion change callback',onExpansionChange)
@@ -3283,7 +3285,7 @@ debugger
       ))
 
       function processSelectionClick (
-        Event:MouseEvent, Item:any, ItemPath:number[]
+        Event:PointerEvent, Item:any, ItemPath:number[]
       ):void {
         Event.stopImmediatePropagation()
         Event.preventDefault()
@@ -3343,7 +3345,20 @@ debugger
         }
       }
 
-      function processExpansionClick (Event:MouseEvent, Item:any, Path:number[]):void {
+      function processDoubleClick (
+        Event:PointerEvent, Item:any, ItemPath:number[]
+      ):void {
+        if (onItemDoubleClicked != null) {
+          Event.stopImmediatePropagation()
+          Event.preventDefault()
+
+          onItemDoubleClicked(Item,ItemPath,Event)
+        }
+      }
+
+      function processExpansionClick (
+        Event:PointerEvent, Item:any, Path:number[]
+      ):void {
         Event.stopImmediatePropagation()
         Event.preventDefault()
 
@@ -3376,16 +3391,22 @@ debugger
 
         const hasContent = (ContentList.length > 0)
 
-        function onSelectionClick (Event:MouseEvent) {
+        function onSelectionClick (Event:PointerEvent) {
           processSelectionClick(Event, Item,Path)
         }
 
-        function onExpansionClick (Event:MouseEvent) {
+        function onDoubleClick (Event:PointerEvent) {
+          processDoubleClick(Event, Item,Path)
+        }
+
+        function onExpansionClick (Event:PointerEvent) {
           processExpansionClick(Event, Item,Path)
         }
 
         return html`<div class="ItemView" style="padding-left:${Offset}px">
-          <div class="ItemLine ${isSelected ? 'selected' : ''}" onClick=${onSelectionClick}>
+          <div class="ItemLine ${isSelected ? 'selected' : ''}"
+            onClick=${onSelectionClick} onDblClick=${onDoubleClick}
+          >
             ${hasContent
               ? (isExpanded
                   ? html`<img class="ItemExpander" src="/svg/icons/caret-down.svg"  onClick=${onExpansionClick}/>`
