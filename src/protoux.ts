@@ -2118,14 +2118,22 @@ debugger
   const HashmarkPattern = /^\s*(\d+(?:[.]\d+)?|\d*[.](?:\d*))(?:\s*:\s*([^\x00-\x1F\x7F-\x9F\u2028\u2029\uFFF9-\uFFFB]+))?$/
 
   class PUX_Slider extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Hashmarks,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2150,7 +2158,9 @@ debugger
       return html`<div class=${ClassesWith('PUX Slider Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${HashmarkId}>
-        <input type="range" value=${Value || ''} ...${otherProps}/>
+        <input type="range" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${HashmarkList}`
     }
   }
@@ -2161,14 +2171,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_TextlineInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2188,7 +2206,9 @@ debugger
       return html`<div class=${ClassesWith('PUX TextlineInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="text" value=${Value || ''} ...${otherProps}/>
+        <input type="text" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2199,13 +2219,21 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_PasswordInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2216,7 +2244,9 @@ debugger
       return html`<div class=${ClassesWith('PUX PasswordInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
-        <input type="password" value=${Value || ''} ...${otherProps}/>
+        <input type="password" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>`
     }
   }
@@ -2227,14 +2257,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_NumberInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2254,7 +2292,9 @@ debugger
       return html`<div class=${ClassesWith('PUX NumberInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="number" value=${Value || ''} ...${otherProps}/>
+        <input type="number" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2265,14 +2305,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_PhoneNumberInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2292,7 +2340,9 @@ debugger
       return html`<div class=${ClassesWith('PUX PhoneNumberInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="tel" value=${Value || ''} ...${otherProps}/>
+        <input type="tel" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2303,14 +2353,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_EMailAddressInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2330,7 +2388,9 @@ debugger
       return html`<div class=${ClassesWith('PUX EMailAddressInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="email" value=${Value || ''} ...${otherProps}/>
+        <input type="email" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2341,14 +2401,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_URLInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2368,7 +2436,9 @@ debugger
       return html`<div class=${ClassesWith('PUX URLInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="url" value=${Value || ''} ...${otherProps}/>
+        <input type="url" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2379,14 +2449,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_TimeInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2406,7 +2484,9 @@ debugger
       return html`<div class=${ClassesWith('PUX TimeInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="time" value=${Value || ''} ...${otherProps}/>
+        <input type="time" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2417,14 +2497,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_DateTimeInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2444,7 +2532,9 @@ debugger
       return html`<div class=${ClassesWith('PUX DateTimeInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="datetime-local" value=${Value || ''} ...${otherProps}/>
+        <input type="datetime-local" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2455,14 +2545,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_DateInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2482,7 +2580,9 @@ debugger
       return html`<div class=${ClassesWith('PUX DateInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="date" value=${Value || ''} ...${otherProps}/>
+        <input type="date" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2493,14 +2593,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_WeekInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2520,7 +2628,9 @@ debugger
       return html`<div class=${ClassesWith('PUX WeekInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="week" value=${Value || ''} ...${otherProps}/>
+        <input type="week" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2531,14 +2641,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_MonthInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2558,7 +2676,9 @@ debugger
       return html`<div class=${ClassesWith('PUX MonthInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="month" value=${Value || ''} ...${otherProps}/>
+        <input type="month" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2569,14 +2689,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_SearchInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2596,7 +2724,9 @@ debugger
       return html`<div class=${ClassesWith('PUX SearchInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="search" value=${Value || ''} ...${otherProps}/>
+        <input type="search" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2607,14 +2737,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_FileInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View,
         Placeholder, onDrop, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2642,7 +2780,9 @@ debugger
       return html`<label class=${ClassesWith('PUX FileInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " onDragEnter=${onDragEnter} onDragOver=${onDragOver} onDrop=${onFileDrop}>
-        <input type="file" style="display:none" ...${otherProps}/>
+        <input type="file" style="display:none" ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
         ${(Value || '') === '' ? '' : html`<span>${Value}</span>`}
         ${(Value || '') === '' ? ((Placeholder || '') === '' ? '' : html`<span>${Placeholder}</span>`) : ''}
       </label>`
@@ -2655,14 +2795,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_ColorInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, Suggestions,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2682,7 +2830,9 @@ debugger
       return html`<div class=${ClassesWith('PUX ColorInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="color" value=${Value || ''} ...${otherProps} />
+        <input type="color" value=${Value || ''} ...${otherProps}
+          onBlur=${this.rerender.bind(this)}
+        />
       </div>${SuggestionList}`
     }
   }
@@ -2693,14 +2843,22 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_DropDown extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Options, Placeholder,
         View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2711,7 +2869,7 @@ debugger
       return html`<div class=${ClassesWith('PUX DropDown Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
-        <select ...${otherProps}>
+        <select ...${otherProps} onBlur=${this.rerender.bind(this)}>
           ${Placeholder == null
             ? ''
             : html`<option value="" disabled>${Placeholder}</option>`
@@ -2730,13 +2888,21 @@ debugger
 //------------------------------------------------------------------------------
 
   class PUX_TextInput extends PUX_WidgetView {
+    private _ValueToShow:any
+
     public render (PropSet:Indexable):any {
       const Widget = PropSet.Widget
       Widget.View = this
 
-      const {
+      let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value, View, ...otherProps
       } = Widget
+
+      if (document.activeElement === (this as Component).base) {
+        Value = this._ValueToShow
+      } else {
+        this._ValueToShow = Value
+      }
 
       const CSSGeometry = (
         (x != null) && (Width  != null) && (y != null) && (Height != null)
@@ -2747,7 +2913,9 @@ debugger
       return html`<div class=${ClassesWith('PUX TextInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       ">
-        <textarea ...${otherProps} value=${Value || ''}></textarea>
+        <textarea ...${otherProps} value=${Value || ''}
+          onBlur=${this.rerender.bind(this)}
+        ></textarea>
       </div>`
     }
   }
