@@ -427,6 +427,8 @@ debugger
   /**** PointerEvent Handlers ****/
 
     function onPointerDown (Event:PointerEvent):void {
+      if (! Event.isPrimary) { return }
+
       if (onlyFrom != null) {
         if (
           (onlyFrom instanceof HTMLElement) && (onlyFrom !== Event.target) ||
@@ -579,6 +581,8 @@ debugger
   /**** PointerEvent Handlers ****/
 
     function onPointerDown (Event:PointerEvent):void {
+      if (! Event.isPrimary) { return }
+
       if (onlyFrom != null) {
         if (
           (onlyFrom instanceof HTMLElement) && (onlyFrom !== Event.target) ||
@@ -1403,14 +1407,14 @@ debugger
       const moveDialog = (x:number,y:number, dx:number,dy:number) => {
         Dialog.x = Dialog._DragOffset.x + dx
         Dialog.y = Dialog._DragOffset.y + dy
-        Dialog.z = 1000                 // brings dialog to front while dragging
+        Dialog.z = 20001000             // brings dialog to front while dragging
         PropSet.ProtoUX.View.rerender()
 //      this.rerender() // does not seem to work for any reason
       }
 
       const moveDialogAndFinish = (x:number,y:number, dx:number,dy:number) => {
         moveDialog(x,y, dx,dy)
-        Dialog.z = 0
+        Dialog.z = 2000000
         PropSet.ProtoUX.bringDialogToFront(Dialog.Name)
       }
 
@@ -1443,7 +1447,7 @@ debugger
       }
 
       return html`<div class=${ClassesWith('PUX Dialog',Classes)} id=${Id} style="
-        ${Style || ''}; ${CSSGeometry}; z-index:${z || 0};
+        ${Style || ''}; ${CSSGeometry}; z-index:${z || 2000000};
       " ...${otherProps}>
         <div class="Titlebar"
           onPointerDown=${DragRecognizer} onPointerUp=${DragRecognizer}
@@ -1503,14 +1507,14 @@ debugger
         } else {
           resizeDialog(dx,dy)
         }
-        Dialog.z = 1000                 // brings dialog to front while dragging
+        Dialog.z = 20001000             // brings dialog to front while dragging
         PropSet.ProtoUX.View.rerender()
 //      this.rerender() // does not seem to work for any reason
       }
 
       const handleDragAndFinish = (x:number,y:number, dx:number,dy:number) => {
         handleDrag(x,y, dx,dy)
-        Dialog.z = 0
+        Dialog.z = 2000000
         PropSet.ProtoUX.bringDialogToFront(Dialog.Name)
       }
 
@@ -1568,7 +1572,7 @@ debugger
       )
 
       return html`<div class=${ClassesWith('PUX ResizableDialog',Classes)} id=${Id} style="
-        ${Style || ''}; ${CSSGeometry}; z-index:${z || 0};
+        ${Style || ''}; ${CSSGeometry}; z-index:${z || 2000000};
       " ...${otherProps}>
         <div class="ContentPane">
           ${(WidgetList || []).map(
