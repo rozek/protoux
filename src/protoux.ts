@@ -929,8 +929,9 @@ debugger
       }
 
       this._openDialogs.push(Dialog)
-        if (typeof Dialog.onOpen === 'function') { Dialog.onOpen(Dialog) }
       this.rerender()
+
+      if (typeof Dialog.onOpen === 'function') { Dialog.onOpen(Dialog) }
     }
 
   /**** closeDialog ****/
@@ -943,8 +944,9 @@ debugger
       if (DialogIndex < 0) { return }
 
       this._openDialogs.splice(DialogIndex,1)
-        if (typeof Dialog.onClose === 'function') { Dialog.onClose(Dialog) }
       this.rerender()
+
+      if (typeof Dialog.onClose === 'function') { Dialog.onClose(Dialog) }
     }
 
   /**** DialogIsOpen ****/
@@ -1431,7 +1433,7 @@ debugger
       })
 
       const {
-        Id, Classes,Style, x,y,z, Width,Height, Title,
+        Id, Classes,Style, x,y,z, Width,Height, Title, closeable,
         View, WidgetList, ...otherProps
       } = Dialog
 
@@ -1443,7 +1445,7 @@ debugger
         Event.stopImmediatePropagation()
         Event.preventDefault()
 
-        PropSet.ProtoUX.closeDialog(Dialog.Name)
+        if (closeable !== false) { PropSet.ProtoUX.closeDialog(Dialog.Name) }
       }
 
       return html`<div class=${ClassesWith('PUX Dialog',Classes)} id=${Id} style="
@@ -1455,6 +1457,7 @@ debugger
         >
           <div class="Title">${Title}</div>
           <img class="CloseButton" src="${PropSet.ProtoUX._ImageFolder}/xmark.png"
+            style="visibility:${closeable === false ? 'hidden' : 'visible'}"
             onClick=${onClose}/>
         </div>
 
@@ -1481,7 +1484,7 @@ debugger
       Dialog.View = this
 
       let {
-        Id, Classes,Style, x,y,z, Width,Height, Title,
+        Id, Classes,Style, x,y,z, Width,Height, Title, closeable,
         minWidth, minHeight, maxWidth, maxHeight,
         View, WidgetList, ...otherProps
       } = Dialog
@@ -1564,7 +1567,7 @@ debugger
         Event.stopImmediatePropagation()
         Event.preventDefault()
 
-        PropSet.ProtoUX.closeDialog(Dialog.Name)
+        if (closeable !== false) { PropSet.ProtoUX.closeDialog(Dialog.Name) }
       }
 
       const CSSGeometry = (
@@ -1586,6 +1589,7 @@ debugger
         >
           <div class="Title">${Title}</div>
           <img class="CloseButton" src="${PropSet.ProtoUX._ImageFolder}/xmark.png"
+            style="visibility:${closeable === false ? 'hidden' : 'visible'}"
             onClick=${onClose}/>
         </div>
 
@@ -1889,7 +1893,7 @@ debugger
 
       let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height, Value,Color,
-        disabled, View, ...otherProps
+        disabled,onClick, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1903,6 +1907,15 @@ debugger
         Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
       }
 
+      function _onClick (Event:PointerEvent) {
+        if (disabled == true) {
+          Event.stopPropagation()
+          Event.preventDefault()
+        } else {
+          if (typeof onClick === 'function') { onClick(Event) }
+        }
+      }
+
       return html`<div class=${ClassesWith('PUX Icon Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " disabled=${disabled}><div style="
@@ -1912,7 +1925,7 @@ debugger
         -webkit-mask-size:contain;           mask-size:contain;
         -webkit-mask-position:center center; mask-position:center center;
         background-color:${Color || 'black'};
-      " ...${otherProps}/></>`
+      " onClick=${_onClick} ...${otherProps}/></>`
     }
   }
   ProtoUX.registerWidgetView('Icon',PUX_Icon)
@@ -1928,7 +1941,7 @@ debugger
 
       let {
         Id, Type,Classes,Style, Anchoring, x,y, Width,Height,
-        Value,Color,Options, onInput, View, ...otherProps
+        Value,Color,Options, disabled,onInput, View, ...otherProps
       } = Widget
 
       const CSSGeometry = (
@@ -1942,6 +1955,15 @@ debugger
         Value = Value.trim().replace(/url\("\/images\//g,'url("'+ImageFolder)
       }
 
+      function _onInput (Event:any) {
+        if (disabled == true) {
+          Event.stopPropagation()
+          Event.preventDefault()
+        } else {
+          if (typeof onInput === 'function') { onInput(Event) }
+        }
+      }
+
       return html`<div class=${ClassesWith('PUX PseudoDropDown Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       "><div style="
@@ -1952,11 +1974,16 @@ debugger
         -webkit-mask-position:center center; mask-position:center center;
         background-color:${Color || 'black'};
       " ...${otherProps}/>
-        <select onInput=${onInput}>
-          <option value="" disabled selected>please select</option>
-          ${(Options || []).map(
-            (Option:string) => html`<option>${Option}</>`
-          )}
+        <select onInput=${_onInput}>
+          ${ValueIsListSatisfying(Options,ValueIsString)
+            ? html`
+                <option value="" disabled selected>please select</option>
+                ${(Options || []).map(
+                  (Option:string) => html`<option>${Option}</>`
+                )}
+              `
+            : Options
+          }
         </select>
       </div>`
     }
@@ -2161,9 +2188,9 @@ debugger
 
       return html`<div class=${ClassesWith('PUX Slider Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
-      " list=${HashmarkId}>
+      ">
         <input type="range" value=${Value || ''} ...${otherProps}
-          onBlur=${this.rerender.bind(this)}
+          onBlur=${this.rerender.bind(this)} list=${HashmarkId}
         />
       </div>${HashmarkList}`
     }
@@ -3075,7 +3102,7 @@ debugger
       const activeIndex = (
         Value == null ? 0 : (Value < 0 ? WidgetList.length+Value : Value)
       )
-      const activeCard = WidgetList[activeIndex] || WidgetList[0]
+      const activeCard = (WidgetList || [])[activeIndex] || (WidgetList || [])[0]
 
       return html`<div class=${ClassesWith('PUX Deck Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
@@ -3138,7 +3165,7 @@ debugger
       const activeIndex = (
         Value == null ? 0 : (Value < 0 ? WidgetList.length+Value : Value)
       )
-      const activeTab = WidgetList[activeIndex] || WidgetList[0]
+      const activeTab = (WidgetList || [])[activeIndex] || (WidgetList || [])[0]
 
       const self = this as Component
       function activateTab (Index:number):void {
