@@ -621,7 +621,7 @@ debugger
 /*C*/ console.log('ProtoUX: PointerTarget changed')
 /*C*/ }
 
-      if (State === 'busy')      { continueDragging(Event) }
+      if (State === 'busy')      { return continueDragging(Event) }
       if (State === 'observing') {                     // before actual dragging
         let { pageX:x,pageY:y } = Event
         if ((x0-x)**2 + (y0-y)**2 >= Threshold**2) { startDragging(Event) }
@@ -629,8 +629,10 @@ debugger
     }
 
     function onPointerUp (Event:PointerEvent):void {
-      if (State === 'busy')      { finishDragging(Event) }
+      if (State === 'busy')      { return finishDragging(Event) }
       if (State === 'observing') {
+        consumeEvent(Event)
+
         State = 'idle'
         onClicked(x0,y0, Event)
 
