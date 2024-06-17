@@ -409,14 +409,14 @@ debugger
 
     function consumeEvent (Event:Event):void {
       Event.stopImmediatePropagation()
-      Event.preventDefault()
+      Event.preventDefault()      // prevent mouse event from being sent as well
     }
 
 /*C*/ let PointerTarget:HTMLElement|undefined
 /*C*/        // workaround for undesired disappearance of pointer capture target
 
     let {
-      onlyFrom, neverFrom, Threshold = 0, consumingEvent = true,
+      onlyFrom, neverFrom, Threshold = 0,
       onDragStarted  = DummyCallback, onDragContinued = DummyCallback,
       onDragFinished = DummyCallback, onDragCancelled = DummyCallback
     } = OptionSet
@@ -463,8 +463,9 @@ debugger
 /*C*/ if ((State !== 'idle') && (Event.target !== PointerTarget)) {
 /*C*/   ;(Event.target as HTMLElement).setPointerCapture(Event.pointerId)
 /*C*/   PointerTarget = Event.target as HTMLElement
-/*C*/ console.log('PointerTarget changed')
+/*C*/ console.log('ProtoUX: PointerTarget changed')
 /*C*/ }
+
       if (State === 'observing') {                     // before actual dragging
         let { pageX:x,pageY:y } = Event
         if ((x0-x)**2 + (y0-y)**2 >= Threshold**2) { startDragging(Event) }
@@ -488,7 +489,7 @@ debugger
   /**** State Transitions ****/
 
     function startDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       State = 'busy'
       let { pageX:x,pageY:y } = Event
@@ -498,7 +499,7 @@ debugger
     }
 
     function continueDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       let { pageX:x,pageY:y } = Event
       onDragContinued(
@@ -507,7 +508,7 @@ debugger
     }
 
     function finishDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       State = 'idle'
       let { pageX:x,pageY:y } = Event
@@ -518,7 +519,7 @@ debugger
     }
 
     function abortDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       if (State !== 'idle') {
         const wasBusy = (State === 'busy')
@@ -567,7 +568,7 @@ debugger
 /*C*/        // workaround for undesired disappearance of pointer capture target
 
     let {
-      onlyFrom, neverFrom, Threshold = 0, consumingEvent = true,
+      onlyFrom, neverFrom, Threshold = 0,
       onDragStarted  = DummyCallback, onDragContinued = DummyCallback,
       onDragFinished = DummyCallback, onDragCancelled = DummyCallback,
       onClicked = DummyCallback,
@@ -617,8 +618,9 @@ debugger
 /*C*/ if ((State !== 'idle') && (Event.target !== PointerTarget)) {
 /*C*/   ;(Event.target as HTMLElement).setPointerCapture(Event.pointerId)
 /*C*/   PointerTarget = Event.target as HTMLElement
-/*C*/ console.log('PointerTarget changed')
+/*C*/ console.log('ProtoUX: PointerTarget changed')
 /*C*/ }
+
       if (State === 'busy')      { continueDragging(Event) }
       if (State === 'observing') {                     // before actual dragging
         let { pageX:x,pageY:y } = Event
@@ -650,7 +652,7 @@ debugger
   /**** State Transitions ****/
 
     function startDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       State = 'busy'
       let { pageX:x,pageY:y } = Event
@@ -660,7 +662,7 @@ debugger
     }
 
     function continueDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       let { pageX:x,pageY:y } = Event
       onDragContinued(
@@ -669,7 +671,7 @@ debugger
     }
 
     function finishDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       State = 'idle'
       let { pageX:x,pageY:y } = Event
@@ -680,7 +682,7 @@ debugger
     }
 
     function abortDragging (Event:PointerEvent):void {
-      if (consumingEvent) { consumeEvent(Event) }
+      consumeEvent(Event)
 
       if (State !== 'idle') {
         const wasBusy = (State === 'busy')
