@@ -25,7 +25,6 @@
 
   import hyperactiv from 'hyperactiv'
   const  { observe, computed, dispose } = hyperactiv
-  export { observe, computed, dispose }
 
 /**** make some existing types indexable ****/
 
