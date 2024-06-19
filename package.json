@@ -33,10 +33,12 @@
     "url": "https://github.com/rozek/protoux/issues"
   },
   "homepage": "https://github.com/rozek/protoux#readme",
-  "dependencies": {
+  "dependencies":{
+  	"javascript-interface-library": "^1.0.5"
+  },
+  "peerDependencies": {
     "htm": "github:rozek/htm",
-    "hyperactiv": "github:rozek/hyperactiv",
-    "javascript-interface-library": "^1.0.5"
+    "hyperactiv": "github:rozek/hyperactiv"
   },
   "devDependencies": {
     "agadoo": "^2.0.0",
