@@ -1,6 +1,6 @@
 {
   "name": "protoux",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "runtime for a self-made private prototyping system",
   "type": "module",
   "source": "src/protoux.ts",
