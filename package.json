@@ -15,7 +15,7 @@
   "umd:main": "./dist/protoux.umd.js",
   "types": "./dist/protoux.d.ts",
   "scripts": {
-    "build": "rimraf dist && microbundle --globals JIL=javascript-interface-library && rm -r dist/src",
+    "build": "rimraf dist && microbundle --globals JIL=javascript-interface-library && mv dist/src/protoux.d.ts ./dist && rm -r dist/src",
     "agadoo": "agadoo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
