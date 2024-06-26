@@ -43,6 +43,7 @@
   "devDependencies": {
     "agadoo": "^2.0.0",
     "microbundle": "^0.15.1",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^5.2.2"
   }
 }
