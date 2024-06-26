@@ -163,7 +163,7 @@ import{quoted as e,ValueIsNonEmptyString as t,ValueIsPlainObject as i,ValueIsStr
         <input type="number" value=${0} ...${0}
           onBlur=${0}
         />
-      </div>${0}`),Mi("PUX NumberInput Widget",n),i,h,o||"",g,d||"",p,this.rerender.bind(this),c)}}),Ii.registerWidgetView("PhoneNumberInput",class extends _i{constructor(...e){super(...e),this._ValueToShow=void 0}render(e){const t=e.Widget;t.View=this;let{Id:i,Classes:n,Style:o,x:l,y:s,Width:r,Height:a,Value:d,Suggestions:u}=t,p=f(t,z);document.activeElement===this.base?d=this._ValueToShow:this._ValueToShow=d;const h=null!=l&&null!=r&&null!=s&&null!=a?`left:${l}px; top:${s}px; width:${r}px; height:${a}px; right:auto; bottom:auto;`:"";let g,c="";return Array.isArray(u)&&u.length>0&&(g=i+"-Suggestions",c=x(nt||(nt=yi`<datalist id=${0}>
+      </div>${0}`),Mi("PUX NumberInput Widget",n),i,h,o||"",g,null==d?"":d,p,this.rerender.bind(this),c)}}),Ii.registerWidgetView("PhoneNumberInput",class extends _i{constructor(...e){super(...e),this._ValueToShow=void 0}render(e){const t=e.Widget;t.View=this;let{Id:i,Classes:n,Style:o,x:l,y:s,Width:r,Height:a,Value:d,Suggestions:u}=t,p=f(t,z);document.activeElement===this.base?d=this._ValueToShow:this._ValueToShow=d;const h=null!=l&&null!=r&&null!=s&&null!=a?`left:${l}px; top:${s}px; width:${r}px; height:${a}px; right:auto; bottom:auto;`:"";let g,c="";return Array.isArray(u)&&u.length>0&&(g=i+"-Suggestions",c=x(nt||(nt=yi`<datalist id=${0}>
           ${0}
         </datalist>`),g,u.map(e=>x(ot||(ot=yi`<option value=${0}></option>`),e)))),x(lt||(lt=yi`<div class=${0} id=${0} style="
         ${0} ${0}
