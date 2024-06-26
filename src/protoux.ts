@@ -2326,7 +2326,7 @@ debugger
       return html`<div class=${ClassesWith('PUX NumberInput Widget',Classes)} id=${Id} style="
         ${CSSGeometry} ${Style || ''}
       " list=${SuggestionId}>
-        <input type="number" value=${Value || ''} ...${otherProps}
+        <input type="number" value=${Value == null ? '' : Value} ...${otherProps}
           onBlur=${this.rerender.bind(this)}
         />
       </div>${SuggestionList}`
