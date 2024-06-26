@@ -268,7 +268,7 @@
 
   .PUX.NestedListView .ItemIcon {
     display:inline-block; position:relative;
-    margin-top:6px; width:14px; height:10px;
+    margin:6px 2px 0px 2px; width:10px; height:10px;
     pointer-events:none;
   }
 
@@ -3611,10 +3611,10 @@ debugger
           >
             ${hasContent
               ? (isExpanded
-                  ? html`<img class="ItemExpander" src="/svg/icons/caret-down.svg"  onClick=${onExpansionClick}/>`
-                  : html`<img class="ItemExpander" src="/svg/icons/caret-right.svg" onClick=${onExpansionClick}/>`
+                  ? html`<img class="ItemExpander" src="${PropSet.ProtoUX._ImageFolder}/caret-down.png"  onClick=${onExpansionClick}/>`
+                  : html`<img class="ItemExpander" src="${PropSet.ProtoUX._ImageFolder}/caret-right.png" onClick=${onExpansionClick}/>`
                 )
-              : html`<img class="ItemIcon" src="/svg/icons/circle.svg"/>`
+              : html`<img class="ItemIcon" src="${PropSet.ProtoUX._ImageFolder}/circle.png"/>`
             } ${ItemRenderer(Item,Path)}
           </div>
           ${hasContent && isExpanded
