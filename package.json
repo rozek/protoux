@@ -1,21 +1,22 @@
 {
   "name": "protoux",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "runtime for a self-made private prototyping system",
-  "type": "module",
-  "source": "src/protoux.ts",
-  "exports": {
-    "types": "./dist/protoux.d.ts",
-    "require": "./dist/protoux.cjs",
-    "default": "./dist/protoux.modern.js"
-  },
-  "main": "./dist/protoux.cjs",
+  "source": "./src/protoux.ts",
+  "main":   "./dist/protoux.umd.js",
+  "browser":"./dist/protoux.umd.js",
   "module": "./dist/protoux.esm.js",
   "svelte": "./dist/protoux.esm.js",
-  "umd:main": "./dist/protoux.umd.js",
-  "types": "./dist/protoux.d.ts",
+  "types":  "./dist/protoux.d.ts",
+  "exports": {
+    "require":"./dist/protoux.umd.js",
+    "browser":"./dist/protoux.umd.js",
+    "module": "./dist/protoux.esm.js",
+    "svelte": "./dist/protoux.esm.js",
+    "types":  "./dist/protoux.d.ts"
+  },
   "scripts": {
-    "build": "rimraf dist && microbundle --globals JIL=javascript-interface-library && mv dist/src/protoux.d.ts ./dist && rm -r dist/src",
+    "build": "rimraf dist && microbundle --globals JIL=javascript-interface-library && mv dist/src/protoux.d.ts ./dist && rimraf dist/src && rm dist/protoux.js*",
     "agadoo": "agadoo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
